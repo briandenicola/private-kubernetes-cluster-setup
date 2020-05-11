@@ -1,10 +1,12 @@
 provider "azurerm" {
-  version = "~> 1.35.0"
+  version = "~> 2.7.0"
+  features  {}
 }
 
 provider "azurerm" {
   alias           = "acr"
-  version         = "~> 1.35.0"
+  version = "~> 2.7.0"
+  features        {}
   subscription_id = var.acr_subscription
 }
 
@@ -19,20 +21,6 @@ data "azurerm_subnet" "k8s_subnet" {
   name                 = var.k8s_subnet
   virtual_network_name = var.k8s_vnet
   resource_group_name  = var.k8s_vnet_resource_group_name
-}
-
-data "azurerm_container_registry" "acr_repo" {
-  name                = var.acr_name
-  resource_group_name = var.acr_resource_group
-  provider            = azurerm.acr
-}
-
-resource "azurerm_role_assignment" "acr_pullrole" {
-  scope                = data.azurerm_container_registry.acr_repo.id
-  role_definition_name = "AcrPull"
-  principal_id         = var.client_id
-  provider             = azurerm.acr
-  skip_service_principal_aad_check = true
 }
 
 resource "azurerm_resource_group" "k8s" {
@@ -67,6 +55,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   node_resource_group = "${azurerm_resource_group.k8s.name}_nodes"
   dns_prefix          = var.cluster_name
   kubernetes_version  = var.cluster_version
+  private_cluster_enabled = "true"
 
   linux_profile {
     admin_username = var.admin_user
@@ -76,11 +65,15 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
   }
 
-  agent_pool_profile {
+  identity {
+    type = "SystemAssigned"
+  }
+
+  default_node_pool  {
     name                = "default"
-    count               = var.agent_count
+    node_count          = var.agent_count
+    availability_zones  = ["1", "2", "3"]
     vm_size             = var.vm_size
-    os_type             = "Linux"
     os_disk_size_gb     = 30
     vnet_subnet_id      = data.azurerm_subnet.k8s_subnet.id
     type                = "VirtualMachineScaleSets"
@@ -101,11 +94,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     load_balancer_sku  = var.load_balancer_sku
   }
 
-  service_principal {
-    client_id     = var.client_id
-    client_secret = var.client_secret
-  }
-
   addon_profile {
     oms_agent {
       enabled                    = true
@@ -117,4 +105,19 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     Environment = var.environment
   }
 }
+
+data "azurerm_container_registry" "acr_repo" {
+  name                = var.acr_name
+  resource_group_name = var.acr_resource_group
+  provider            = azurerm.acr
+}
+
+resource "azurerm_role_assignment" "acr_pullrole" {
+  scope                = data.azurerm_container_registry.acr_repo.id
+  role_definition_name = "AcrPull"
+  principal_id         =  azurerm_kubernetes_cluster.k8s.identity.0.principal_id
+  provider             = azurerm.acr
+  skip_service_principal_aad_check = true
+}
+
 

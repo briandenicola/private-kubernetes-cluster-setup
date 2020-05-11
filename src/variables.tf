@@ -29,7 +29,7 @@ variable "cluster_name" {
 
 variable "cluster_version" {
   description = "The cluster version"
-  default     = "1.15.7"
+  default     = "1.16.7"
 }
 
 variable "resource_group_name" {
@@ -46,14 +46,6 @@ variable "vm_size" {
   default     = "Standard_B4ms"
 }
 
-variable "client_id" {
-  description = "The Client Id of the Service Principal"
-}
-
-variable "client_secret" {
-  description = "The Storage Account Key"
-}
-
 variable "admin_user" {
   description = "The local administrator on Linux"
   default     = "manager"
@@ -61,10 +53,12 @@ variable "admin_user" {
 
 variable "ssh_public_key" {
   description = "The public key for the local administrator"
+  default     = ""
 }
 
 variable "log_analytics_workspace_name" {
   description = "The name for the Log Analytics Workspace"
+  default     = ""
 }
 
 variable "environment" {
@@ -72,8 +66,8 @@ variable "environment" {
 }
 
 variable "load_balancer_sku" {
-  default     = "standard"
   description = "The type of load balancer to deploy as part of the AKS cluster"
+  default     = "standard"
 }
 
 variable "acr_subscription" {

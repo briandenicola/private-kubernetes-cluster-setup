@@ -1,6 +1,5 @@
 cluster_name = ""
-agent_count = 1
-client_id = ""
+agent_count = 3
 environment = "development"
 log_analytics_workspace_name = ""
 k8s_vnet_resource_group_name = "DevSub02_Network_RG"

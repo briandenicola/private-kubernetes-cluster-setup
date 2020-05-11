@@ -7,9 +7,9 @@ trigger:
     - Deploy/*
 
 variables:
-  STORAGE_ACCOUNT:    "bjdterraform001"
+  STORAGE_ACCOUNT:    ""
   PLAN_FILE:          "aks.sandbox.plan.${today}-${uuid}"              
-  AKS_RG_NAME:        ""
+  AKS_RG_NAME:        "DevSub02_K8SSandbox_RG"
   ACR_NAME:           ""
 
 stages:
@@ -52,11 +52,11 @@ stages:
 
               cd '$(System.ArtifactsDirectory)/drop'
 
-              wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip    
-              unzip terraform_0.12.20_linux_amd64.zip
+              wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip    
+              unzip terraform_0.12.24_linux_amd64.zip
               
               ./terraform init -backend=true -backend-config="access_key=$(access_key)" -backend-config="key=sandbox.terraform.tfstate"
-              ./terraform plan -out="$(PLAN_FILE)" -var "resource_group_name=$(AKS_RG_NAME)" -var "client_secret=$(client_secret)" -var-file="sandbox.tfvars"
+              ./terraform plan -out="$(PLAN_FILE)" -var "resource_group_name=$(AKS_RG_NAME)" -var-file="sandbox.tfvars"
               ./terraform apply -auto-approve $(PLAN_FILE)
 
               az login --service-principal -u ${ARM_CLIENT_ID} -p ${ARM_CLIENT_SECRET} --tenant ${ARM_TENANT_ID}

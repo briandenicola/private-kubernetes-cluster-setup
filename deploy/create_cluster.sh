@@ -12,8 +12,8 @@ export PLAN_FILE="aks.$ENV.plan.${today}-${uuid}"
 
 cd ../src
 
-wget https://releases.hashicorp.com/terraform/0.12.20/terraform_0.12.20_linux_amd64.zip    
-unzip terraform_0.12.20_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip    
+unzip terraform_0.12.24_linux_amd64.zip
 
 ./terraform init -backend=true -backend-config="access_key=$KEY" -backend-config="key=$ENV.terraform.tfstate"
 ./terraform plan -out="$PLAN_FILE" -var "resource_group_name=$RG_NAME" -var "client_secret=$ARM_CLIENT_SECRET" -var-file="$ENV.tfvars"

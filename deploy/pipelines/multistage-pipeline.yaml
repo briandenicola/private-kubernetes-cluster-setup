@@ -7,13 +7,13 @@ trigger:
     - Deploy/*
 
 variables:
-  STORAGE_ACCOUNT:    "bjdterraform001"
-  DEV_AKS_RG_NAME:    "DevSub02_K8SDev_RG"           
-  PRD_AKS_RG_NAME:    "DevSub02_K8S01_RG"
-  ACR_NAME:           "bjd145"
-  CLIENT_ID:          "4e565daf-621d-48d3-b010-1208da519cbe"
-  SUBSCRIPTION_ID:    "bfafbd89-a2a3-43a5-af72-fb4ef0c514c1"
-  TENANT_ID:          "72f988bf-86f1-41af-91ab-2d7cd011db47"
+  STORAGE_ACCOUNT:    ""
+  DEV_AKS_RG_NAME:    ""    
+  PRD_AKS_RG_NAME:    ""
+  ACR_NAME:           ""
+  CLIENT_ID:          ""
+  SUBSCRIPTION_ID:    ""
+  TENANT_ID:          ""
 
 stages:
 - stage: Build
