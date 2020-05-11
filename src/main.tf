@@ -115,9 +115,16 @@ data "azurerm_container_registry" "acr_repo" {
 resource "azurerm_role_assignment" "acr_pullrole" {
   scope                = data.azurerm_container_registry.acr_repo.id
   role_definition_name = "AcrPull"
-  principal_id         =  azurerm_kubernetes_cluster.k8s.identity.0.principal_id
+  principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity.0.object_id 
   provider             = azurerm.acr
   skip_service_principal_aad_check = true
 }
 
+resource "azurerm_role_assignment" "acr_pullrole_cluster" {
+  scope                = data.azurerm_container_registry.acr_repo.id
+  role_definition_name = "AcrPull"
+  principal_id        = azurerm_kubernetes_cluster.k8s.identity.0.principal_id
+  provider             = azurerm.acr
+  skip_service_principal_aad_check = true
+}
 
