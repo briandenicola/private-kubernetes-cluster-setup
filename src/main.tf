@@ -231,6 +231,14 @@ resource "azurerm_role_assignment" "acr_pullrole_cluster" {
   skip_service_principal_aad_check = true
 }
 
+resource "azurerm_role_assignment" "acr_pullrole_nodepool" {
+  scope                = data.azurerm_container_registry.acr_repo.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_kubernetes_cluster.k8s.kubelet_identity.0.object_id 
+  provider             = azurerm.acr
+  skip_service_principal_aad_check = true
+}
+
 resource "azurerm_role_assignment" "management_vm" {
   scope                = azurerm_kubernetes_cluster.k8s.id
   role_definition_name = "Azure Kubernetes Service RBAC Cluster Admin"
