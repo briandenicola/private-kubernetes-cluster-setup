@@ -29,7 +29,7 @@ variable "cluster_name" {
 
 variable "cluster_version" {
   description = "The cluster version"
-  default     = "1.16.7"
+  default     = "1.20.7"
 }
 
 variable "resource_group_name" {
@@ -53,12 +53,12 @@ variable "admin_user" {
 
 variable "ssh_public_key" {
   description = "The public key for the local administrator"
-  default     = ""
+  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGUfWYw+OI3udPmdcIklEeLapnR/9boHLNOpHwglZ+fxv959rjmXyq+ZB55xfHQqjYgvUARLbYmvnBgIpDDI95fo2tepHjspvw4nmM1OwRCt+DwY7Y7Rmq/5LRIj6RvJe0V2TsS8xE0VI907zLoatqQ6cO9kedlbr9KY4ZrRXYHOZWapHqcliyI29lZIPGdmAFjmtdkngmu4sgss9V+2gwWghp+bnMXyyn96oBxeQjCNDiP/90yucjYgoDPHslkLXc7jgdfnb+oxa0iG9bHutzgTdQ7ZkCZOnd++ZJISIvKhIIJAfqaQNVY1B7cXzFDcTJbZxpptZvKbaUaWhRS1uJ briandenicola@harpocrates.denicolafamily.com"
 }
 
 variable "log_analytics_workspace_name" {
   description = "The name for the Log Analytics Workspace"
-  default     = ""
+  default     = "bjdloganalytics003"
 }
 
 variable "environment" {
@@ -66,19 +66,25 @@ variable "environment" {
 }
 
 variable "load_balancer_sku" {
-  description = "The type of load balancer to deploy as part of the AKS cluster"
   default     = "standard"
+  description = "The type of load balancer to deploy as part of the AKS cluster"
 }
 
 variable "acr_subscription" {
+  default     = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"
   description = "The subscription where Azure Container Repo lives"
 }
 
 variable "acr_resource_group" {
+  default     = "Core_Infra_ContainerRepo_RG"
   description = "The Resource Grop where Azure Container Repo lives"
 }
 
 variable "acr_name" {
+  default     = "bjd145"
   description = "The Azure Container Repo name"
 }
 
+variable "azure_rbac_group_object_id" {
+  description = "GUID of the AKS admin Group"
+}

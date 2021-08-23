@@ -1,11 +1,11 @@
 provider "azurerm" {
-  version = "~> 2.7.0"
+  version = "~> 2.73.0"
   features  {}
 }
 
 provider "azurerm" {
   alias           = "acr"
-  version = "~> 2.7.0"
+  version         = "~> 2.73.0"
   features        {}
   subscription_id = var.acr_subscription
 }
@@ -49,13 +49,25 @@ resource "azurerm_log_analytics_solution" "k8s" {
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
-  name                = var.cluster_name
-  location            = azurerm_resource_group.k8s.location
-  resource_group_name = azurerm_resource_group.k8s.name
-  node_resource_group = "${azurerm_resource_group.k8s.name}_nodes"
-  dns_prefix          = var.cluster_name
-  kubernetes_version  = var.cluster_version
-  private_cluster_enabled = "true"
+  name                      = var.cluster_name
+  location                  = azurerm_resource_group.k8s.location
+  resource_group_name       = azurerm_resource_group.k8s.name
+  node_resource_group       = "${azurerm_resource_group.k8s.name}_nodes"
+  dns_prefix                = var.cluster_name
+  kubernetes_version        = var.cluster_version
+  private_cluster_enabled   = "true"
+  automatic_channel_upgrade = "patch"
+
+  role_based_access_control {
+    enabled = "true"
+    azure_active_directory {
+      managed                 = "true" 
+      azure_rbac_enabled      = "true"  
+      admin_group_object_ids  = [
+        var.azure_rbac_group_object_id,
+      ] 
+    }
+  }
 
   linux_profile {
     admin_username = var.admin_user
@@ -70,20 +82,17 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   default_node_pool  {
-    name                = "default"
-    node_count          = var.agent_count
-    availability_zones  = ["1", "2", "3"]
-    vm_size             = var.vm_size
-    os_disk_size_gb     = 30
-    vnet_subnet_id      = data.azurerm_subnet.k8s_subnet.id
-    type                = "VirtualMachineScaleSets"
-    enable_auto_scaling = "true"
-    min_count           = 1
-    max_count           = 3
-  }
-
-  role_based_access_control {
-    enabled = "true"
+    name                    = "default"
+    node_count              = var.agent_count
+    availability_zones      = ["1", "2", "3"]
+    vm_size                 = var.vm_size
+    os_disk_size_gb         = 30
+    vnet_subnet_id          = data.azurerm_subnet.k8s_subnet.id
+    type                    = "VirtualMachineScaleSets"
+    enable_auto_scaling     = "true"
+    min_count               = 1
+    max_count               = 3
+    //local_account_disabled  = "false"
   }
 
   network_profile {
@@ -92,12 +101,16 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     docker_bridge_cidr = "172.17.0.1/16"
     network_plugin     = "azure"
     load_balancer_sku  = var.load_balancer_sku
+    network_policy     = "calico"
   }
 
   addon_profile {
     oms_agent {
       enabled                    = true
       log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
+    }
+    azure_policy {
+      enabled  = "true"
     }
   }
 
