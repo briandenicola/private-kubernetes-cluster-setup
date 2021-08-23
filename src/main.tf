@@ -121,7 +121,7 @@ resource "azurerm_role_assignment" "aks_role_assignemnt_dns" {
 }
 
 resource "azurerm_log_analytics_workspace" "k8s" {
-  name                = var.log_analytics_workspace_name
+  name                = "${var.cluster_name}-logs"
   location            = azurerm_resource_group.k8s.location
   resource_group_name = azurerm_resource_group.k8s.name
   sku                 = "pergb2018"
