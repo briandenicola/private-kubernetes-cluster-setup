@@ -1,5 +1,5 @@
 # Introduction 
-A method of creating an AKS cluster Terraforms 0.12+
+A method of creating an AKS cluster Terraforms 1.0.5
 
 # Setup
 ## Pre-requisites 
