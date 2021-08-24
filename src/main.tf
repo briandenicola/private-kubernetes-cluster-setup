@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 provider "azurerm" {
   version = "~> 2.73.0"
   features  {}
@@ -10,6 +12,7 @@ provider "azurerm" {
   subscription_id = var.acr_subscription
 }
 
+>>>>>>> 720cc2714ceaa5890be94fccc33e997c5acc6442
 terraform {
   backend "azurerm" {
     storage_account_name = "bjdterraform001"

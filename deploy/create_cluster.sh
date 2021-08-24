@@ -13,10 +13,15 @@ export ARM_SUBSCRIPTION_ID=$SUBSCRIPTION_ID
 export ARM_TENANT_ID=$TENANT_ID
 export PLAN_FILE="aks.$ENV.plan.${today}-${uuid}" 
 
-cd ../src
+cd $AGENT_BUILDDIRECTORY/drop/Code
 
+<<<<<<< HEAD
+wget https://releases.hashicorp.com/terraform/1.0.5/terraform_1.0.5_linux_amd64.zip
+unzip terraform_1.0.5_linux_amd64.zip
+=======
 wget https://releases.hashicorp.com/terraform/0.12.31/terraform_0.12.31_linux_amd64.zip    
 unzip terraform_0.12.31_linux_amd64.zip
+>>>>>>> 720cc2714ceaa5890be94fccc33e997c5acc6442
 
 ./terraform init -backend=true -backend-config="access_key=$KEY" -backend-config="key=$ENV.terraform.tfstate"
 ./terraform plan -out="$PLAN_FILE" -var "resource_group_name=$RG_NAME" -var-file="$ENV.tfvars"
