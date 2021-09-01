@@ -5,6 +5,8 @@ terraform {
   }
 }
 
+data "azurerm_client_config" "current" {}
+
 data "azurerm_virtual_network" "vnet" {
   name                = var.k8s_vnet
   resource_group_name = var.k8s_vnet_resource_group_name
