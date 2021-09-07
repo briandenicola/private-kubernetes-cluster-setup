@@ -62,6 +62,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
   }
 
+  /* Still in public preview 
+  kubelet_identity {
+    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
+  }*/
 
   default_node_pool  {
     name                    = "default"
@@ -69,6 +73,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     availability_zones      = ["1", "2", "3"]
     vm_size                 = var.vm_size
     os_disk_size_gb         = 30
+    os_os_disk_type         = Ephemeral
     vnet_subnet_id          = data.azurerm_subnet.k8s_subnet.id
     type                    = "VirtualMachineScaleSets"
     enable_auto_scaling     = "true"
