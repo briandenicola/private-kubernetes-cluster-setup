@@ -23,6 +23,13 @@ resource "azurerm_role_assignment" "aks_role_assignemnt_dns" {
   skip_service_principal_aad_check = true
 }
 
+resource "azurerm_role_assignment" "aks_role_assignemnt_dns" {
+  scope                = data.azurerm_virtual_network.vnet.id
+  role_definition_name = "Network Contributor"
+  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
+  skip_service_principal_aad_check = true
+}
+
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
