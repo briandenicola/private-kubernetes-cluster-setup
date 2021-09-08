@@ -27,11 +27,6 @@ variable "cluster_name" {
   description = "The cluster name"
 }
 
-variable "cluster_version" {
-  description = "The cluster version"
-  default     = "1.14.8"
-}
-
 variable "resource_group_name" {
   description = "The Azure Resource Group to deploy AKS"
 }

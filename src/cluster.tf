@@ -30,6 +30,9 @@ resource "azurerm_role_assignment" "aks_role_assignemnt_nework" {
   skip_service_principal_aad_check = true
 }
 
+data "azurerm_kubernetes_service_versions" "current" {
+  location = azurerm_resource_group.k8s.location
+}
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
@@ -40,7 +43,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name       = azurerm_resource_group.k8s.name
   node_resource_group       = "${azurerm_resource_group.k8s.name}_nodes"
   dns_prefix_private_cluster = var.cluster_name
-  kubernetes_version        = var.cluster_version
+  kubernetes_version        = data.azurerm_kubernetes_service_versions.current.latest_version
   private_cluster_enabled   = "true"
   private_dns_zone_id       = azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade = "patch"
