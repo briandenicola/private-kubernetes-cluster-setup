@@ -1,42 +1,11 @@
-resource "azurerm_private_dns_zone" "aks_private_zone" {
-  name                = "privatelink.${var.location}.azmk8s.io"
-  resource_group_name = azurerm_resource_group.k8s.name
-}
-
-resource "azurerm_private_dns_zone_virtual_network_link" "dns_link" {
-  name                  = "aks_dns_link"
-  resource_group_name   = azurerm_resource_group.k8s.name
-  private_dns_zone_name = azurerm_private_dns_zone.aks_private_zone.name
-  virtual_network_id    = data.azurerm_virtual_network.vnet.id
-}
-
-resource "azurerm_user_assigned_identity" "aks_identity" {
-  name                = "${var.cluster_name}-identity"
-  resource_group_name = azurerm_resource_group.k8s.name
-  location            = azurerm_resource_group.k8s.location
-}
-
-resource "azurerm_role_assignment" "aks_role_assignemnt_dns" {
-  scope                = azurerm_private_dns_zone.aks_private_zone.id
-  role_definition_name = "Private DNS Zone Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
-  skip_service_principal_aad_check = true
-}
-
-resource "azurerm_role_assignment" "aks_role_assignemnt_nework" {
-  scope                = data.azurerm_virtual_network.vnet.id
-  role_definition_name = "Network Contributor"
-  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
-  skip_service_principal_aad_check = true
-}
-
 data "azurerm_kubernetes_service_versions" "current" {
   location = azurerm_resource_group.k8s.location
 }
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
-    azurerm_role_assignment.aks_role_assignemnt_dns
+    azurerm_role_assignment.aks_role_assignemnt_dns,
+    azurerm_role_assignment.aks_role_assignemnt_msi
   ]
   name                      = var.cluster_name
   location                  = azurerm_resource_group.k8s.location
@@ -47,6 +16,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   private_cluster_enabled   = "true"
   private_dns_zone_id       = azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade = "patch"
+  local_account_disabled    = "true"
 
   role_based_access_control {
     enabled = "true"
@@ -72,10 +42,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
   }
 
-  /* Still in public preview 
   kubelet_identity {
-    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
-  }*/
+    client_id                 = azurerm_user_assigned_identity.aks_kubelet_identity.client_id
+    object_id                 = azurerm_user_assigned_identity.aks_kubelet_identity.principal_id
+    user_assigned_identity_id = azurerm_user_assigned_identity.aks_kubelet_identity.id
+  }
 
   default_node_pool  {
     name                    = "default"
@@ -89,7 +60,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     enable_auto_scaling     = "true"
     min_count               = 1
     max_count               = 3
-    //local_account_disabled  = "false"
   }
 
   network_profile {
@@ -109,6 +79,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azure_policy {
       enabled  = true
     }
+  }
+
+  provisioner "local-exec" {
+    command = "az aks enable-addons --addons open-service-mesh,azure-keyvault-secrets-provider -g ${azurerm_resource_group.k8s.name} -n ${var.cluster_name}; az aks update -g ${azurerm_resource_group.k8s.name} -n ${var.cluster_name} --enable-pod-identity "
   }
 
   tags = {
