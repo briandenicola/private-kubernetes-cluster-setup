@@ -1,0 +1,28 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: helm-example
+  namespace: flux-system
+spec:
+  interval: 1m
+  url: https://bjd145.azurecr.io/helm/gorestapi
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: helm-example
+  namespace: default
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: goexamplechart
+      version: '0.1.0'
+      sourceRef:
+        kind: HelmRepository
+        name: helm-example
+        namespace: flux-system
+      interval: 1m
+  values:
+    build_version: 1.2.9e3af86300
+    buildid: 1109 
