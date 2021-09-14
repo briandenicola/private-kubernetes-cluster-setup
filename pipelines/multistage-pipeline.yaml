@@ -8,17 +8,17 @@ trigger:
     - infrastructure/*
 
 variables:
-  STORAGE_ACCOUNT:    "bjdterraform001"
-  PLAN_FILE:          "aks.sandbox.plan.${today}-${uuid}"              
-  AKS_RG_NAME:        "DevSub02_K8SSandbox_RG"
-  ACR_NAME:           "bjd145"
+  STORAGE_ACCOUNT:    ""
+  PLAN_FILE:          "aks.production.plan.${today}-${uuid}"              
+  AKS_RG_NAME:        "DevSub_K8S_RG"
+  ACR_NAME:           ""
 
 stages:
 - stage: build
   jobs: 
   - job: 'Publish_Files'
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'Ubuntu 18.04'
     steps:
     - task: CopyFiles@2
       inputs:
@@ -30,8 +30,8 @@ stages:
   jobs:
   - deployment: 'Build_AKS'
     pool:
-      vmImage: 'Ubuntu 16.04'
-    environment: 'AKSSandbox'
+      vmImage: 'Ubuntu 18.04'
+    environment: 'AKS'
     strategy:
       runOnce:
         deploy:
