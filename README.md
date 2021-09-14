@@ -1,5 +1,5 @@
 # Introduction 
-A method of creating a private AKS cluster (with or without Egress filtering) using Terraforms and the Flux gitOps operator. 
+A method of creating a private AKS cluster without Egress filtering using Terraforms and the Flux gitOps operator. 
 
 ## Azure Resources Created
 * Private AKS Cluster with Azure AD Pod Identity, KeyVault CSI Driver and OpenService Mesh extensions
@@ -13,17 +13,14 @@ A method of creating a private AKS cluster (with or without Egress filtering) us
     * private-endpoint
     * servers
     * AzureBastionSubnet
-    * AzureFirewallSubnet
 * Azure Container Repostiory 
 * Azure Blob Storage - Terraform state storage
 * Azure Bastion - to access jumpbox VM
-* Azure Firewall - required only if using egress filtering
-    * A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
 * Azure AD Group - for Administrator access to the cluster
 
 # Setup
 ## Prerequisites
-* Update infrastructure/default/production.tfvars with correct values
+* Update infrastructure/production.tfvars with correct values
 
 ## Cluster Creation
 1. az extension add --name aks-preview
