@@ -6,6 +6,8 @@ metadata:
 spec:
   interval: 1m
   url: https://bjd145.azurecr.io/helm/v1/repo/
+  secretRef:
+    name: https-credentials
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
