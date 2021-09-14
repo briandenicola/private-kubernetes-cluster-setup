@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: appee85e06
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./application
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: appee85e06
+  validation: client
+
