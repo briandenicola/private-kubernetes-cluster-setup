@@ -68,6 +68,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     docker_bridge_cidr = "172.17.0.1/16"
     network_plugin     = "azure"
     load_balancer_sku  = var.load_balancer_sku
+    //outbound_type      = "userDefinedRouting"
     network_policy     = "calico"
   }
 
