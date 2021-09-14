@@ -6,6 +6,7 @@ metadata:
 spec:
   interval: 1m
   url: https://bjd145.azurecr.io/helm/v1/repo/
+  passCredentials: true
   secretRef:
     name: https-credentials
 ---
