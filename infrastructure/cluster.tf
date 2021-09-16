@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   private_dns_zone_id       = data.azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade = "patch"
   local_account_disabled    = "true"
-  tier                      = "Paid"
+  sku_tier                  = "Paid"
 
   role_based_access_control {
     enabled = "true"
