@@ -40,23 +40,17 @@ A method of creating a private AKS cluster without Egress filtering using Terraf
 ## GitOps BootStrap
 1. Access the Jump VM through Azure Bastion 
 2. curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-3. wget https://github.com/Azure/kubelogin/releases/download/v0.0.10/kubelogin-linux-amd64.zip
-4. curl -s https://fluxcd.io/install.sh | sudo bash
-5. unzip kubelogin-linux-amd64.zip
-6. mkdir bin
-7. mv kubectl bin/.
-8. mv bin/linux_amd64/kubelogin bin/.
-9. chmod 755 bin/*
-10. az login --identity
-11. az aks install-cli
-12. az aks get-credentials -n ${CLUSTER_NAME} -g ${CLUSTER_RESOURCE_GROUP}
-13. kubelogin convert-kubeconfig -l msi
-14. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
+3. curl -s https://fluxcd.io/install.sh | sudo bash
+4. az login --identity
+5. az aks install-cli
+6. az aks get-credentials -n ${CLUSTER_NAME} -g ${CLUSTER_RESOURCE_GROUP}
+7. kubelogin convert-kubeconfig -l msi
+8. echo -n ${ACR_NAME} > ./username.txt 
+9. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
+9. kubectl create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
+10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
+11. flux create source git appee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
 
 ## Azure DevOps
 * If you are using Azure DevOps then you can setup a pipeline using the  multistage-pipeline.yaml file in the pipelines folder.
 * The steps for GitOps will be incorporated into the pipeline eventually.
-
-
-
-
