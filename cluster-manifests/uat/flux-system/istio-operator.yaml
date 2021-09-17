@@ -1,4 +1,12 @@
 ---
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  namespace: istio-system
+  name: istio-controlplane
+spec:
+  profile: default
+---
 # Source: istio-operator/templates/namespace.yaml
 apiVersion: v1
 kind: Namespace
