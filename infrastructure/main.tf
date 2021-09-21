@@ -13,6 +13,6 @@ resource "azurerm_resource_group" "k8s" {
 }
 
 resource "azurerm_resource_group" "jumpbox" {
-  name                  = "${var.resource_group_name}-jumpbox"
+  name                  = "${var.resource_group_name}_jumpbox"
   location              = var.location
 }
