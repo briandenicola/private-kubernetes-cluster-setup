@@ -47,7 +47,7 @@ A method of creating a private AKS cluster without Egress filtering using Terraf
 7. kubelogin convert-kubeconfig -l msi
 8. echo -n ${ACR_NAME} > ./username.txt 
 9. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
-9. kubectl create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
+9. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
 10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
 11. flux create source git appee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
 
