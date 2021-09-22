@@ -7,18 +7,19 @@ on:
 
 jobs:
   deploy:
-    name: Deploy CQRS
+    name: Deploy Cluster
     runs-on: self-hosted
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        tf_actions_working_dir: './infrastructure'
-        env.storage_access_key: ${{ secrets.storage_access_key }}
+        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
+        CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+        RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
     defaults:
       run:
-        working-directory: ${{ env.tf_actions_working_dir }}
+        working-directory: './infrastructure'
     steps:
     - name: "Checkout"
       uses: actions/checkout@master
@@ -28,7 +29,7 @@ jobs:
 
     - name: "Terraform Init"
       id: init
-      run: -backend=true -backend-config="access_key=${{ env.storage_access_key }}" -backend-config="key=uat.terraform.tfstate"
+      run: -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=uat.terraform.tfstate"
       
     - name: "Terraform Plan"
       id: plan
@@ -38,8 +39,3 @@ jobs:
     - name: "Terraform Apply"
       id: apply
       run: terraform apply -auto-approve uat.plan
-
-    - name: "Post Cluster Configuration"
-      shell: bash
-      run: |
-        echo -n "TBD"
