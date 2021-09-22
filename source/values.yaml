@@ -1,5 +1,5 @@
 chat_image: bjd145/chatws
-chat_image_version: 0.5
+chat_image_version: 1008
 chat_replicas: 1 
 
 sentimentapi_uri: http://acs:5000/text/analytics/v3.0/sentiment
