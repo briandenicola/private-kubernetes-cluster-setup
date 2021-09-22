@@ -1,0 +1,45 @@
+name: Creates a Kuberentes cluster with Flux and Istio configured
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Creates a Kuberentes cluster with Flux and Istio configured'
+
+jobs:
+  deploy:
+    name: Deploy CQRS
+    runs-on: self-hosted
+    env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        tf_actions_working_dir: './infrastructure'
+        env.storage_access_key: ${{ secrets.storage_access_key }}
+    defaults:
+      run:
+        working-directory: ${{ env.tf_actions_working_dir }}
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@master
+
+    - name: "Terraform Setup"
+      uses: hashicorp/setup-terraform@v1
+
+    - name: "Terraform Init"
+      id: init
+      run: -backend=true -backend-config="access_key=${{ env.storage_access_key }}" -backend-config="key=uat.terraform.tfstate"
+      
+    - name: "Terraform Plan"
+      id: plan
+      run:  terraform plan -out="uat.plan" -var "resource_group_name=DevSub02_K8SUAT_RG" -var-file="uat.tfvars"
+      continue-on-error: false 
+
+    - name: "Terraform Apply"
+      id: apply
+      run: terraform apply -auto-approve uat.plan
+
+    - name: "Post Cluster Configuration"
+      shell: bash
+      run: |
+        echo -n "TBD"
