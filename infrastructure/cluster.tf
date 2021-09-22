@@ -97,6 +97,7 @@ resource "null_resource" "config_setup" {
       CLUSTER_NAME = "${var.cluster_name}"
       RG = "${azurerm_resource_group.k8s.name}"
       SUBSCRIPTION_ID = "${data.azurerm_client_config.current.subscription_id}"
+      INGRESS_IDENTITY = "${var.cluster_name}-ingress-identity"
     }
   }
 }
