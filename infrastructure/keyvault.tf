@@ -25,13 +25,63 @@ resource "azurerm_key_vault" "k8s" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = azurerm_user_assigned_identity.aks_ingress_identity.principal_id 
+
+    secret_permissions = [
+      "list",
+      "get"
+    ]
+  
+    certificate_permissions = [
+      "list",
+      "get"
+    ]
+  }
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
     object_id = data.azurerm_client_config.current.object_id 
+
+    key_permissions = [
+      "get",
+      "list",
+      "create",
+      "decrypt",
+      "encrypt",
+      "sign",
+      "unwrapKey",
+      "verify",
+      "wrapKey",
+    ]
+
+    certificate_permissions = [
+      "create",
+      "get",
+      "delete",
+      "list",
+      "backup",
+      "deleteissuers",
+      "GetIssuers", 
+      "Import",
+      "ListIssuers", 
+      "ManageContacts",
+      "ManageIssuers",
+      "Purge",
+      "Recover",
+      "Restore",
+      "SetIssuers",
+      "Update"
+    ]
 
     secret_permissions = [
       "set",
       "get",
       "delete",
-      "list"
+      "list",
+      "backup",
+      "purge",
+      "recover",
+      "restore"
     ]
   }
 }
