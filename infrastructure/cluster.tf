@@ -83,11 +83,19 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
   }
 
-  provisioner "local-exec" {
-    command = "az aks enable-addons --addons open-service-mesh,azure-keyvault-secrets-provider -g ${azurerm_resource_group.k8s.name} -n ${var.cluster_name}; az aks update -g ${azurerm_resource_group.k8s.name} -n ${var.cluster_name} --enable-pod-identity "
-  }
-
   tags = {
     Environment = var.environment
+  }
+}
+
+resource "null_resource" "config_setup" {
+  provisioner "local-exec" {
+    command = "./post-creation-configuration.sh"
+    interpreter = ["bash"]
+  }
+
+  environment = {
+      CLUSTER_NAME = "${var.cluster_name}"
+      RG = "${azurerm_resource_group.k8s.name}"
   }
 }
