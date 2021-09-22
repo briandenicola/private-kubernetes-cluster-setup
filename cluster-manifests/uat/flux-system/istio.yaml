@@ -55,7 +55,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      istio: ingressgateway
+      istio: istio-ingressgateway
   template:
     metadata:
       annotations:
