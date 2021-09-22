@@ -8,5 +8,5 @@ spec:
   interval: 30s
   ref:
     branch: master
-  url: ssh://git@github.com/briandenicola/kubernetes-cluster-setup
+  url: https://github.com/briandenicola/kubernetes-cluster-setup
 
