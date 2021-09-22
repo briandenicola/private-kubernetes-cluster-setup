@@ -51,7 +51,7 @@ stages:
               export ARM_SUBSCRIPTION_ID="$(subscription_id)"
               export ARM_TENANT_ID="$(tenant_id)"
 
-              cd '$(System.ArtifactsDirectory)/drop/default'
+              cd '$(System.ArtifactsDirectory)/drop'
 
               az extension add --name aks-preview
               az extension update --name aks-preview

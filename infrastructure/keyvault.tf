@@ -50,7 +50,7 @@ resource "azurerm_private_endpoint" "key_vault" {
   }
 
   private_dns_zone_group {
-    name                          = azurerm_private_dns_zone.privatelink_vaultcore_azure_net.name
-    private_dns_zone_ids          = [ azurerm_private_dns_zone.privatelink_vaultcore_azure_net.id ]
+    name                          = data.azurerm_private_dns_zone.privatelink_vaultcore_azure_net.name
+    private_dns_zone_ids          = [ data.azurerm_private_dns_zone.privatelink_vaultcore_azure_net.id ]
   }
 }
