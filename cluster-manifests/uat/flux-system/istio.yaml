@@ -18,9 +18,8 @@ spec:
     ingressGateways:
       - name: istio-ingressgateway
         enabled: true
+        label:
+          aadpodidbinding: bjdk8s04uat-ingress-identity
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-
-#podAnnotations:   
-# aadpodidbinding: bjdk8s04uat-ingress-identity
