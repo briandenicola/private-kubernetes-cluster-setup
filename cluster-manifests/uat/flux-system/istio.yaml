@@ -17,6 +17,7 @@ spec:
   components:
     ingressGateways:
       - name: istio-ingressgateway
+        namespace: default
         enabled: true
         label:
           aadpodidbinding: bjdk8s04uat-ingress-identity
