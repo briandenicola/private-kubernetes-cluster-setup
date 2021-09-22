@@ -92,10 +92,10 @@ resource "null_resource" "config_setup" {
   provisioner "local-exec" {
     command = "./post-creation-configuration.sh"
     interpreter = ["bash"]
-  }
 
-  environment = {
+    environment = {
       CLUSTER_NAME = "${var.cluster_name}"
       RG = "${azurerm_resource_group.k8s.name}"
+    }
   }
 }
