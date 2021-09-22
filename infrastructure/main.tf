@@ -16,3 +16,4 @@ resource "azurerm_resource_group" "jumpbox" {
   name                  = "${var.resource_group_name}_jumpbox"
   location              = var.location
 }
+

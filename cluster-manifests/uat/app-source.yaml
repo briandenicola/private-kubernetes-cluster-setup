@@ -7,6 +7,6 @@ metadata:
 spec:
   interval: 30s
   ref:
-    branch: AzureFirewall
+    branch: master
   url: ssh://git@github.com/briandenicola/kubernetes-cluster-setup
 
