@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azuresentimentanalysis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: azuresentimentanalysis
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: azuresentimentanalysis
+    spec:
+      containers:
+      - name: azuresentimentanalysis
+        image: mcr.microsoft.com/azure-cognitive-services/sentiment:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: Eula
+          value: "accept"
+        - name: Billing
+          value: {{ .Values.sentimentapi_billing_uri }} 
+        - name: ApiKey
+          valueFrom:
+            configMapKeyRef:
+              name: chatsvcmap
+              key: cogsApiKey      
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "250m"
+          limits:
+            memory: "4Gi"
+            cpu: "500m"

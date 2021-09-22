@@ -1,0 +1,61 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: istio-tls
+  namespace: istio-system
+spec:
+  provider: azure
+  secretObjects:                               
+  - secretName: istio-ingress-tls
+    type: kubernetes.io/tls
+    data: 
+    - objectName: {{ .Values.certificate_name }}
+      key: tls.key
+    - objectName: {{ .Values.certificate_name }}
+      key: tls.crt
+  parameters:
+    usePodIdentity: "true"                                        
+    keyvaultName: {{ .Values.keyvault_name }}                                                          
+    objects:  |
+      array:
+        - |
+          objectName: {{ .Values.certificate_name }}
+          objectType: secret
+    tenantId: {{ .Values.tenant_id }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ print .Values.hostname "-gw" | replace "." "-" }}
+spec:
+  selector:
+    istio: istio-ingressgateway 
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: istio-ingress-tls
+    hosts:
+    - {{ .Values.hostname }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ print .Values.hostname "-vs" | replace "." "-" }}
+spec:
+  hosts:
+  - {{ print .Values.hostname | quote }}
+  gateways:
+  -  {{ print .Values.hostname "-gw" | replace "." "-" }}
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 8081
+        host: websocketchat-svc

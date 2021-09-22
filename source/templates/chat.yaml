@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocketchat
+spec:
+  selector:
+    matchLabels:
+      app: websocketchat
+      lang: golang
+  replicas: {{ .Values.chat_replicas }} 
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: websocketchat
+        lang: golang
+        aadpodidbinding: {{ .Values.pod_identity }}
+    spec:
+      containers:
+      - name: chatws
+        image: {{ print .Values.chat_image ":" .Values.chat_image_version | nospace  }} 
+        env:
+        - name: COGSURL
+          value: {{ .Values.sentimentapi_uri }} 
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: tls-mount
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+      - name: tls-mount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "istio-ingress-tls"
