@@ -14,12 +14,16 @@ metadata:
   name: istio-controlplane
 spec:
   profile: default
+  values:
+    gateways:
+      istio-ingressgateway:
+        labels:
+          aadpodidbinding: bjdk8s04uat-ingress-identity
   components:
     ingressGateways:
       - name: istio-ingressgateway
         enabled: true
         k8s:
-          podlabels:
-            aadpodidbinding: bjdk8s04uat-ingress-identity
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+            
