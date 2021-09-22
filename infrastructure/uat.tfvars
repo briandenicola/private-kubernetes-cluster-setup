@@ -1,0 +1,13 @@
+cluster_name = "bjdk8s04uat"
+agent_count = 3
+environment = "uat"
+k8s_vnet_resource_group_name = "DevSub02_Network_RG"
+k8s_vnet = "DevSub02-Vnet-Sandbox-001"
+k8s_subnet = "kubernetesuat"
+dns_service_ip = "10.191.0.10"
+service_cidr = "10.191.0.0/16"
+acr_subscription = "BJD_Core_Subscription"
+acr_resource_group = "Core_Infra_ContainerRepo_RG"
+acr_name = "bjd145"
+azure_rbac_group_object_id = "15390134-7115-49f3-8375-da9f6f608dce"
+dns_resource_group_name = "DevSub02_DNS_RG"
