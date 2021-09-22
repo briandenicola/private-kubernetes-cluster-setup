@@ -32,7 +32,7 @@ jobs:
 
     - name: "Terraform Init"
       id: init
-      run: -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=uat.terraform.tfstate"
+      run: terraform init -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=uat.terraform.tfstate"
       
     - name: "Terraform Plan"
       id: plan
