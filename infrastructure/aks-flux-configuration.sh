@@ -11,4 +11,4 @@ kubectl create ns flux-system
 kubectl -n flux-system create secret generic https-credentials --from-literal=username=${ACR_NAME} --from-literal=password=${ACR_PASSWORD}
 
 flux bootstrap github --owner=briandenicola --repository=kubernetes-cluster-setup --path=./cluster-manifests/uat --branch=master --personal
-flux create source git appee85e06 --url=https://github.com/briandenicola/kubernetes-cluster-setup --branch=master --interval=30s 
+flux create source git app-ee85e06 --url=https://github.com/briandenicola/kubernetes-cluster-setup --branch=master --interval=30s 
