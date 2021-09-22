@@ -15,14 +15,17 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
-        CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-        RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
     defaults:
       run:
         working-directory: './infrastructure'
     steps:
     - name: "Checkout"
       uses: actions/checkout@master
+
+    - name: "Log into Azure"
+      uses: Azure/login@v1.1
+      with:
+        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
 
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1
