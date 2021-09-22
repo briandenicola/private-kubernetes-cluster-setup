@@ -15,9 +15,12 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    
     defaults:
       run:
         working-directory: './infrastructure'
+
     steps:
     - name: "Checkout"
       uses: actions/checkout@master

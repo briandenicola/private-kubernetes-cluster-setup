@@ -90,14 +90,29 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
 resource "null_resource" "config_setup" {
   provisioner "local-exec" {
-    command = "./post-creation-configuration.sh"
+    command = "./aks-post-creation-configuration.sh"
     interpreter = ["bash"]
 
     environment = {
-      CLUSTER_NAME = "${var.cluster_name}"
-      RG = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID = "${data.azurerm_client_config.current.subscription_id}"
-      INGRESS_IDENTITY = "${var.cluster_name}-ingress-identity"
+      CLUSTER_NAME        = "${var.cluster_name}"
+      RG                  = "${azurerm_resource_group.k8s.name}"
+      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+    }
+  }
+}
+
+resource "null_resource" "flux_setup" {
+  provisioner "local-exec" {
+    command = "./aks-flux-configuration.sh"
+    interpreter = ["bash"]
+
+    environment = {
+      CLUSTER_NAME        = "${var.cluster_name}"
+      RG                  = "${azurerm_resource_group.k8s.name}"
+      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+      INGRESS_IDENTITY    = "${var.cluster_name}-ingress-identity"
+      ACR_NAME            = "${var.acr_name}"
+      ACR_SUBSCRIPTION_ID = "${var.acr_subscription}"
     }
   }
 }
