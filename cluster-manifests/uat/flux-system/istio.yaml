@@ -7,6 +7,14 @@ metadata:
     istio-operator-managed: Reconcile
     istio-injection: disabled
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-ingress
+  labels:
+    istio-operator-managed: Reconcile
+    istio-injection: disabled
+---
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
@@ -15,12 +23,71 @@ metadata:
 spec:
   profile: default
   components:
+    base:
+      enabled: true
     ingressGateways:
-      - name: istio-ingressgateway
-        enabled: true
-        k8s:
-          podAnnotations:   
-            aadpodidbinding: bjdk8s04uat-ingress-identity
-          serviceAnnotations:
-            service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-
+      enabled: false
+    pilot:
+      enabled: true
+---    
+apiVersion: v1
+kind: Service
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-ingress
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    istio: ingressgateway
+  ports:
+  - port: 80
+    name: http
+  - port: 443
+    name: https
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-ingress
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  template:
+    metadata:
+      annotations:
+        inject.istio.io/templates: gateway
+      labels:
+        istio: istio-ingressgateway
+        sidecar.istio.io/inject: "true"
+        aadpodidbinding: bjdk8s04uat-ingress-identity
+    spec:
+      containers:
+      - name: istio-proxy
+        image: auto 
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: istio-ingressgateway-sds
+  namespace: istio-ingress
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "watch", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: istio-ingressgateway-sds
+  namespace: istio-ingress
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: istio-ingressgateway-sds
+subjects:
+- kind: ServiceAccount
+  name: default
