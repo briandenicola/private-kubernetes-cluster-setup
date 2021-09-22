@@ -11,7 +11,7 @@ resource "azurerm_user_assigned_identity" "aks_kubelet_identity" {
 }
 
 resource "azurerm_role_assignment" "aks_role_assignemnt_dns" {
-  scope                = azurerm_private_dns_zone.aks_private_zone.id
+  scope                = data.azurerm_private_dns_zone.aks_private_zone.id
   role_definition_name = "Private DNS Zone Contributor"
   principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
   skip_service_principal_aad_check = true

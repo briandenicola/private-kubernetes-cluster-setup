@@ -14,9 +14,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   dns_prefix_private_cluster = var.cluster_name
   kubernetes_version        = data.azurerm_kubernetes_service_versions.current.latest_version
   private_cluster_enabled   = "true"
-  private_dns_zone_id       = azurerm_private_dns_zone.aks_private_zone.id
+  private_dns_zone_id       = data.azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade = "patch"
   local_account_disabled    = "true"
+  sku_tier                  = "Paid"
 
   role_based_access_control {
     enabled = "true"
@@ -68,7 +69,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     docker_bridge_cidr = "172.17.0.1/16"
     network_plugin     = "azure"
     load_balancer_sku  = var.load_balancer_sku
-    //outbound_type      = "userDefinedRouting"
+    outbound_type      = "userDefinedRouting"
     network_policy     = "calico"
   }
 

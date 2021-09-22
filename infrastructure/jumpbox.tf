@@ -4,8 +4,8 @@ resource "random_id" "management_vm_id" {
 
 resource "azurerm_network_interface" "management" {
   name                = "bjd${random_id.management_vm_id.id}-nic"
-  location            = azurerm_resource_group.k8s.location
-  resource_group_name = azurerm_resource_group.k8s.name
+  location            = azurerm_resource_group.jumpbox.location
+  resource_group_name = azurerm_resource_group.jumpbox.name
 
   ip_configuration {
     name                          = "internal"
@@ -16,14 +16,13 @@ resource "azurerm_network_interface" "management" {
 
 resource "azurerm_linux_virtual_machine" "management" {
   name                = "bjd${random_id.management_vm_id.id}"
-  resource_group_name = azurerm_resource_group.k8s.name
-  location            = azurerm_resource_group.k8s.location
+  resource_group_name = azurerm_resource_group.jumpbox.name
+  location            = azurerm_resource_group.jumpbox.location
   size                = "Standard_B2ms"
   admin_username      = "manager"
   network_interface_ids = [
     azurerm_network_interface.management.id,
   ]
-
 
   identity {
     type = "SystemAssigned"

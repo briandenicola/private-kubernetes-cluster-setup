@@ -1,5 +1,5 @@
 # Introduction 
-A method of creating a private AKS cluster without Egress filtering using Terraforms and the Flux gitOps operator. 
+A method of creating a private AKS cluster with Egress filtering using Terraforms and the Flux gitOps operator. 
 
 ## Azure Resources Created
 * Private AKS Cluster with Azure AD Pod Identity, KeyVault CSI Driver and OpenService Mesh extensions
@@ -16,7 +16,8 @@ A method of creating a private AKS cluster without Egress filtering using Terraf
 * Azure Container Repostiory 
 * Azure Blob Storage - Terraform state storage
 * Azure Bastion - to access jumpbox VM
-* Azure AD Group - for Administrator access to the cluster
+* Azure Firewall with proper [network and application rules](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic)
+* A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
 
 # Setup
 ## Prerequisites
@@ -32,10 +33,11 @@ A method of creating a private AKS cluster without Egress filtering using Terraf
 7. az feature register --namespace "Microsoft.ContainerService" --name "DisableLocalAccountsPreview"
 8. az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService')].{Name:name,State:properties.state}"
     * Wait till the above features are enabled
-9. az provider register --namespace Microsoft.ContainerService 
-10. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="key=production.terraform.tfstate"
-11. terraform plan -out="production.plan" -var "resource_group_name=DevSub01_AKS_RG" -var-file="production.tfvars"
-12. terraform apply -auto-approve "production.plan"
+9. az provider register --namespace Microsoft.ContainerService
+10. cd infrastructure
+11. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="key=production.terraform.tfstate"
+12. terraform plan -out="production.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="production.tfvars"
+13. terraform apply -auto-approve "production.plan"
 
 ## GitOps BootStrap
 1. Access the Jump VM through Azure Bastion 
@@ -50,6 +52,7 @@ A method of creating a private AKS cluster without Egress filtering using Terraf
 9. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
 10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
 11. flux create source git appee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
+
 
 ## Azure DevOps
 * If you are using Azure DevOps then you can setup a pipeline using the  multistage-pipeline.yaml file in the pipelines folder.
