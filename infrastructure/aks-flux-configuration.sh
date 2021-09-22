@@ -5,9 +5,6 @@ az account set -s ${SUBSCRIPTION_ID}
 az aks get-credentials -g ${RG} -n ${CLUSTER_NAME} --overwrite-existing
 kubelogin convert-kubeconfig -l msi
 
-RESOURCEID=`az identity show --name ${INGRESS_IDENTITY} --resource-group ${RG} --query id -o tsv`
-az aks pod-identity add --resource-group ${RG} --cluster-name ${CLUSTER_NAME} --namespace default --name ${INGRESS_IDENTITY} --identity-resource-id $RESOURCEID
-
 ACR_PASSWORD=`az acr credential show -n ${ACR_NAME} --subscription ${ACR_SUBSCRIPTION_ID} --query "passwords[0].value" -o tsv | tr -d '\n'`
 
 kubectl create ns flux-system
