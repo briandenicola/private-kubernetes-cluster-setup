@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: app-ee85e06
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: app-ee85e06
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,47 +17,42 @@ spec:
     metadata:
       labels:
         app: app-ee85e06
+        aadpodidbinding: bjdk8s04uat-ingress-identity
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000  
-        supplementalGroups: [2000]
-        fsGroup: 2000
-        seccompProfile:
-          type: RuntimeDefault
       containers:
-      - name: httpbin
-        image: bjd145.azurecr.io/httpdemo:latest
-        imagePullPolicy: Always
-        securityContext:
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false  
+      - name: app-ee85e06
+        image: nginx:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         resources:
-          limits:
-            memory: "512Mi"
-            cpu: "2"
           requests:
             memory: "64Mi"
-            cpu: "0.25"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         volumeMounts:
-        - mountPath: /usr/tmp
-          name: tmp-volume
+        - name: tls-mount
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
       volumes:
-      - name: tmp-volume
-        emptyDir: {}
+      - name: tls-mount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "istio-tls"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: app-ee85e06-svc
+  labels:
+    version: "1.0"
 spec:
-  type: ClusterIP
   selector:
     app: app-ee85e06
   ports:
   - port: 80
-    targetPort: 8080
-
+    targetPort: 80
+  type: ClusterIP
