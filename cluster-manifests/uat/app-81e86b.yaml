@@ -20,15 +20,15 @@ spec:
   chart:
     spec:
       chart: sentimentchat
-      version: '0.2.0'
+      version: '0.2.1'
       sourceRef:
         kind: HelmRepository
         name: app-81e86b
         namespace: flux-system
       interval: 1m
   values:
-    keyvault_name: 'bjdk8s04uat-kv'
-    certificate_name: 'wildcard-bjdazure-tech'
-    pod_identity: 'bjdk8s04uat-ingress-identity'
+    keyvault_name: 'app-81e86b-kv'
+    keyvault_secret_name: 'app-81e86b-cogs-key'
+    pod_identity: 'app-81e86b-identity'
+    hostname: 'chat.bjdazure.tech'
     tenant_id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-    hostname: 'csi.bjdazure.tech'
