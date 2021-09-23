@@ -25,7 +25,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: default_bjdazure_tech-gw
+  name: default-bjdazure-tech-gw
 spec:
   selector:
     istio: ingressgateway 
@@ -49,12 +49,12 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name:  default_bjdazure_tech-vs
+  name:  default-bjdazure-tech-vs
 spec:
   hosts:
   -  istio-default.bjdazure.tech
   gateways:
-  -  default_bjdazure_tech-gw
+  -  default-bjdazure-tech-gw
   http:
   - route:
     - destination:
