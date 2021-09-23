@@ -19,9 +19,27 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 * Azure Firewall with proper [network and application rules](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic)
 * A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
 
-# Setup
+# GitHub Actions
 ## Prerequisites
-* Update infrastructure/production.tfvars with correct values
+* A task runner deployed in the virtual network where the AKS cluster will be deployed.
+* The task runnre VM need to have a User Managed Identity assigned 
+* Update infrastructure/uat.tfvars with correct values
+* Create the follow Secrets in GitHub:
+
+    | Secret Name | Secret Name |
+    --------------- | --------------- 
+    | ARM_CLIENT_ID | ARM_CLIENT_SECRET | 
+    | ARM_SUBSCRIPTION_ID | ARM_TENANT_ID | 
+    | STORAGE_ACCESS_KEY | PAT_TOKEN |
+
+## Steps
+1. Trigger Github Action to create the cluster. 
+2. Terraform will the call the aks-post-creation-configuration.sh script to add Pod Identity and KeyVault CSI Driver 
+3. Terraform will finally call the aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
+
+# Manual Setup
+## Prerequisites
+* Update infrastructure/uat.tfvars with correct values
 
 ## Cluster Creation
 1. az extension add --name aks-preview
@@ -51,9 +69,4 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 9. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
 9. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
 10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
-11. flux create source git appee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
-
-
-## Azure DevOps
-* If you are using Azure DevOps then you can setup a pipeline using the  multistage-pipeline.yaml file in the pipelines folder.
-* The steps for GitOps will be incorporated into the pipeline eventually.
+11. flux create source git app-ee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
