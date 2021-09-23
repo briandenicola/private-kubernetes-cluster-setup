@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: chatsvcmap
-data:
-  cogsApiKey: {{ .Values.sentimentapi_key  }}
