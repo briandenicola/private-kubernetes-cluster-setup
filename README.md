@@ -8,12 +8,7 @@ A method of creating an AKS cluster with Kubenet networking
 * Azure Container Repostiory 
 * Azure Blob Storage - Terraform state storage
 
-## Steps
-1. Trigger Github Action to create the cluster. 
-2. Terraform will the call the aks-post-creation-configuration.sh script to add Pod Identity and KeyVault CSI Driver 
-3. Terraform will finally call the aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
-
-# Manual Setup
+# Setups
 ## Prerequisites
 * Update infrastructure/uat.tfvars with correct values
 
