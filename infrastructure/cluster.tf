@@ -113,6 +113,8 @@ resource "null_resource" "flux_setup" {
       CLUSTER_NAME        = "${var.cluster_name}"
       RG                  = "${azurerm_resource_group.k8s.name}"
       SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+      GITHUB_ACCOUNT      = "briandenicola"
+      GITHUB_REPO         = "kubernetes-cluster-setup"
     }
   }
 }
