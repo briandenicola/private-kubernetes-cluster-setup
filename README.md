@@ -42,31 +42,7 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 * Update infrastructure/uat.tfvars with correct values
 
 ## Cluster Creation
-1. az extension add --name aks-preview
-2. az extension update --name aks-preview
-3. az login
-4. az feature register --namespace "Microsoft.ContainerService" --name "AKS-AzureKeyVaultSecretsProvider"
-5. az feature register --namespace "Microsoft.ContainerService" --name "EnablePodIdentityPreview"
-6. az feature register --namespace "Microsoft.ContainerService" --name "AKS-OpenServiceMesh"
-7. az feature register --namespace "Microsoft.ContainerService" --name "DisableLocalAccountsPreview"
-8. az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService')].{Name:name,State:properties.state}"
-    * Wait till the above features are enabled
-9. az provider register --namespace Microsoft.ContainerService
-10. cd infrastructure
-11. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="key=production.terraform.tfstate"
-12. terraform plan -out="production.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="production.tfvars"
-13. terraform apply -auto-approve "production.plan"
-
-## GitOps BootStrap
-1. Access the Jump VM through Azure Bastion 
-2. curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-3. curl -s https://fluxcd.io/install.sh | sudo bash
-4. az login --identity
-5. az aks install-cli
-6. az aks get-credentials -n ${CLUSTER_NAME} -g ${CLUSTER_RESOURCE_GROUP}
-7. kubelogin convert-kubeconfig -l msi
-8. echo -n ${ACR_NAME} > ./username.txt 
-9. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
-9. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
-10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
-11. flux create source git app-ee85e06 --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --interval=30s --private-key-file=/home/manager/.ssh/id_rsa
+1. cd infrastructure
+2. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="key=simple.terraform.tfstate"
+3. terraform plan -out="simple.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="uat.tfvars"
+4. terraform apply -auto-approve "simple.plan"

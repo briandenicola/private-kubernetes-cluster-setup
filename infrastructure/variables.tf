@@ -3,26 +3,6 @@ variable "location" {
   default     = "centralus"
 }
 
-variable "k8s_vnet_resource_group_name" {
-  description = "The Resource Group name that contains the Vnet for AKS"
-}
-
-variable "k8s_subnet" {
-  description = "The subnet name where AKS will be deployed to"
-}
-
-variable "k8s_vnet" {
-  description = "The Vnet name where AKS will be deployed to"
-}
-
-variable "dns_service_ip" {
-  description = "The IP address for the DNS serviced hosted inside AKS cluster"
-}
-
-variable "service_cidr" {
-  description = "The IP range for internal services in AKS. Should not overlap any other IP space "
-}
-
 variable "cluster_name" {
   description = "The cluster name"
 }
@@ -73,20 +53,4 @@ variable "acr_resource_group" {
 variable "acr_name" {
   default     = "bjd145"
   description = "The Azure Container Repo name"
-}
-
-variable "azure_rbac_group_object_id" {
-  description = "GUID of the AKS admin Group"
-}
-
-variable "dns_resource_group_name" {
-  description = "The Resource Group name that contains Private DNS Zones"
-}
-
-variable "github_actions_identity_name" {
-  description = "The name of the Github Task runner Managed Identity"
-}
-
-variable "github_actions_identity_resource_group" {
-  description = "The Resource Group name that Github Taskrunner Identity"
 }
