@@ -1,36 +1,12 @@
 # Introduction 
-A method of creating a private AKS cluster with Egress filtering using Terraforms and the Flux gitOps operator. 
+A method of creating an AKS cluster with Kubenet networking
 
 ## Azure Resources Created
-* Private AKS Cluster with Azure AD Pod Identity, KeyVault CSI Driver and OpenService Mesh extensions
-* Jumpbox VM
-* KeyVault
-* Private Zones for AKS and Keyvault
+* An AKS Cluster
 
 ## Required Existing Azure Resources
-* Virtual Network with subnets
-    * kubernetes
-    * private-endpoint
-    * servers
-    * AzureBastionSubnet
 * Azure Container Repostiory 
 * Azure Blob Storage - Terraform state storage
-* Azure Bastion - to access jumpbox VM
-* Azure Firewall with proper [network and application rules](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic)
-* A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
-
-# GitHub Actions
-## Prerequisites
-* A task runner deployed in the virtual network where the AKS cluster will be deployed.
-* The task runnre VM need to have a User Managed Identity assigned 
-* Update infrastructure/uat.tfvars with correct values
-* Create the follow Secrets in GitHub:
-
-    | Secret Name | Secret Name |
-    --------------- | --------------- 
-    | ARM_CLIENT_ID | ARM_CLIENT_SECRET | 
-    | ARM_SUBSCRIPTION_ID | ARM_TENANT_ID | 
-    | STORAGE_ACCESS_KEY | PAT_TOKEN |
 
 ## Steps
 1. Trigger Github Action to create the cluster. 
