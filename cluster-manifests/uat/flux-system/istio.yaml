@@ -7,7 +7,7 @@ metadata:
     istio-operator-managed: Reconcile
     istio-injection: disabled
 ---
-apiVersion: install.istio.io/v1alpha1
+apiVersion: install.istio.io/v1beta1
 kind: IstioOperator
 metadata:
   namespace: istio-system
@@ -33,3 +33,12 @@ spec:
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: "default"
+  namespace: "istio-system"
+spec:
+  mtls:
+    mode: STRICT
