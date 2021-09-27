@@ -10,20 +10,6 @@ spec:
   secretRef:
     name: https-credentials
 ---
-apiVersion: networking.istio.io/v1beta1
-kind: ServiceEntry
-metadata:
-  name: cognitive-services
-spec:
-  hosts:
-  - centralus.api.cognitive.microsoft.com
-  ports:
-  - number: 443
-    name: https
-    protocol: HTTPS
-  resolution: DNS
-  location: MESH_EXTERNAL
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -34,7 +20,7 @@ spec:
   chart:
     spec:
       chart: sentimentchat
-      version: '0.2.5'
+      version: '0.2.6'
       sourceRef:
         kind: HelmRepository
         name: app-81e86b
