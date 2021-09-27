@@ -15,6 +15,10 @@ metadata:
 spec:
   profile: default
   components:
+    egressGateways:
+    - name: istio-egressgateway
+      namespace: default
+      enabled: true
     ingressGateways:
       - name: istio-ingressgateway
         namespace: default
