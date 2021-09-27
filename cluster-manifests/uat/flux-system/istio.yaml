@@ -7,7 +7,7 @@ metadata:
     istio-operator-managed: Reconcile
     istio-injection: disabled
 ---
-apiVersion: install.istio.io/v1beta1
+apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   namespace: istio-system
