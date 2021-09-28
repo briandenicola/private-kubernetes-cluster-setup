@@ -102,7 +102,7 @@ resource "null_resource" "config_setup" {
   }
 }
 
-resource "null_resource" "flux_setup_574486b30b99" {
+resource "null_resource" "flux_setup_574486b30b98" {
   provisioner "local-exec" {
     command = "./aks-flux-configuration.sh"
     interpreter = ["bash"]
