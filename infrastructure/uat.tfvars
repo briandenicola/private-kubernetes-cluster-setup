@@ -1,4 +1,4 @@
-cluster_name = "bjdk8s04uat"
+cluster_name = "bjdk8s03uat"
 agent_count = 3
 environment = "uat"
 k8s_vnet_resource_group_name = "DevSub02_Network_RG"
