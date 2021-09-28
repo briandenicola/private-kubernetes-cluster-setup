@@ -90,3 +90,11 @@ variable "github_actions_identity_name" {
 variable "github_actions_identity_resource_group" {
   description = "The Resource Group name that Github Taskrunner Identity"
 }
+
+variable "chat_ee85e06_resource_group" {
+ description = "The Resource Group name the Chat Application" 
+}
+
+variable "chat_ee85e06_identity" {
+ description = "The Identity of the Chat Application" 
+}
