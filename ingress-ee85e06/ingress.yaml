@@ -14,7 +14,7 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: bjdk8s04uat-kv                                                        
+    keyvaultName: bjdk8s03uat-kv                                                        
     objects:  |
       array:
         - |
@@ -58,7 +58,7 @@ spec:
   http:
   - route:
     - destination:
-        host: app-ee85e06-svc
+        host: ingress-ee85e06-svc
         port:
           number: 80
   

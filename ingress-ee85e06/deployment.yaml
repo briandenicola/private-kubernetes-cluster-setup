@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-ee85e06
+  name: ingress-ee85e06
 spec:
   selector:
     matchLabels:
-      app: app-ee85e06
+      app: ingress-ee85e06
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -16,11 +16,11 @@ spec:
   template:
     metadata:
       labels:
-        app: app-ee85e06
+        app: ingress-ee85e06
         aadpodidbinding: bjdk8s04uat-ingress-identity
     spec:
       containers:
-      - name: app-ee85e06
+      - name: ingress-ee85e06
         image: nginx:latest
         ports:
         - containerPort: 80
@@ -46,12 +46,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-ee85e06-svc
+  name: ingress-ee85e06-svc
   labels:
     version: "1.0"
 spec:
   selector:
-    app: app-ee85e06
+    app: ingress-ee85e06
   ports:
   - port: 80
     targetPort: 80
