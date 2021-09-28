@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/uat
-export APP_NAME=app-ee85e06
+export APP_NAME=ingress-ee85e06
 export REPO_BRANCH=master
 
 az login --identity
