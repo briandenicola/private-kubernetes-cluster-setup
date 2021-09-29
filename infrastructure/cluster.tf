@@ -89,6 +89,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 }
 
 resource "null_resource" "config_setup" {
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
   provisioner "local-exec" {
     command = "./aks-post-creation-configuration.sh"
     interpreter = ["bash"]
@@ -101,7 +104,10 @@ resource "null_resource" "config_setup" {
   }
 }
 
-resource "null_resource" "pod_identity_ingress_574486b30b98" {
+resource "null_resource" "pod_identity_ingress_010255b13ca131" {
+  depends_on = [
+    null_resource.config_setup
+  ]
   provisioner "local-exec" {
     command = "./aks-pod-identity-creation.sh"
     interpreter = ["bash"]
@@ -117,7 +123,10 @@ resource "null_resource" "pod_identity_ingress_574486b30b98" {
   }
 }
 
-resource "null_resource" "pod_identity_chat_574486b30b98" {
+resource "null_resource" "pod_identity_chat_010255b13ca131" {
+  depends_on = [
+    null_resource.pod_identity_ingress_010255b13ca131
+  ]
   provisioner "local-exec" {
     command = "./aks-pod-identity-creation.sh"
     interpreter = ["bash"]
@@ -133,7 +142,10 @@ resource "null_resource" "pod_identity_chat_574486b30b98" {
   }
 }
 
-resource "null_resource" "flux_setup_574486b30b98" {
+resource "null_resource" "flux_setup_010255b13ca131" {
+  depends_on = [
+    null_resource.pod_identity_chat_010255b13ca131
+  ]
   provisioner "local-exec" {
     command = "./aks-flux-configuration.sh"
     interpreter = ["bash"]
