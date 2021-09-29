@@ -97,7 +97,38 @@ resource "null_resource" "config_setup" {
       CLUSTER_NAME        = "${var.cluster_name}"
       RG                  = "${azurerm_resource_group.k8s.name}"
       SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-      INGRESS_IDENTITY    = "${var.cluster_name}-ingress-identity"
+    }
+  }
+}
+
+resource "null_resource" "pod_identity_ingress_574486b30b98" {
+  provisioner "local-exec" {
+    command = "./aks-pod-identity-creation.sh"
+    interpreter = ["bash"]
+
+    environment = {
+      CLUSTER_NAME        = "${var.cluster_name}"
+      CLUSTER_RG          = "${azurerm_resource_group.k8s.name}"
+      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+      IDENTITY_NAME       = "${var.cluster_name}-ingress-identity"
+      IDENTITY_RG         = "${azurerm_resource_group.k8s.name}"
+      NAMESPACE           = "default"
+    }
+  }
+}
+
+resource "null_resource" "pod_identity_chat_574486b30b98" {
+  provisioner "local-exec" {
+    command = "./aks-pod-identity-creation.sh"
+    interpreter = ["bash"]
+
+    environment = {
+      CLUSTER_NAME        = "${var.cluster_name}"
+      CLUSTER_RG          = "${azurerm_resource_group.k8s.name}"
+      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+      IDENTITY_NAME       = "${var.chat_ee85e06_identity}"
+      IDENTITY_RG         = "${var.chat_ee85e06_resource_group}"
+      NAMESPACE           = "default"
     }
   }
 }
