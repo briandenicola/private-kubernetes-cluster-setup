@@ -17,6 +17,7 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 * Azure Blob Storage - Terraform state storage
 * Azure Bastion - to access jumpbox VM
 * Azure Firewall with proper [network and application rules](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic)
+   *  Follow [this](https://github.com/briandenicola/cqrs/blob/master/Infrastructure/terraform/regional-firewall-rules.tf) example of using AKS with Azure Firewall using Terraforms
 * A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
 
 # GitHub Actions
