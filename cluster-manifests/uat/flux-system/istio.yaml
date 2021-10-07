@@ -33,12 +33,3 @@ spec:
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
----
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: "default"
-  namespace: "istio-system"
-spec:
-  mtls:
-    mode: STRICT

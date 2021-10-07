@@ -23,3 +23,12 @@ spec:
     kind: GitRepository
     name: ingress-ee85e06
   validation: client
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: "default"
+  namespace: "istio-system"
+spec:
+  mtls:
+    mode: STRICT
