@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - ingress.yaml
+  - istio-peer-authentication.yaml
