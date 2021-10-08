@@ -56,6 +56,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     vm_size                 = var.vm_size
     os_disk_size_gb         = 30
     os_disk_type            = "Ephemeral"
+    os_sku                  = "CBLMariner"
     vnet_subnet_id          = data.azurerm_subnet.k8s_subnet.id
     type                    = "VirtualMachineScaleSets"
     enable_auto_scaling     = "true"
@@ -88,7 +89,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 }
 
-resource "null_resource" "config_setup_e330115" {
+resource "null_resource" "config_setup_bf1e8068f" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s
   ]
@@ -104,9 +105,9 @@ resource "null_resource" "config_setup_e330115" {
   }
 }
 
-resource "null_resource" "pod_identity_ingress_e330115" {
+resource "null_resource" "pod_identity_ingress_bf1e8068f" {
   depends_on = [
-    null_resource.config_setup_e330115
+    null_resource.config_setup_bf1e8068f
   ]
   provisioner "local-exec" {
     command = "./aks-pod-identity-creation.sh"
@@ -123,9 +124,9 @@ resource "null_resource" "pod_identity_ingress_e330115" {
   }
 }
 
-resource "null_resource" "pod_identity_chat_e330115" {
+resource "null_resource" "pod_identity_chat_bf1e8068f" {
   depends_on = [
-    null_resource.pod_identity_ingress_e330115
+    null_resource.pod_identity_ingress_bf1e8068f
   ]
   provisioner "local-exec" {
     command = "./aks-pod-identity-creation.sh"
@@ -142,9 +143,9 @@ resource "null_resource" "pod_identity_chat_e330115" {
   }
 }
 
-resource "null_resource" "flux_setup_e330115" {
+resource "null_resource" "flux_setup_bf1e8068f" {
   depends_on = [
-    null_resource.pod_identity_chat_e330115
+    null_resource.pod_identity_chat_bf1e8068f
   ]
   provisioner "local-exec" {
     command = "./aks-flux-configuration.sh"
