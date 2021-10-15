@@ -28,4 +28,4 @@ spec:
       interval: 1m
   values:
     hostname: 'todo.bjdazure.tech'
-    todo_build_version: 'f4988674fe5a5b12ae44b235145209f20434a892'
+    todo_build_version: '054c066116570b6d3051b894915ca31dd491c31d'
