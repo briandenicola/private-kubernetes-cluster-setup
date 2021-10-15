@@ -20,7 +20,7 @@ spec:
   chart:
     spec:
       chart: b2c-todo
-      version: '0.0.2'
+      version: '0.0.3'
       sourceRef:
         kind: HelmRepository
         name: todo-da27d5
@@ -28,4 +28,4 @@ spec:
       interval: 1m
   values:
     hostname: 'todo.bjdazure.tech'
-    todo_build_version: 'ca392489c3ea66f44fdc4f2e0ae685d24a9a1b6e'
+    todo_build_version: '4e66f96a25f2d75ffb6e64c0dacfc1bc97ff7643'
