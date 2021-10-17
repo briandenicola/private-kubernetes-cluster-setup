@@ -20,14 +20,14 @@ spec:
   chart:
     spec:
       chart: sentimentchat
-      version: '0.3.0'
+      version: '0.3.1'
       sourceRef:
         kind: HelmRepository
         name: chat-81e86b
         namespace: flux-system
       interval: 1m
   values:
-    chat_image_version: 'b8ef6c0e79a975a293585ac63659fab74d5cc587'
+    chat_image_version: 'e991b54cc3932d5f301cf33a732f1ffc8ad2d224'
     keyvault_name: 'chat-81e86b-kv'
     keyvault_secret_name: 'chat-81e86b-cogs-key'
     pod_identity: 'chat-81e86b-identity'
