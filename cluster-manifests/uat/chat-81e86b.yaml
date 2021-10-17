@@ -20,7 +20,7 @@ spec:
   chart:
     spec:
       chart: sentimentchat
-      version: '0.2.8'
+      version: '0.2.9'
       sourceRef:
         kind: HelmRepository
         name: chat-81e86b
