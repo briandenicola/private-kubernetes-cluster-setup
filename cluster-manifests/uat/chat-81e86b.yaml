@@ -27,7 +27,7 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
-    chat_image_version: 'e991b54cc3932d5f301cf33a732f1ffc8ad2d224'
+    chat_image_version: '9c73d9f2fcb02a3f7fe8daa7707d0819269a6eef'
     keyvault_name: 'chat-81e86b-kv'
     keyvault_secret_name: 'chat-81e86b-cogs-key'
     pod_identity: 'chat-81e86b-identity'
