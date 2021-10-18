@@ -25,7 +25,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: default-bjdazure-tech-gw
+  name: bjdazure-tech-gw
 spec:
   selector:
     istio: ingressgateway 
@@ -35,7 +35,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - "istio-default.bjdazure.tech"
+    - *.bjdazure.tech
   - port:
       number: 443
       name: https
@@ -44,7 +44,7 @@ spec:
       mode: SIMPLE
       credentialName: istio-ingress-tls
     hosts:
-    - "istio-default.bjdazure.tech"
+    - *.bjdazure.tech
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -54,7 +54,7 @@ spec:
   hosts:
   -  istio-default.bjdazure.tech
   gateways:
-  -  default-bjdazure-tech-gw
+  -  bjdazure-tech-gw
   http:
   - route:
     - destination:
