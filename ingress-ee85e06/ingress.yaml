@@ -2,6 +2,7 @@ apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
 kind: SecretProviderClass
 metadata:
   name: istio-tls
+  namespace: default
 spec:
   provider: azure
   secretObjects:                               
@@ -26,6 +27,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: default-bjdazure-tech-gw
+  namespace: default
 spec:
   selector:
     istio: ingressgateway 
@@ -50,6 +52,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name:  default-bjdazure-tech-vs
+  namespace: default
 spec:
   hosts:
   -  istio-default.bjdazure.tech
