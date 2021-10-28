@@ -40,3 +40,11 @@ spec:
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+          service:
+            selector:
+              app: istio-ingressgateway
+            ports:
+            - port: 443
+              targetPort: 443
+            - port: 80
+              targetPort: 80
