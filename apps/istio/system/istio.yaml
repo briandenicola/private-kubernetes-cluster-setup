@@ -29,11 +29,11 @@ spec:
   components:
     egressGateways:
     - name: istio-egressgateway
-      namespace: istio-system
+      namespace: default
       enabled: true
     ingressGateways:
       - name: istio-ingressgateway
-        namespace: istio-system
+        namespace: default
         enabled: true
         label:
           aadpodidbinding: bjdk8s03uat-ingress-identity
