@@ -36,15 +36,7 @@ spec:
         namespace: istio-system
         enabled: true
         label:
-          aadpodidbinding: bjdk8s04uat-ingress-identity
+          aadpodidbinding: bjdk8s03uat-ingress-identity
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-          service:
-            selector:
-              app: istio-ingressgateway
-            ports:
-            - port: 443
-              targetPort: 443
-            - port: 80
-              targetPort: 80
