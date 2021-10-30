@@ -1,9 +1,10 @@
-cluster_name = "bjdk8s03uat"
+cluster_name = "bjdk8s-osm"
 agent_count = 3
-environment = "uat"
+service_mesh_type = "osm"
+open_service_mesh_enabled = true
 k8s_vnet_resource_group_name = "DevSub02_Network_RG"
 k8s_vnet = "DevSub02-Vnet-Sandbox-001"
-k8s_subnet = "kubernetesuat"
+k8s_subnet = "kubernetesdev"
 dns_service_ip = "192.168.0.10"
 service_cidr = "192.168.0.0/16"
 acr_subscription = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"

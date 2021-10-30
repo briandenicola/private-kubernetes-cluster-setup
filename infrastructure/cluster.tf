@@ -82,10 +82,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azure_policy {
       enabled  = true
     }
+    open_service_mesh { 
+      enabled  = var.open_service_mesh_enabled
+    }
   }
 
   tags = {
-    Environment = var.environment
+    ServiceMeshType = var.service_mesh_type
   }
 }
 
@@ -159,6 +162,7 @@ resource "null_resource" "flux_setup_bf1e8068f" {
       ACR_SUBSCRIPTION_ID = "${var.acr_subscription}"
       GITHUB_ACCOUNT      = "briandenicola"
       GITHUB_REPO         = "kubernetes-cluster-setup"
+      SERVICE_MESH_TYPE   = "${var.service_mesh_type}" 
     }
   }
 }

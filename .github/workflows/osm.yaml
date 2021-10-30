@@ -1,0 +1,47 @@
+name: Creates a Kuberentes cluster with Flux and Open Service Mesh configured
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Creates a Kuberentes cluster with Flux and Open Service Mesh configured'
+
+jobs:
+  deploy:
+    name: Deploy Cluster
+    runs-on: self-hosted
+    env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+    
+    defaults:
+      run:
+        working-directory: './infrastructure'
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@master
+
+    - name: "Log into Azure"
+      uses: Azure/login@v1.1
+      with:
+        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
+
+    - name: "Terraform Setup"
+      uses: hashicorp/setup-terraform@v1
+
+    - name: "Terraform Init"
+      id: init
+      run: terraform init -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=osm.terraform.tfstate"
+      
+    - name: "Terraform Plan"
+      id: plan
+      run:  terraform plan -out="osm.plan" -var "resource_group_name=DevSub02_K8S_OSM_RG" -var-file="osm.tfvars"
+      continue-on-error: false 
+
+    - name: "Terraform Apply"
+      id: apply
+      run: terraform apply -auto-approve osm.plan

@@ -51,10 +51,6 @@ variable "ssh_public_key" {
   default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGUfWYw+OI3udPmdcIklEeLapnR/9boHLNOpHwglZ+fxv959rjmXyq+ZB55xfHQqjYgvUARLbYmvnBgIpDDI95fo2tepHjspvw4nmM1OwRCt+DwY7Y7Rmq/5LRIj6RvJe0V2TsS8xE0VI907zLoatqQ6cO9kedlbr9KY4ZrRXYHOZWapHqcliyI29lZIPGdmAFjmtdkngmu4sgss9V+2gwWghp+bnMXyyn96oBxeQjCNDiP/90yucjYgoDPHslkLXc7jgdfnb+oxa0iG9bHutzgTdQ7ZkCZOnd++ZJISIvKhIIJAfqaQNVY1B7cXzFDcTJbZxpptZvKbaUaWhRS1uJ briandenicola@harpocrates.denicolafamily.com"
 }
 
-variable "environment" {
-  description = "The environment this cluster is"
-}
-
 variable "load_balancer_sku" {
   default     = "standard"
   description = "The type of load balancer to deploy as part of the AKS cluster"
@@ -97,4 +93,12 @@ variable "chat_ee85e06_resource_group" {
 
 variable "chat_ee85e06_identity" {
  description = "The Identity of the Chat Application" 
+}
+
+variable "service_mesh_type" {
+  description = "The type of Service Mesh to install onto the cluster"
+}
+
+variable "open_service_mesh_enabled" {
+  description = "Whether or not to enable Open Service Mesh add-on for AKS"
 }

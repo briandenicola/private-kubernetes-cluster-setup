@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/uat
+export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${SERVICE_MESH_TYPE}
 export REPO_BRANCH=master
 
 az login --identity
