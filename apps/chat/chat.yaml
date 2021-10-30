@@ -23,13 +23,13 @@ spec:
       version: '0.3.3'
       sourceRef:
         kind: HelmRepository
-        name: chat-81e86b
+        name: chat-e0ce7b6
         namespace: flux-system
       interval: 1m
   values:
     chat_image_version: '9c73d9f2fcb02a3f7fe8daa7707d0819269a6eef'
-    keyvault_name: 'chat-81e86b-kv'
-    keyvault_secret_name: 'chat-81e86b-cogs-key'
-    pod_identity: 'chat-81e86b-identity'
+    keyvault_name: 'chat-e0ce7b6-kv'
+    keyvault_secret_name: 'chat-e0ce7b6-cogs-key'
+    pod_identity: 'chat-e0ce7b6-identity'
     hostname: 'chat.bjdazure.tech'
     tenant_id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
