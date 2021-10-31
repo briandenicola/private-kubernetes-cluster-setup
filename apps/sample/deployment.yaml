@@ -4,5 +4,4 @@ kind: Namespace
 metadata:
   name: sampleapp
   labels:
-    istio-injection: enabled
 ---
