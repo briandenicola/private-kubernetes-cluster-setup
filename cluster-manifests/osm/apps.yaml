@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 30m0s
   dependsOn:
-    - name: osm-system
+    - name: flux-system
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -22,7 +22,7 @@ metadata:
 spec:
   interval: 30m0s
   dependsOn:
-    - name: osm-system
+    - name: flux-system
   sourceRef:
     kind: GitRepository
     name: flux-system
