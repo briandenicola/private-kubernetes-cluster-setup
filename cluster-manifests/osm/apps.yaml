@@ -4,9 +4,9 @@ metadata:
   name: sampleapp
   namespace: flux-system
 spec:
-  interval: 30m0s
+  interval: 10m0s
   dependsOn:
-    - name: osm-operator
+    - name: osm-ingress
   sourceRef:
     kind: GitRepository
     name: flux-system
