@@ -6,7 +6,7 @@ metadata:
 spec:
   interval: 30m0s
   dependsOn:
-    - name: flux-system
+    - name: osm-operator
   sourceRef:
     kind: GitRepository
     name: flux-system
