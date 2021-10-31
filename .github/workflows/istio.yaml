@@ -16,7 +16,15 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-    
+        ACR_NAME: ${{ secrets.ACR_NAME }}
+        ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
+        SERVICE_TYPE_MESH: istio
+        CLUSTER_RG: bjdk8s-istio
+        CLUSTER_NAME: DevSub02_K8S_ISTIO_RG
+        GITHUB_ACCOUNT: briandenicola
+        GITHUB_REPO: kubernetes-cluster-setup
+        REPO_BRANCH: master
+
     defaults:
       run:
         working-directory: './infrastructure'
@@ -45,3 +53,9 @@ jobs:
     - name: "Terraform Apply"
       id: apply
       run: terraform apply -auto-approve istio.plan
+    
+    - name: Setup Flux
+      run: |
+        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
+        chmod a+x ./aks-flux-configuration.sh
+        ./aks-flux-configuration.sh
