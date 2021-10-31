@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Cluster
+    name: Setup Flux
     runs-on: self-hosted
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
@@ -41,4 +41,4 @@ jobs:
         kubectl -n flux-system delete secret https-credentials
         kubectl -n flux-system create secret generic https-credentials --from-literal=username=bjd145 --from-literal=password=${ACR_PASSWORD}
 
-        flux bootstrap github --owner=briandenicola--repository=${GITHUB_REPO} --path=${CLUSTER_BOOTSTRAP_PATH} --branch=${REPO_BRANCH} --personal=true --private=false
+        flux bootstrap github --owner=briandenicola --repository=${GITHUB_REPO} --path=${CLUSTER_BOOTSTRAP_PATH} --branch=${REPO_BRANCH} --personal=true --private=false
