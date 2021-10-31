@@ -47,7 +47,7 @@ jobs:
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="osm.plan" -var "resource_group_name=${{ env.CLUSTER_NAME }}" -var-file="osm.tfvars"
+      run:  terraform plan -out="osm.plan" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var-file="osm.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"
