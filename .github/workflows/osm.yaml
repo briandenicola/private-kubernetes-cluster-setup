@@ -19,8 +19,8 @@ jobs:
         ACR_NAME: ${{ secrets.ACR_NAME }}
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH: osm
-        CLUSTER_RG: bjdk8s-osm
-        CLUSTER_NAME: DevSub02_K8S_OSM_RG
+        CLUSTER_RG: DevSub02_K8S_OSM_RG
+        CLUSTER_NAME: bjdk8s-osm
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
         REPO_BRANCH: master
