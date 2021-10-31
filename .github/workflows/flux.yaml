@@ -38,6 +38,7 @@ jobs:
 
         ACR_PASSWORD=`az acr credential show -n bjd145 --subscription BJD_CORE_SUBSCRIPTION --query "passwords[0].value" -o tsv | tr -d '\n'`
 
+        kubectl create ns flux-system
         kubectl -n flux-system delete secret https-credentials
         kubectl -n flux-system create secret generic https-credentials --from-literal=username=bjd145 --from-literal=password=${ACR_PASSWORD}
 
