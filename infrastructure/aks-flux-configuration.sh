@@ -2,6 +2,7 @@
 
 export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${SERVICE_MESH_TYPE}
 export REPO_BRANCH=master
+export GITHUB_TOKEN=${GITHUB_ACCESS_TOKEN}
 
 az login --identity
 az account set -s ${SUBSCRIPTION_ID}

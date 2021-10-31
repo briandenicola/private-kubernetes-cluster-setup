@@ -162,6 +162,7 @@ resource "null_resource" "flux_setup_bf1e8068f" {
       ACR_SUBSCRIPTION_ID = "${var.acr_subscription}"
       GITHUB_ACCOUNT      = "briandenicola"
       GITHUB_REPO         = "kubernetes-cluster-setup"
+      GITHUB_ACCESS_TOKEN = "${var.github_token}"
       SERVICE_MESH_TYPE   = "${var.service_mesh_type}" 
     }
   }
