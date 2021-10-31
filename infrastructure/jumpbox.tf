@@ -55,7 +55,7 @@ resource "azurerm_role_assignment" "management_vm" {
 }
 
 
-resource "azurerm_role_assignment" "github_actions_aks_read" {
+resource "azurerm_role_assignment" "management_vm_aks_read" {
   scope                = azurerm_kubernetes_cluster.k8s.id
   role_definition_name = "Azure Kubernetes Service Cluster User Role"
   principal_id         = azurerm_linux_virtual_machine.management.identity.0.principal_id
