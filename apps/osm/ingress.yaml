@@ -42,7 +42,7 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: "istio-tls"
+            secretProviderClass: "osm-tls"
 ---
 apiVersion: v1
 kind: Service
