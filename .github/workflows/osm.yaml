@@ -19,6 +19,8 @@ jobs:
         ACR_NAME: ${{ secrets.ACR_NAME }}
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH: osm
+        CLUSTER_RG: bjdk8s-osm
+        CLUSTER_NAME: DevSub02_K8S_OSM_RG
     
     defaults:
       run:
@@ -42,7 +44,7 @@ jobs:
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="osm.plan" -var "resource_group_name=DevSub02_K8S_OSM_RG" -var-file="osm.tfvars"
+      run:  terraform plan -out="osm.plan" -var "resource_group_name=${{ env.CLUSTER_NAME }}" -var-file="osm.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"
@@ -51,20 +53,20 @@ jobs:
     
     - name: Setup Flux
       run: |
-        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${SERVICE_TYPE_MESH}
+        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
         export OWNER=briandenicola
         export GITHUB_REPO=kubernetes-cluster-setup
         export REPO_BRANCH=master
 
         az login --identity
-        az account set -s ${ARM_SUBSCRIPTION_ID}
-        az aks get-credentials -g DevSub02_K8S_OSM_RG -n bjdk8s-osm --overwrite-existing
+        az account set -s ${{ env.ARM_SUBSCRIPTION_ID }}
+        az aks get-credentials -g ${{ env.CLUSTER_RG}} -n ${{ env.CLUSTER_NAME }} --overwrite-existing
         kubelogin convert-kubeconfig -l msi
 
-        ACR_PASSWORD=`az acr credential show -n ${ACR_NAME} --subscription ${ACR_SUBSCRIPTION_ID} --query "passwords[0].value" -o tsv | tr -d '\n'`
+        ACR_PASSWORD=`az acr credential show -n ${{ env.ACR_NAME }} --subscription ${{ env.ACR_SUBSCRIPTION_ID }} --query "passwords[0].value" -o tsv | tr -d '\n'`
 
         kubectl create ns flux-system
-        kubectl -n flux-system delete secret https-credentials
-        kubectl -n flux-system create secret generic https-credentials --from-literal=username=${ACR_NAME} --from-literal=password=${ACR_PASSWORD}
+        kubectl -n flux-system delete secret https-credentials || true
+        kubectl -n flux-system create secret generic https-credentials --from-literal=username=${{ env.ACR_NAME }} --from-literal=password=${ACR_PASSWORD}
 
         flux bootstrap github --owner=${OWNER} --repository=${GITHUB_REPO} --path=${CLUSTER_BOOTSTRAP_PATH} --branch=${REPO_BRANCH} --personal=true --private=false
