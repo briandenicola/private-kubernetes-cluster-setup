@@ -39,7 +39,7 @@ jobs:
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="istio.plan" -var "resource_group_name=DevSub02_K8S_Istio_RG" -var "github_token=${{ env.GITHUB_TOKEN }}" -var-file="istio.tfvars"
+      run:  terraform plan -out="istio.plan" -var "resource_group_name=DevSub02_K8S_Istio_RG" -var-file="istio.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"

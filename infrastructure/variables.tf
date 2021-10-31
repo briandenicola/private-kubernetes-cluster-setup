@@ -102,7 +102,3 @@ variable "service_mesh_type" {
 variable "open_service_mesh_enabled" {
   description = "Whether or not to enable Open Service Mesh add-on for AKS"
 }
-
-variable "github_token" {
-  description = "Access token for Github Repo"
-}
