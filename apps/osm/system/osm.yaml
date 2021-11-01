@@ -1,0 +1,9 @@
+apiVersion: config.openservicemesh.io/v1alpha1
+kind: MeshConfig
+metadata:
+  namespace: kube-system
+  name: osm-mesh-config
+spec:
+  traffic:
+    enableEgress: true
+    useHTTPSIngress: true
