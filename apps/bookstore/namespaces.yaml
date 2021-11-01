@@ -1,3 +1,6 @@
+#Don't forget: 
+#  kubectl get ns | grep -i book | awk '{print $1}' | xargs osm namespace add
+#  kubectl get ns | grep -i book | awk '{print $1}' | xargs -I {} kubectl -n {} rollout restart deployment {}
 ---
 apiVersion: v1
 kind: Namespace
