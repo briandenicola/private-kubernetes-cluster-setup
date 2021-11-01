@@ -17,10 +17,10 @@ kind: Kustomization
 metadata:
   name: osm-ingress
   namespace: flux-system
-dependsOn:
-    - name: osm-system
 spec:
   interval: 10m0s
+  dependsOn:
+    - name: osm-system
   sourceRef:
     kind: GitRepository
     name: flux-system
