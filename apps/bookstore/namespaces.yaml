@@ -7,34 +7,34 @@ kind: Namespace
 metadata:
   name: bookstore
   labels:
-    openservicemesh.io/monitored-by=osm
+    openservicemesh.io/monitored-by: osm
   annotations:
-    'openservicemesh.io/sidecar-injection': 'enabled'
+    openservicemesh.io/sidecar-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: bookbuyer
   labels:
-    openservicemesh.io/monitored-by=osm
+    openservicemesh.io/monitored-by: osm
   annotations:
-    'openservicemesh.io/sidecar-injection': 'enabled'
+    openservicemesh.io/sidecar-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: bookthief
   labels:
-    openservicemesh.io/monitored-by=osm
+    openservicemesh.io/monitored-by: osm
   annotations:
-    'openservicemesh.io/sidecar-injection': 'enabled'
+    openservicemesh.io/sidecar-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: bookwarehouse
   labels:
-    openservicemesh.io/monitored-by=osm
+    openservicemesh.io/monitored-by: osm
   annotations:
-    'openservicemesh.io/sidecar-injection': 'enabled'
+    openservicemesh.io/sidecar-injection: enabled
 ---
