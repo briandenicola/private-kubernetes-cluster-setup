@@ -11,7 +11,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  url: kured https://weaveworks.github.io/kured
+  url: https://weaveworks.github.io/kured
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
