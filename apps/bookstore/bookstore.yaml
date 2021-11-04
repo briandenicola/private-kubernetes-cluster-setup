@@ -32,6 +32,7 @@ spec:
     metadata:
       labels:
         app: bookstore
+        aadpodidbinding: bjdk8s-osm-ingress-identity
     spec:
       serviceAccountName: bookstore
       nodeSelector:
@@ -51,3 +52,14 @@ spec:
               value: bookwarehouse
             - name: IDENTITY
               value: bookstore-v1
+          volumeMounts:
+          - name: tls-mount
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
+      volumes:
+      - name: tls-mount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "osm-tls"
