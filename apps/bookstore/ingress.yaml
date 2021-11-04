@@ -14,7 +14,7 @@ spec:
 apiVersion: projectcontour.io/v1
 kind: HTTPProxy
 metadata:
-  name: bookstore-proxy
+  name: bookstore-tls-proxy
   namespace: bookstore
 spec:
   virtualhost:
