@@ -1,5 +1,5 @@
 # Introduction 
-A method of creating a private AKS cluster with Egress filtering using Terraforms and the Flux gitOps operator. 
+A method of creating a private AKS cluster with Egress filtering using Terraforms and the Flux gitOps operator. The cluster will be setup with either Open Service Mesh or Istio with couple demo applications deployed. 
 
 ## Azure Resources Created
 * Private AKS Cluster with Azure AD Pod Identity, KeyVault CSI Driver and OpenService Mesh extensions
@@ -35,38 +35,39 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 
 ## Steps
 1. Trigger Github Action to create the cluster. 
-2. Terraform will the call the aks-post-creation-configuration.sh script to add Pod Identity and KeyVault CSI Driver 
-3. Terraform will finally call the aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
+1. Terraform will the call the aks-post-creation-configuration.sh script to add Pod Identity and KeyVault CSI Driver 
+1. GitHub Actions pipeline will then call the aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
 
 # Manual Setup
 ## Prerequisites
-* Update infrastructure/uat.tfvars with correct values
+* Update infrastructure/osm|istio.tfvars with correct values for your environment
 
 ## Cluster Creation
 1. az extension add --name aks-preview
-2. az extension update --name aks-preview
-3. az login
-4. az feature register --namespace "Microsoft.ContainerService" --name "AKS-AzureKeyVaultSecretsProvider"
-5. az feature register --namespace "Microsoft.ContainerService" --name "EnablePodIdentityPreview"
-6. az feature register --namespace "Microsoft.ContainerService" --name "AKS-OpenServiceMesh"
-7. az feature register --namespace "Microsoft.ContainerService" --name "DisableLocalAccountsPreview"
-8. az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService')].{Name:name,State:properties.state}"
+1. az extension update --name aks-preview
+1. az login
+1. az feature register --namespace "Microsoft.ContainerService" --name "AKS-AzureKeyVaultSecretsProvider"
+1. az feature register --namespace "Microsoft.ContainerService" --name "EnablePodIdentityPreview"
+1. az feature register --namespace "Microsoft.ContainerService" --name "AKS-OpenServiceMesh"
+1. az feature register --namespace "Microsoft.ContainerService" --name "DisableLocalAccountsPreview"
+1. az feature list -o table --query "[?contains(name, 'Microsoft.ContainerService')].{Name:name,State:properties.state}"
     * Wait till the above features are enabled
-9. az provider register --namespace Microsoft.ContainerService
-10. cd infrastructure
-11. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="key=production.terraform.tfstate"
-12. terraform plan -out="production.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="production.tfvars"
-13. terraform apply -auto-approve "production.plan"
+1. az provider register --namespace Microsoft.ContainerService
+1. cd infrastructure
+1. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="production.terraform.tfstate"
+1. terraform plan -out="production.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="{osm|istio}.tfvars"
+1. terraform apply -auto-approve "production.plan"
 
 ## GitOps BootStrap
 1. Access the Jump VM through Azure Bastion 
-2. curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-3. curl -s https://fluxcd.io/install.sh | sudo bash
-4. az login --identity
-5. az aks install-cli
-6. az aks get-credentials -n ${CLUSTER_NAME} -g ${CLUSTER_RESOURCE_GROUP}
-7. kubelogin convert-kubeconfig -l msi
-8. echo -n ${ACR_NAME} > ./username.txt 
-9. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
-9. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
-10. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --private-key-file=/home/manager/.ssh/id_rsa
+1. export GITHUB_TOKEN=${PAT_TOKEN_FOR_YOUR_REPO}
+1. curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+1. curl -s https://fluxcd.io/install.sh | sudo bash
+1. az login --identity
+1. az aks install-cli
+1. az aks get-credentials -n ${CLUSTER_NAME} -g ${CLUSTER_RESOURCE_GROUP}
+1. kubelogin convert-kubeconfig -l msi
+1. echo -n ${ACR_NAME} > ./username.txt 
+1. az acr credential show -n ${ACR_NAME} --query "passwords[0].value" -o tsv | tr -d '\n' > password.txt 
+1. kubectl -n flux-system create secret generic https-credentials --from-file=username=./username.txt --from-file=password=./password.txt
+1. flux bootstrap git --url=ssh://git@github.com/${user}/kubernetes-cluster-setup --branch=master --path=./cluster-manifests/uat  --personal=true --private=false
