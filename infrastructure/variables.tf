@@ -102,3 +102,14 @@ variable "service_mesh_type" {
 variable "open_service_mesh_enabled" {
   description = "Whether or not to enable Open Service Mesh add-on for AKS"
 }
+
+variable "certificate_name" {
+  description = "The name of the certificate to use for TLS"
+}
+
+variable "certificate_base64_encoded" {
+  description = "The name of the certificate to use for TLS"
+}
+variable "certificate_password" {
+  description = "The password for the certificate"
+}
