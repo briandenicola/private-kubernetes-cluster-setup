@@ -1,4 +1,3 @@
-# Create bookstore Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,19 +11,13 @@ spec:
     name: bookstore-port
   selector:
     app: bookstore
-
 ---
-
-# Create bookstore Service Account
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: bookstore
   namespace: bookstore
-
 ---
-
-# Create bookstore Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
