@@ -4,9 +4,3 @@ resources:
   - config.yaml
   - backend.yaml
   - tls.yaml
-patches:
-  - path: add-annotation.patch.yaml
-    target:
-      kind: Service
-      namespace: osm-system 
-      name: osm-contour-envoy
