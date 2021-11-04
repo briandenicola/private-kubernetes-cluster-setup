@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - config.yaml
   - backend.yaml
+  - ingress.yaml

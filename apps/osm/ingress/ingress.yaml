@@ -1,0 +1,28 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: default-proxy
+  namespace: osm-system
+spec:
+  virtualhost:
+    fqdn: default-backend.bjdazure.tech
+  routes:
+  - services:
+    - name: osm-default-backend-ee85e06-svc
+      port: 80
+---
+kind: IngressBackend
+apiVersion: policy.openservicemesh.io/v1alpha1
+metadata:
+  name: default-backend
+  namespace: osm-system
+spec:
+  backends:
+  - name: osm-default-backend-ee85e06-svc
+    port:
+      number: 80
+      protocol: http
+  sources:
+  - kind: Service
+    namespace: osm-system
+    name: osm-contour-envoy
