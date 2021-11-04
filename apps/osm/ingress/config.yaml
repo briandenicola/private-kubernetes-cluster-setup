@@ -8,3 +8,7 @@ spec:
     enableEgress: true
     useHTTPSIngress: true
     enablePermissiveTrafficPolicyMode: true
+  observability:
+    enableDebugServer: true
+    tracing:
+      enable: false
