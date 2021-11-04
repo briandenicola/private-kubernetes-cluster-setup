@@ -1,0 +1,28 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: bookstore-proxy
+  namespace: bookstore
+spec:
+  virtualhost:
+    fqdn: bookstore.bjdazure.tech
+  routes:
+  - services:
+    - name: bookstore
+      port: 14001
+---
+kind: IngressBackend
+apiVersion: policy.openservicemesh.io/v1alpha1
+metadata:
+  name: bookstore-backend
+  namespace: bookstore
+spec:
+  backends:
+  - name: httpbin
+    port:
+      number: 14001
+      protocol: http
+  sources:
+  - kind: Service
+    namespace: osm-system
+    name: osm-contour-envoy
