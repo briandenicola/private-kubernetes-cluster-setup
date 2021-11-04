@@ -32,3 +32,13 @@ spec:
   values:
     contour:
       enabled: true
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - kind: Service
+            apiVersion: v1
+            metadata:
+              name: osm-contour-envoy
+              namespace: osm-system
+              annotations:
+                service.beta.kubernetes.io/azure-load-balancer-internal: "true"
