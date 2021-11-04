@@ -5,15 +5,4 @@ resources:
   - backend.yaml
   - tls.yaml
 patches:
-- patch: |-
-      apiVersion: apps/v1
-      kind: Service
-      metadata:
-        name: osm-contour-envoy
-        namespace: osm-system
-        annotations:
-          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-  target:
-    kind: Service
-    name: osm-contour-envoy
-    namespace: osm-system
+  - path: add-annotation.patch.yaml
