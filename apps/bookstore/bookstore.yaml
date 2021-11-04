@@ -62,4 +62,4 @@ spec:
           driver: secrets-store.csi.k8s.io
           readOnly: true
           volumeAttributes:
-            secretProviderClass: "osm-tls"
+            secretProviderClass: "bookstore-tls"
