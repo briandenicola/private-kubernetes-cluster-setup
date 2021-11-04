@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingress-default-backend-ee85e06
-  namespace: default
+  name: osm-default-backend-ee85e06
+  namespace: osm-system
 spec:
   selector:
     matchLabels:
-      app: ingress-default-backend-ee85e06
+      app: osm-default-backend-ee85e06
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -17,11 +17,10 @@ spec:
   template:
     metadata:
       labels:
-        app: ingress-default-backend-ee85e06
-        aadpodidbinding: bjdk8s-osm-ingress-identity
+        app: osm-default-backend-ee85e06
     spec:
       containers:
-      - name: ingress-default-backend-ee85e06
+      - name: osm-default-backend-ee85e06
         image: nginx:latest
         ports:
         - containerPort: 80
@@ -32,28 +31,17 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
-        volumeMounts:
-        - name: tls-mount
-          mountPath: "/mnt/secrets-store"
-          readOnly: true
-      volumes:
-      - name: tls-mount
-        csi:
-          driver: secrets-store.csi.k8s.io
-          readOnly: true
-          volumeAttributes:
-            secretProviderClass: "osm-tls"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingress-default-backend-ee85e06-svc
-  namespace: default
+  name: osm-default-backend-ee85e06-svc
+  namespace: osm-system
   labels:
     version: "1.0"
 spec:
   selector:
-    app: ingress-default-backend-ee85e06
+    app: osm-default-backend-ee85e06
   ports:
   - port: 80
     targetPort: 80
