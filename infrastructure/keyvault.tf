@@ -92,10 +92,6 @@ resource "azurerm_private_endpoint" "key_vault" {
   location                  = azurerm_resource_group.k8s.location
   subnet_id                 = data.azurerm_subnet.private_endpoint_subnet.id
   
-  depends_on = [
-    azurerm_key_vault_certificate.k8s
-  ]
-  
   private_service_connection {
     name                           = "kv-${var.cluster_name}-kv-endpoint"
     private_connection_resource_id = azurerm_key_vault.k8s.id
@@ -112,6 +108,10 @@ resource "azurerm_private_endpoint" "key_vault" {
 resource "azurerm_key_vault_certificate" "k8s" {
   name         = var.certificate_name
   key_vault_id = azurerm_key_vault.k8s.id
+
+  depends_on = [
+    azurerm_private_endpoint.key_vault
+  ]
 
   certificate {
     contents = var.certificate_base64_encoded
