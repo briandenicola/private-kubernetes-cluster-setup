@@ -50,7 +50,7 @@ jobs:
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="${{ env.SERVICE_TYPE_MESH }}.plan" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var-file="${{ env.SERVICE_TYPE_MESH }}.tfvars"
+      run:  terraform plan -out="${{ env.SERVICE_TYPE_MESH }}.plan" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var "service_mesh_type=${{ env.SERVICE_TYPE_MESH }}" -var-file="${{ env.SERVICE_TYPE_MESH }}.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"

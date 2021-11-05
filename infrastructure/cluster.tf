@@ -145,27 +145,3 @@ resource "null_resource" "pod_identity_chat_bf1e8068f" {
     }
   }
 }
-
-/* Need to Address how to bootstrap Flux via GitHub Actions
-resource "null_resource" "flux_setup_bf1e8068f" {
-  depends_on = [
-    null_resource.pod_identity_chat_bf1e8068f
-  ]
-  provisioner "local-exec" {
-    command = "./aks-flux-configuration.sh"
-    interpreter = ["bash"]
-
-    environment = {
-      CLUSTER_NAME        = "${var.cluster_name}"
-      RG                  = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-      ACR_NAME            = "${var.acr_name}"
-      ACR_SUBSCRIPTION_ID = "${var.acr_subscription}"
-      GITHUB_ACCOUNT      = "briandenicola"
-      GITHUB_REPO         = "kubernetes-cluster-setup"
-      GITHUB_ACCESS_TOKEN = "${var.github_token}"
-      SERVICE_MESH_TYPE   = "${var.service_mesh_type}" 
-    }
-  }
-}
-*/
