@@ -20,9 +20,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         ACR_NAME: ${{ secrets.ACR_NAME }}
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
-        SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}"
-        CLUSTER_RG: DevSub02_K8S_${{env.SERVICE_TYPE_MESH}}_RG
-        CLUSTER_NAME: bjdk8s-${{env.SERVICE_TYPE_MESH}}_RG
+        SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
         REPO_BRANCH: master
@@ -37,6 +36,8 @@ jobs:
     
     - name: Echo Test
       run: |
+        export CLUSTER_NAME=bjdk8s-${{env.SERVICE_TYPE_MESH}}_RG
+
         echo ${{ env.SERVICE_TYPE_MESH }}
         echo ${{ env.CLUSTER_RG }}
         echo ${{ env.CLUSTER_NAME }}
