@@ -1,4 +1,4 @@
-name: Creates a Kuberentes cluster with Flux and Open Service Mesh configured
+name: Test Action
 on:
   workflow_dispatch:
     inputs:
@@ -6,10 +6,6 @@ on:
         description: 'Type of service mesh to include in the cluster'
         required: true
         default: 'osm'
-      tags:
-        description: 'Test scenario tags'  
-      tags:
-        description: 'Creates a Kuberentes cluster with Flux and Open Service Mesh configured'
 
 jobs:
   deploy:
