@@ -26,11 +26,11 @@ data:
     [prometheus_data_collection_settings.cluster]
         interval = "1m"
         monitor_kubernetes_pods = true
-        - prometheus.io/scrape: "true"
-        - prometheus.io/path: "/stats/prometheus"
+        - prometheus.io/scrape: true
+        - prometheus.io/path: /stats/prometheus
         - prometheus.io/port: 15020
         - prometheus.io/scheme: "http"
-        
+
     [prometheus_data_collection_settings.node]
         interval = "1m"
 
