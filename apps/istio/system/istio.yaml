@@ -23,9 +23,11 @@ spec:
   profile: default
   meshConfig:
     accessLogFile: /dev/stdout
+    accessLogEncoding: JSON
     enableTracing: true
+    enablePrometheusMerge: true
     outboundTrafficPolicy:
-      mode: REGISTRY_ONLY
+      mode: ALLOW_ANY
   components:
     egressGateways:
     - name: istio-egressgateway
@@ -40,3 +42,12 @@ spec:
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  addonComponents:
+    prometheus:
+      enabled: false
+    kiali:
+      enabled: false
+    grafana:
+      enabled: false
+    tracing:
+      enabled: false
