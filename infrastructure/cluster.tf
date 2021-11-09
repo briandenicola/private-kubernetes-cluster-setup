@@ -120,7 +120,7 @@ resource "null_resource" "pod_identity_ingress_bf1e8068f" {
       CLUSTER_NAME        = "${var.cluster_name}"
       CLUSTER_RG          = "${azurerm_resource_group.k8s.name}"
       SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-      IDENTITY_NAME       = "${var.cluster_name}-ingress-identity"
+      IDENTITY_NAME       = "${var.cluster_name}-${var.service_mesh_type}-pod-identity"
       IDENTITY_RG         = "${azurerm_resource_group.k8s.name}"
       NAMESPACE           = "default"
     }

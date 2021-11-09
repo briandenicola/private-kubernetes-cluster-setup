@@ -32,7 +32,7 @@ spec:
     metadata:
       labels:
         app: bookstore
-        aadpodidbinding: bjdk8s-osm-ingress-identity
+        aadpodidbinding: f1dd32-osm-pod-identity
     spec:
       serviceAccountName: bookstore
       nodeSelector:

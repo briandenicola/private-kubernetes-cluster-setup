@@ -15,7 +15,7 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: bjdk8s-istio-kv                                                       
+    keyvaultName: e416aa-kv                                            
     objects:  |
       array:
         - |

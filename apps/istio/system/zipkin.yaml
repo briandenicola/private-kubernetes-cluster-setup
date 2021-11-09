@@ -7,7 +7,7 @@ spec:
   provider: azure
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: bjdk8s-istio-kv                                                       
+    keyvaultName: e416aa-kv                                     
     objects:  |
       array:
         - |
@@ -48,7 +48,7 @@ spec:
       labels:
         app: opentelemetry
         component: otel-collector
-        aadpodidbinding: bjdk8s-istio-ingress-identity
+        aadpodidbinding: e416aa-istio-pod-identity
     spec:
       containers:
       - name: otel-collector

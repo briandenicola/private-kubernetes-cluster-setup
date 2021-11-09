@@ -4,11 +4,11 @@ metadata:
   labels:
     addonmanager.kubernetes.io/mode: Reconcile
     kubernetes.azure.com/managedby: aks
-  name: bjdk8s-osm-ingress-identity
+  name: f1dd32-osm-pod-identity
   namespace: bookstore
 spec:
   clientID: 153c3a1a-6de5-4833-a9af-c61b000a282f
-  resourceID: /subscriptions/bfafbd89-a2a3-43a5-af72-fb4ef0c514c1/resourcegroups/DevSub02_K8S_OSM_RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/bjdk8s-osm-ingress-identity
+  resourceID: /subscriptions/bfafbd89-a2a3-43a5-af72-fb4ef0c514c1/resourcegroups/DevSub02_K8S_OSM_RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/f1dd32-osm-pod-identity
   type: 0
 ---
 apiVersion: aadpodidentity.k8s.io/v1
@@ -17,8 +17,8 @@ metadata:
   labels:
     addonmanager.kubernetes.io/mode: Reconcile
     kubernetes.azure.com/managedby: aks
-  name: bjdk8s-osm-ingress-identity-binding
+  name: f1dd32-osm-pod-identity-binding
   namespace: bookstore
 spec:
-  azureIdentity: bjdk8s-osm-ingress-identity
-  selector: bjdk8s-osm-ingress-identity
+  azureIdentity: f1dd32-osm-pod-identity
+  selector: f1dd32-osm-pod-identity

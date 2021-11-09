@@ -15,7 +15,7 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: bjdk8s-osm-kv                                                        
+    keyvaultName: f1dd32-kv                                                        
     objects:  |
       array:
         - |

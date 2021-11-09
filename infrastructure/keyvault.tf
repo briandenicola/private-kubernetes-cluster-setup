@@ -25,7 +25,7 @@ resource "azurerm_key_vault" "k8s" {
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = azurerm_user_assigned_identity.aks_ingress_identity.principal_id 
+    object_id = azurerm_user_assigned_identity.aks_service_mesh_identity.principal_id 
 
     secret_permissions = [
       "list",
