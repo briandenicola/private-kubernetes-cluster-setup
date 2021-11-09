@@ -2,12 +2,15 @@ name: Creates K8s with a Mesh installed
 on:
   workflow_dispatch:
     inputs:
-      mesh_type:
-        description: 'Type of service mesh to include in the cluster - osm|istio'
+      cluster_name:
+        description: 'The name of the cluster to create - e416aa|f1dd32'
         required: true
-        default: 'osm'
+        default: 'e416aa'
+      mesh_type:
+        description: 'Type of service mesh to include in the cluster - istio|osm'
+        required: true
+        default: 'istio'
       
-
 jobs:
   deploy:
     name: Deploy Cluster
@@ -23,7 +26,7 @@ jobs:
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}
-        CLUSTER_NAME: ${{ github.event.cluster_name}}
+        CLUSTER_NAME: ${{ github.event.inputs.cluster_name}}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
         REPO_BRANCH: master
