@@ -27,13 +27,10 @@ spec:
     enablePrometheusMerge: true
     outboundTrafficPolicy:
       mode: ALLOW_ANY
-    tracing:
-      sampling: 60
-  values:
-    global:
-      tracer:
+    defaultConfig:
+      tracing:
         zipkin:
-          address: otel-collector.default.svc.cluster.local:9411 
+          address: otel-collector.default.svc.cluster.local:9411
   components:
     egressGateways:
     - name: istio-egressgateway
