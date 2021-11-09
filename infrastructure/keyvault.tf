@@ -138,7 +138,7 @@ resource "azurerm_key_vault_certificate" "k8s" {
 
 resource "azurerm_key_vault_secret" "zipkin" {
   name         = "otel-collector-config"
-  value        = base64encode(templatefile(file("zipkin-config.tpl"), {app_insight_key = "${azurerm_application_insights.k8s.instrumentation_key}"}))
+  value        = base64encode(templatefile("zipkin-config.tpl", {app_insight_key = "${azurerm_application_insights.k8s.instrumentation_key}"}))
   key_vault_id = azurerm_key_vault.k8s.id
 
   depends_on = [
