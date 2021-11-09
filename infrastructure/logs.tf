@@ -17,3 +17,11 @@ resource "azurerm_log_analytics_solution" "k8s" {
     product   = "OMSGallery/ContainerInsights"
   }
 }
+
+resource "azurerm_application_insights" "k8s" {
+  name                = "${var.cluster_name}-appinsights"
+  location            = azurerm_resource_group.k8s.location
+  resource_group_name = azurerm_resource_group.k8s.name
+  workspace_id        = azurerm_log_analytics_workspace.k8s.id
+  application_type    = "web"
+}
