@@ -20,7 +20,6 @@ metadata:
   namespace: istio-system
   name: istio-controlplane
 spec:
-  profile: default
   meshConfig:
     accessLogFile: /dev/stdout
     accessLogEncoding: JSON
