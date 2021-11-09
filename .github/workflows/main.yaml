@@ -23,7 +23,7 @@ jobs:
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}
-        CLUSTER_NAME:  bjdk8s-${{ github.event.inputs.mesh_type }}
+        CLUSTER_NAME: ${{ github.event.cluster_name}}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
         REPO_BRANCH: master
