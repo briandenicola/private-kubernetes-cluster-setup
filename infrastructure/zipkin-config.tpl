@@ -12,7 +12,7 @@ exporters:
         loglevel: debug
     azuremonitor:
         endpoint: "https://dc.services.visualstudio.com/v2/track"
-        instrumentation_key:  {{ .Values.app_insights_key }}
+        instrumentation_key: ${app_insight_key}
         maxbatchsize: 100
         maxbatchinterval: 10s
 service:
