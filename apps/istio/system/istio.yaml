@@ -29,8 +29,6 @@ spec:
       mode: ALLOW_ANY
     tracing:
       sampling: 60
-      zipkin:
-        address: otel-collector.default.svc.cluster.local:9411
   values:
     global:
       tracer:
