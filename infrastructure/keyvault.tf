@@ -110,7 +110,8 @@ resource "azurerm_key_vault_certificate" "k8s" {
   key_vault_id = azurerm_key_vault.k8s.id
 
   depends_on = [
-    azurerm_private_endpoint.key_vault
+    azurerm_private_endpoint.key_vault,
+    azurerm_kubernetes_cluster.k8s
   ]
 
   certificate {
@@ -142,7 +143,8 @@ resource "azurerm_key_vault_secret" "zipkin" {
   key_vault_id = azurerm_key_vault.k8s.id
 
   depends_on = [
-    azurerm_private_endpoint.key_vault
+    azurerm_private_endpoint.key_vault,
+    azurerm_kubernetes_cluster.k8s
   ]
 } 
 
