@@ -32,6 +32,11 @@ spec:
       sampling: 60
       zipkin:
         address: otel-collector.default.svc.cluster.local:9411
+  values:
+    global:
+      tracer:
+        zipkin:
+          address: otel-collector.default.svc.cluster.local:9411 
   components:
     egressGateways:
     - name: istio-egressgateway
