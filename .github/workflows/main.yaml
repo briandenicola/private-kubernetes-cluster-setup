@@ -76,4 +76,4 @@ jobs:
         export ADMIN_GROUP_ID="15390134-7115-49f3-8375-da9f6f608dce"
         export CREATE_AZ_RESOURCES="false"
         
-        bash ./aks-application-bootstrap.sh"
+        bash ./aks-application-bootstrap.sh
