@@ -21,10 +21,7 @@ jobs:
     name: Deploy Application Enviornment
     runs-on: self-hosted
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
     defaults:
       run:
@@ -34,14 +31,8 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@master
 
-    - name: "Log into Azure"
-      uses: Azure/login@v1.1
-      with:
-        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
-
     - name: Bostrap AKS Application
       run: |
-        export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
         export IDENTITY_NAME="${{ github.event.inputs.app_name }}-identity"
         export IDENTITY_RG="DevSub02_${{ github.event.inputs.app_name }}_RG"
         export NAMESPACE=${{ github.event.inputs.app_name }}

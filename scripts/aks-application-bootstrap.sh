@@ -3,6 +3,9 @@
 export ADMIN_ROLE="Azure Kubernetes Service RBAC Admin"
 export MSI_ROLE="Managed Identity Operator"
 
+az login --identity
+az account set -s ${ARM_SUBSCRIPTION_ID}
+
 CLUSTER_DETAILS=`az aks list --query "[?name=='${CLUSTER_NAME}']"`
 CLUSTER_RG=`echo ${CLUSTER_DETAILS} | jq -r ".[].resourceGroup"`
 
