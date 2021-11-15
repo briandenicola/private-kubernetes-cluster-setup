@@ -59,9 +59,21 @@ jobs:
     - name: "Terraform Apply"
       id: apply
       run: terraform apply -auto-approve ${{ env.SERVICE_TYPE_MESH }}.plan
-    
+
     - name: Setup Flux
+      working-directory: './scripts'
       run: |
         export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
-        chmod a+x ./aks-flux-configuration.sh
-        ./aks-flux-configuration.sh
+        bash ./aks-flux-configuration.sh
+
+    - name: Setup Demo App Identity - Chat
+      working-directory: './scripts'
+      run: |
+        export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
+        export IDENTITY_NAME="chat-e0ce7b6-identity"
+        export IDENTITY_RG="DevSub02_Chat_RG"
+        export NAMESPACE="default"
+        export ADMIN_GROUP_ID="15390134-7115-49f3-8375-da9f6f608dce"
+        export CREATE_AZ_RESOURCES="false"
+        
+        bash ./aks-application-bootstrap.sh

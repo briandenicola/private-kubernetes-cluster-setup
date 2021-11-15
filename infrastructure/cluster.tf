@@ -113,7 +113,7 @@ resource "null_resource" "pod_identity_ingress_bf1e8068f" {
     null_resource.config_setup_bf1e8068f
   ]
   provisioner "local-exec" {
-    command = "./aks-pod-identity-creation.sh"
+    command = "../scripts/aks-pod-identity-creation.sh"
     interpreter = ["bash"]
 
     environment = {
@@ -122,25 +122,6 @@ resource "null_resource" "pod_identity_ingress_bf1e8068f" {
       SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
       IDENTITY_NAME       = "${var.cluster_name}-${var.service_mesh_type}-pod-identity"
       IDENTITY_RG         = "${azurerm_resource_group.k8s.name}"
-      NAMESPACE           = "default"
-    }
-  }
-}
-
-resource "null_resource" "pod_identity_chat_bf1e8068f" {
-  depends_on = [
-    null_resource.pod_identity_ingress_bf1e8068f
-  ]
-  provisioner "local-exec" {
-    command = "./aks-pod-identity-creation.sh"
-    interpreter = ["bash"]
-
-    environment = {
-      CLUSTER_NAME        = "${var.cluster_name}"
-      CLUSTER_RG          = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-      IDENTITY_NAME       = "${var.chat_ee85e06_identity}"
-      IDENTITY_RG         = "${var.chat_ee85e06_resource_group}"
       NAMESPACE           = "default"
     }
   }

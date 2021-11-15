@@ -1,0 +1,43 @@
+name: Bootstraps an Application in AKS/Azure
+on:
+  workflow_dispatch:
+    inputs:
+      app_name:
+        description: 'The name of the application to create'
+        required: true
+      cluster_name:
+        description: 'The name of the AKS cluster to work on'
+        required: true
+      aad_group_id:
+        description: 'The Azure AD Group ID to manage this application'
+        required: true
+      create_az_resources:
+        description: 'Create AZ Resource Group and Manage Identity'
+        required: true
+        default: 'true'
+      
+jobs:
+  deploy:
+    name: Deploy Application Enviornment
+    runs-on: self-hosted
+    env:
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+    defaults:
+      run:
+        working-directory: './scripts'
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@master
+
+    - name: Bostrap AKS Application
+      run: |
+        export IDENTITY_NAME="${{ github.event.inputs.app_name }}-identity"
+        export IDENTITY_RG="DevSub02_${{ github.event.inputs.app_name }}_RG"
+        export NAMESPACE=${{ github.event.inputs.app_name }}
+        export CREATE_AZ_RESOURCES=${{ github.event.inputs.create_az_resources }}
+        export CLUSTER_NAME=${{ github.event.inputs.cluster_name }}
+        export ADMIN_GROUP_ID=${{ github.event.inputs.aad_group_id }}
+
+        bash ./aks-application-bootstrap.sh
