@@ -49,4 +49,4 @@ jobs:
         export CLUSTER_NAME=${{ env.cluster_name }}
         export ADMIN_GROUP_ID=${{ env.aad_group_id }}
 
-        bash ./aks-application-bootstrap.sh"
+        bash ./aks-application-bootstrap.sh
