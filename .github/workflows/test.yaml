@@ -19,8 +19,8 @@ jobs:
     steps:
     - name: Setup Flux
       run: |
-        export IDENTITY_NAME="${{ github.event.inputs.mesh_type }}-identity"
-        export IDENTITY_RG="DevSub02_${{ github.event.inputs.mesh_type }}_RG"
+        export IDENTITY_NAME="${{ github.event.inputs.cluster_name }}-identity"
+        export IDENTITY_RG="DevSub02_${{ github.event.inputs.cluster_name }}_RG"
 
         echo ${IDENTITY_RG}
         echo ${IDENTITY_NAME}
