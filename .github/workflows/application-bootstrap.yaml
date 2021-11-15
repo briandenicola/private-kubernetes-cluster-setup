@@ -42,11 +42,11 @@ jobs:
     - name: Bostrap AKS Application
       run: |
         export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
-        export IDENTITY_NAME="${{ env.app_name }}-identity"
-        export IDENTITY_RG="DevSub02_${{ env.app_name }}_RG"
-        export NAMESPACE=${{ env.app_name }}
-        export CREATE_AZ_RESOURCES=${{ env.create_az_resources}}
-        export CLUSTER_NAME=${{ env.cluster_name }}
-        export ADMIN_GROUP_ID=${{ env.aad_group_id }}
+        export IDENTITY_NAME="${{ github.event.inputs.app_name }}-identity"
+        export IDENTITY_RG="DevSub02_${{ github.event.inputs.app_name }}_RG"
+        export NAMESPACE=${{ github.event.inputs.app_name }}
+        export CREATE_AZ_RESOURCES=${{ github.event.inputs.create_az_resources }}
+        export CLUSTER_NAME=${{ github.event.inputs.cluster_name }}
+        export ADMIN_GROUP_ID=${{ github.event.inputs.aad_group_id }}
 
         bash ./aks-application-bootstrap.sh
