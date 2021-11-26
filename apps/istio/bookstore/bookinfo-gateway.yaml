@@ -5,7 +5,7 @@ metadata:
   namespace: bookstore
 spec:
   hosts:
-  - "bookstore.bjdazure.tech"
+  - bookstore.bjdazure.tech
   gateways:
   - default/default-bjdazure-tech-gw
   http:
