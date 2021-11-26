@@ -1,4 +1,4 @@
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: bookinfo
@@ -7,7 +7,7 @@ spec:
   hosts:
   - "bookstore.bjdazure.tech"
   gateways:
-  - default-bjdazure-tech-gw
+  - default/default-bjdazure-tech-gw
   http:
   - match:
     - uri:
@@ -22,6 +22,6 @@ spec:
         prefix: /api/v1/products
     route:
     - destination:
-        host: productpage
+        host: productpage.bookstore.svc.cluster.local
         port:
           number: 9080
