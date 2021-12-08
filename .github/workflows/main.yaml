@@ -60,6 +60,8 @@ jobs:
       id: apply
       run: terraform apply -auto-approve ${{ env.SERVICE_TYPE_MESH }}.plan
 
+    #TODO: Move Ingress Identity creation out of Terraform and to here.
+
     - name: Setup Flux
       working-directory: './scripts'
       run: |

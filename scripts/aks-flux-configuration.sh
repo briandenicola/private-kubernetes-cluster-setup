@@ -5,6 +5,7 @@ az account set -s ${ARM_SUBSCRIPTION_ID}
 az aks get-credentials -g ${CLUSTER_RG} -n ${CLUSTER_NAME} --overwrite-existing
 kubelogin convert-kubeconfig -l msi
 
+#TODO: Move to SPN Login and disable Admin credentials on ACR
 ACR_PASSWORD=`az acr credential show -n ${ACR_NAME} --subscription ${ACR_SUBSCRIPTION_ID} --query "passwords[0].value" -o tsv | tr -d '\n'`
 
 kubectl create ns flux-system || true
