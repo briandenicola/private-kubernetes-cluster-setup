@@ -2,7 +2,7 @@
 A method of creating a private AKS cluster with Egress filtering using Terraforms and the Flux gitOps operator. The cluster will be setup with either Open Service Mesh or Istio with couple demo applications deployed. 
 
 ## Azure Resources Created
-* Private AKS Cluster with Azure AD Pod Identity, KeyVault CSI Driver and OpenService Mesh extensions
+* Private AKS Cluster with Azure AD Pod Identity and KeyVault CSI Driver extensions
 * Jumpbox VM
 * KeyVault
 * Private Zones for AKS and Keyvault
