@@ -22,8 +22,6 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        ACR_NAME: ${{ secrets.ACR_NAME }}
-        ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
@@ -60,15 +58,17 @@ jobs:
       id: apply
       run: terraform apply -auto-approve ${{ env.SERVICE_TYPE_MESH }}.plan
 
-    #TODO: Move Ingress Identity creation out of Terraform and to here.
-
-    - name: Setup Flux
+    - name: Setup Pod Identity - Service Mesh
       working-directory: './scripts'
       run: |
-        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
-        bash ./aks-flux-configuration.sh
+        export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
+        export IDENTITY_NAME=${{ env.CLUSTER_NAME }}-${{ env.SERVICE_TYPE_MESH }}-pod-identity"
+        export IDENTITY_RG=${{ env.CLUSTER_RG }}
+        export NAMESPACE="default"
+        
+        bash ./aks-pod-identity-creation.sh
 
-    - name: Setup Demo App Identity - Chat
+    - name: Setup Default Demo App Identity - Chat
       working-directory: './scripts'
       run: |
         export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
@@ -77,3 +77,11 @@ jobs:
         export NAMESPACE="default"
         
         bash ./aks-pod-identity-creation.sh
+
+    - name: Setup Flux
+      working-directory: './scripts'
+      run: |
+        export ACR_SPN_ID=${{ secrets.ACR_SPN_ID }}
+        export ACR_SPN_PASSWORD=${{ secrets.ACR_SPN_PASSWORD }}
+        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
+        bash ./aks-flux-configuration.sh
