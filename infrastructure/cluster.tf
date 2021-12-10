@@ -85,6 +85,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     open_service_mesh { 
       enabled  = var.open_service_mesh_enabled
     }
+    azure_keyvault_secrets_provider {
+      enabled = true
+      secret_rotation_enabled = true
+    }
   }
 
   tags = {
@@ -104,25 +108,6 @@ resource "null_resource" "config_setup_bf1e8068f" {
       CLUSTER_NAME        = "${var.cluster_name}"
       RG                  = "${azurerm_resource_group.k8s.name}"
       SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-    }
-  }
-}
-
-resource "null_resource" "pod_identity_ingress_bf1e8068f" {
-  depends_on = [
-    null_resource.config_setup_bf1e8068f
-  ]
-  provisioner "local-exec" {
-    command = "../scripts/aks-pod-identity-creation.sh"
-    interpreter = ["bash"]
-
-    environment = {
-      CLUSTER_NAME        = "${var.cluster_name}"
-      CLUSTER_RG          = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-      IDENTITY_NAME       = "${var.cluster_name}-${var.service_mesh_type}-pod-identity"
-      IDENTITY_RG         = "${azurerm_resource_group.k8s.name}"
-      NAMESPACE           = "default"
     }
   }
 }
