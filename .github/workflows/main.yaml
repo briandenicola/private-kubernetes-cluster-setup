@@ -22,8 +22,6 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        ACR_NAME: ${{ secrets.ACR_NAME }}
-        ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
@@ -83,5 +81,7 @@ jobs:
     - name: Setup Flux
       working-directory: './scripts'
       run: |
+        export ACR_SPN_ID=${{ secrets.ACR_SPN_ID }}
+        export ACR_SPN_PASSWORD=${{ secrets.ACR_SPN_PASSWORD }}
         export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
         bash ./aks-flux-configuration.sh
