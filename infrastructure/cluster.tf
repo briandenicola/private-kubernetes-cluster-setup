@@ -101,7 +101,7 @@ resource "null_resource" "config_setup_bf1e8068f" {
     azurerm_kubernetes_cluster.k8s
   ]
   provisioner "local-exec" {
-    command = "./aks-post-creation-configuration.sh"
+    command = "./aks-post-creation-addons.sh"
     interpreter = ["bash"]
 
     environment = {
