@@ -62,7 +62,7 @@ jobs:
       working-directory: './scripts'
       run: |
         export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
-        export IDENTITY_NAME=${{ env.CLUSTER_NAME }}-${{ env.SERVICE_TYPE_MESH }}-pod-identity"
+        export IDENTITY_NAME=${{ env.CLUSTER_NAME }}-${{ env.SERVICE_TYPE_MESH }}-pod-identity
         export IDENTITY_RG=${{ env.CLUSTER_RG }}
         export NAMESPACE="default"
         
