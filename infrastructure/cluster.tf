@@ -96,7 +96,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 }
 
-resource "null_resource" "config_setup_bf1e8068f" {
+resource "null_resource" "config_setup_bf1e8068r" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s
   ]
