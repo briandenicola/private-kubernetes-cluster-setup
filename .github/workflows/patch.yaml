@@ -1,0 +1,40 @@
+name: Perform a Node Upgrade on an AKS cluster
+on:
+  workflow_dispatch:
+    inputs:
+      cluster_name:
+        description: 'The name of the cluster to create - e416aa|f1dd32'
+        required: true
+        default: 'e416aa'
+      mesh_type:
+        description: 'Type of service mesh to include in the cluster - istio|osm'
+        required: true
+        default: 'istio'
+      
+jobs:
+  deploy:
+    name: Deploy Cluster
+    runs-on: self-hosted
+    env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+
+    defaults:
+      run:
+        working-directory: './infrastructure'
+
+    steps:
+    - name: "Log into Azure"
+      uses: Azure/login@v1.1
+      with:
+        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
+
+    - name: Upgrade node images
+      uses: Azure/cli@v1.0.0
+      with:
+        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
