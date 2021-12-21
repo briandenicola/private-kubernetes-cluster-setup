@@ -10,6 +10,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/osm/dapr
+  path: ./apps/addons/dapr
   prune: true
   validation: client

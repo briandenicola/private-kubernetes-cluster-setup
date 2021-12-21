@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/osm/system
+  path: ./apps/meshes/osm/system
   prune: true
   validation: client
 ---
@@ -24,6 +24,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/osm/ingress
+  path: ./apps/meshes/osm/ingress
   prune: true
   validation: client

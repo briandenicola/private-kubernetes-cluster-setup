@@ -8,6 +8,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/kured
+  path: ./apps/addons/kured
   prune: true
   validation: client
