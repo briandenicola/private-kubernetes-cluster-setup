@@ -32,4 +32,4 @@ spec:
   values:
     global.mtls.enabled: false
     global.logAsJson: true
-    global.ha.enabled: true
+    global.ha.enabled: false
