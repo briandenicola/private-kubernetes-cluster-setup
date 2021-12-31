@@ -26,7 +26,8 @@ data:
     [prometheus_data_collection_settings.cluster]
         interval = "1m"
         monitor_kubernetes_pods = true
-
+        monitor_kubernetes_pods_namespaces = ["dapr-system", "default", "traduire"]
+       
       # - prometheus.io/scrape: true
       # - prometheus.io/path: /stats/prometheus
       # - prometheus.io/port: 15020
