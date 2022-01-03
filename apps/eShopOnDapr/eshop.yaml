@@ -35,3 +35,7 @@ spec:
         name:  eshopondapr-ca369f
         namespace: flux-system
       interval: 1m
+  values:
+    gatewayDnsNameOrIP: eshop-api.bjdazure.tech
+    identityDnsNameOrIP: identity-api.bjdazure.tech
+    blazorDnsNameOrIP: shop.bjdazure.tech
