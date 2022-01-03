@@ -28,7 +28,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: eShopOnDapr
+      chart: eshopondapr
       version: '1.0.0'
       sourceRef:
         kind: HelmRepository
