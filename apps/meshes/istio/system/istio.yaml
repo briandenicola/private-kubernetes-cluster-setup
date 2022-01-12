@@ -47,7 +47,7 @@ spec:
         namespace: default
         enabled: true
         label:
-          aadpodidbinding: e416aa-istio-pod-identity
+          aadpodidbinding: e416ab-istio-pod-identity
         k8s:
           serviceAnnotations:
             service.beta.kubernetes.io/azure-load-balancer-internal: "true"
