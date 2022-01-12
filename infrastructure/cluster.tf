@@ -7,6 +7,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azurerm_role_assignment.aks_role_assignemnt_dns,
     azurerm_role_assignment.aks_role_assignemnt_msi
   ]
+  lifecycle {
+    ignore_changes = [
+      default_node_pool.0.node_count,
+    ]
+  }
   name                      = var.cluster_name
   location                  = azurerm_resource_group.k8s.location
   resource_group_name       = azurerm_resource_group.k8s.name
@@ -97,6 +102,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
+  lifecycle {
+    ignore_changes = [
+      node_count
+    ]
+  }
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vm_size               = "Standard_B4ms"
@@ -112,6 +122,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
+  lifecycle {
+    ignore_changes = [
+      node_count
+    ]
+  }
   name                  = "traduire"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vm_size               = "Standard_D4s_v5"
