@@ -111,20 +111,20 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   node_taints           = [ "reservedFor=eShopOnDapr:NoSchedule" ]
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
-  name                  = "traduire"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
-  vm_size               = "Standard_D4s_v5"
-  enable_auto_scaling   = true
-  mode                  = "User"
-  os_sku                = "CBLMariner"
-  os_disk_size_gb       = 30
-  node_count            = 3
-  min_count             = 3
-  max_count             = 6
+#resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
+#  name                  = "traduire"
+#  kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
+#  vm_size               = "Standard_D4s_v5"
+#  enable_auto_scaling   = true
+#  mode                  = "User"
+#  os_sku                = "CBLMariner"
+#  os_disk_size_gb       = 30
+#  node_count            = 3
+#  min_count             = 3
+#  max_count             = 6
 
-  node_taints           = [ "app=traduire:NoSchedule" ]
-}
+#  node_taints           = [ "app=traduire:NoSchedule" ]
+#}
 
 resource "null_resource" "config_setup_bf1e8069" {
   depends_on = [
