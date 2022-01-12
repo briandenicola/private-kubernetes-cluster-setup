@@ -109,7 +109,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   }
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
-  vm_size               = "Standard_B4ms"
+  vm_size               = "Standard_D4s_v5"
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
