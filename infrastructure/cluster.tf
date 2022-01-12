@@ -111,7 +111,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   node_taints           = [ "reservedFor=eShopOnDapr:NoSchedule" ]
 }
 
-resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
+resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   name                  = "traduire"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vm_size               = "Standard_D4s_v5"
