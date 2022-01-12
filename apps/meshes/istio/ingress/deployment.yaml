@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: ingress-ee85e06
-        aadpodidbinding: e416ab-istio-pod-identity 
+        aadpodidbinding: e416ac-istio-pod-identity 
     spec:
       containers:
       - name: ingress-ee85e06
