@@ -59,14 +59,14 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count              = var.agent_count
     availability_zones      = ["1", "2", "3"]
     vm_size                 = var.vm_size
-    os_disk_size_gb         = 30
+    os_disk_size_gb         = 40
     os_disk_type            = "Ephemeral"
     os_sku                  = "CBLMariner"
     vnet_subnet_id          = data.azurerm_subnet.k8s_subnet.id
     type                    = "VirtualMachineScaleSets"
     enable_auto_scaling     = "true"
     min_count               = 1
-    max_count               = 3
+    max_count               = 5
   }
 
   network_profile {
