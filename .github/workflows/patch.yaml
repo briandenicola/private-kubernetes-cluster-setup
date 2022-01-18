@@ -12,9 +12,10 @@ on:
         default: 'istio'
       
 jobs:
-  deploy:
-    name: Deploy Cluster
-    runs-on: self-hosted
+  upgrade-node:
+    name: Upgrade Cluster Nodepols
+    runs-on: ubuntu-latest
+
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -37,4 +38,4 @@ jobs:
     - name: Upgrade node images
       uses: Azure/cli@v1.0.0
       with:
-        inlineScript: whoami; sudo az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
+        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
