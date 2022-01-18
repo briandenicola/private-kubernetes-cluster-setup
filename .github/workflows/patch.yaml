@@ -10,21 +10,21 @@ on:
         description: 'Type of service mesh to include in the cluster - istio|osm'
         required: true
         default: 'istio'
-      
+
 jobs:
   upgrade-node:
     name: Update Cluster Node Image
     runs-on: ubuntu-latest
 
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
-        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
-        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
-
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
+      CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+      CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+      
     defaults:
       run:
         working-directory: './infrastructure'
@@ -38,4 +38,4 @@ jobs:
     - name: Upgrade node images
       uses: Azure/cli@v1.0.0
       with:
-        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
+        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
