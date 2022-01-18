@@ -37,4 +37,4 @@ jobs:
     - name: Upgrade node images
       uses: Azure/cli@v1.0.0
       with:
-        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
+        inlineScript: whoami; sudo az aks upgrade -g ${{ env.CLUSTER_RG }}} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
