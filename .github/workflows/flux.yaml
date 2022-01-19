@@ -1,0 +1,47 @@
+name: Bootstrap GitOps/Flux 
+on:
+  workflow_dispatch:
+    inputs:
+      cluster_name:
+        description: 'The name of the cluster to create - e416ac|f1dd32'
+        required: true
+        default: 'e416ac'
+      mesh_type:
+        description: 'Type of service mesh to include in the cluster - istio|osm'
+        required: true
+        default: 'istio'
+      
+jobs:
+  flux:
+    name: Install Flux Operator
+    runs-on: self-hosted
+    env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
+        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+        GITHUB_ACCOUNT: briandenicola
+        GITHUB_REPO: kubernetes-cluster-setup
+        REPO_BRANCH: master
+
+    defaults:
+      run:
+        working-directory: './infrastructure'
+
+    steps:
+    - name: "Checkout"
+      uses: actions/checkout@master
+
+    - name: Setup Flux
+      working-directory: './scripts'
+      run: |
+        export ACR_SPN_ID=${{ secrets.ACR_SPN_ID }}
+        export ACR_SPN_PASSWORD=${{ secrets.ACR_SPN_PASSWORD }}
+        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
+        
+        bash ./aks-flux-configuration.sh
