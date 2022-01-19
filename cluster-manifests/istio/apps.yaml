@@ -70,7 +70,7 @@ metadata:
 spec:
   interval: 30m0s
   dependsOn:
-    - name: istio-system
+    - name: dapr
   sourceRef:
     kind: GitRepository
     name: flux-system
