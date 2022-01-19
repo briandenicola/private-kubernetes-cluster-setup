@@ -55,7 +55,6 @@ spec:
       - name: istio-ingressgateway
         namespace: default
         enabled: true
-        replicaCount: 3
         label:
           aadpodidbinding: e416ac-istio-pod-identity
         k8s:
