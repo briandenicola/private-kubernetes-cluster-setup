@@ -1,7 +1,11 @@
 name: Creates K8s without a Mesh installed
 on:
   workflow_dispatch:
-      
+    cluster_name:
+      description: 'The name of the cluster to create - e416ac|f1dd32'
+      required: true
+      default: 'e616af'
+
 jobs:
   deploy:
     name: Deploy Cluster
@@ -16,8 +20,8 @@ jobs:
         ACR_NAME: ${{ secrets.ACR_NAME }}
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
         SERVICE_TYPE_MESH: none
-        CLUSTER_RG:  DevSub02_K8S-RG
-        CLUSTER_NAME:  bjdk8s01
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
+        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
         REPO_BRANCH: master
