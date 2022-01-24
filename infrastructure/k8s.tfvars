@@ -1,4 +1,3 @@
-cluster_name = "a97e03"
 agent_count = 3
 open_service_mesh_enabled = false # will enable OSM via Helm
 k8s_vnet_resource_group_name = "DevSub02_Network_RG"

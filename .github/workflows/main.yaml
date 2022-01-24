@@ -23,7 +23,7 @@ jobs:
         STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
-        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
@@ -47,16 +47,16 @@ jobs:
 
     - name: "Terraform Init"
       id: init
-      run: terraform init -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=${{ env.SERVICE_TYPE_MESH }}.terraform.tfstate"
+      run: terraform init -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=${{ env.CLUSTER_NAME }}.terraform.tfstate"
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="${{ env.SERVICE_TYPE_MESH }}.plan" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var "service_mesh_type=${{ env.SERVICE_TYPE_MESH }}" -var-file="${{ env.SERVICE_TYPE_MESH }}.tfvars"
+      run:  terraform plan -out="${{ env.CLUSTER_NAME }}.plan" -var "cluster_name=${{ env.CLUSTER_NAME }}" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var "service_mesh_type=${{ env.SERVICE_TYPE_MESH }}" -var-file="${{ env.SERVICE_TYPE_MESH }}.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"
       id: apply
-      run: terraform apply -auto-approve ${{ env.SERVICE_TYPE_MESH }}.plan
+      run: terraform apply -auto-approve ${{ env.CLUSTER_NAME }}.plan
 
     - name: Setup Pod Identity - Service Mesh
       working-directory: './scripts'
