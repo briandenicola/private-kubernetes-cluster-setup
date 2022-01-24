@@ -38,19 +38,28 @@ spec:
         zipkin:
           address: otel-collector.default.svc.cluster.local:9411
   components:
+    pilot:
+      k8s:
+        podDisruptionBudget:
+          minAvailable: 1
     egressGateways:
     - name: istio-egressgateway
       namespace: default
       enabled: true
+      k8s:
+        podDisruptionBudget:
+          minAvailable: 1
     ingressGateways:
-      - name: istio-ingressgateway
-        namespace: default
-        enabled: true
-        label:
-          aadpodidbinding: e416ac-istio-pod-identity
-        k8s:
-          serviceAnnotations:
-            service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+    - name: istio-ingressgateway
+      namespace: default
+      enabled: true
+      label:
+        aadpodidbinding: e416ac-istio-pod-identity
+      k8s:
+        podDisruptionBudget:
+          minAvailable: 1
+        serviceAnnotations:
+          service.beta.kubernetes.io/azure-load-balancer-internal: "true"
   addonComponents:
     prometheus:
       enabled: false
