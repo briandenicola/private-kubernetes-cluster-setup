@@ -11,7 +11,7 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-  alias           = "acr"
+  alias           = "core"
   features        {}
-  subscription_id = var.acr_subscription
+  subscription_id = var.core_subscription
 }

@@ -56,7 +56,7 @@ variable "load_balancer_sku" {
   description = "The type of load balancer to deploy as part of the AKS cluster"
 }
 
-variable "acr_subscription" {
+variable "core_subscription" {
   default     = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"
   description = "The subscription where Azure Container Repo lives"
 }
