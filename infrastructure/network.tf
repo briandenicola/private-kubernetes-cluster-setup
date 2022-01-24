@@ -24,11 +24,11 @@ data "azurerm_subnet" "private_endpoint_subnet" {
 data "azurerm_private_dns_zone" "aks_private_zone" {
   name                      = "privatelink.${var.location}.azmk8s.io"
   resource_group_name       = var.dns_resource_group_name
-  provider            = azurerm.core
+  provider                  = azurerm.core
 }
 
 data "azurerm_private_dns_zone" "privatelink_vaultcore_azure_net" {
   name                      = "privatelink.vaultcore.azure.net"
   resource_group_name       = var.dns_resource_group_name
-  provider            = azurerm.core
+  provider                  = azurerm.core
 }

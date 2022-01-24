@@ -34,7 +34,7 @@ resource "azurerm_role_assignment" "acr_pullrole_cluster" {
   scope                 = data.azurerm_container_registry.acr_repo.id
   role_definition_name  = "AcrPull"
   principal_id          = azurerm_user_assigned_identity.aks_identity.principal_id
-  provider              = azurerm.acr
+  provider              = azurerm.core
   skip_service_principal_aad_check = true
 }
 
@@ -42,7 +42,7 @@ resource "azurerm_role_assignment" "acr_pullrole_nodepool" {
   scope                = data.azurerm_container_registry.acr_repo.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_user_assigned_identity.aks_kubelet_identity.principal_id
-  provider             = azurerm.acr
+  provider             = azurerm.core
   skip_service_principal_aad_check = true
 }
 
