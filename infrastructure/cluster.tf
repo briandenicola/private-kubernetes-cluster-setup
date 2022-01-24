@@ -109,7 +109,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   }
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
-  vm_size               = "Standard_D4s_v5"
+  vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
@@ -121,6 +121,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   node_taints           = [ "reservedFor=eShopOnDapr:NoSchedule" ]
 }
 
+/*
 resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   lifecycle {
     ignore_changes = [
@@ -129,7 +130,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   }
   name                  = "traduire"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
-  vm_size               = "Standard_D4s_v5"
+  vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
@@ -140,12 +141,14 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
 
   node_taints           = [ "app=traduire:NoSchedule" ]
 }
+*/
 
 resource "null_resource" "config_setup_bf1e8069" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s,
-    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool,
-    azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
+    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool
+    //azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool,
+    //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
   provisioner "local-exec" {
     command = "./aks-post-creation-addons.sh"
