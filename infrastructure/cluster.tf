@@ -109,6 +109,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   }
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
+  vnet_subnet_id        = data.azurerm_subnet.k8s_subnet.id
   vm_size               = "Standard_D4_v3"
   enable_auto_scaling   = true
   mode                  = "User"
