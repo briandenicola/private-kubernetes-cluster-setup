@@ -22,6 +22,7 @@ fi
 #Create Namespace
 kubectl create ns ${NAMESPACE} || true
 kubectl label ns ${NAMESPACE} istio-injection=enabled
+kubectl -n ${NAMESPACE} create quota ns-limits --hard=requests.cpu=2,limits.cpu=4,requests.memory=10Gi,limits.memory=20Gi,count/gateways.networking.istio.io=0
 
 #Assign Pod Identity to Namespace
 CLUSTER_ID=`echo ${CLUSTER_DETAILS} | jq -r ".[].id"`
