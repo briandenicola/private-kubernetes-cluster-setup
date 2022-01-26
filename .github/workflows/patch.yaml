@@ -35,7 +35,12 @@ jobs:
       with:
         creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
 
-    - name: Upgrade node images
+    - name: Upgrade default node images
       uses: Azure/cli@v1.0.0
       with:
-        inlineScript: az aks upgrade -g ${{ env.CLUSTER_RG }} -n ${{ env.CLUSTER_NAME }} --node-image-only --yes
+        inlineScript: az aks nodepool upgrade -n default -g ${{ env.CLUSTER_RG }}  --cluster-name ${{ env.CLUSTER_NAME }} --node-image-only --max-surge 25% --yes 
+
+    - name: Upgrade eshop node images
+      uses: Azure/cli@v1.0.0
+      with:
+        inlineScript: az aks nodepool upgrade -n eshop -g ${{ env.CLUSTER_RG }} --cluster-name ${{ env.CLUSTER_NAME }} --node-image-only --max-surge 25% --yes
