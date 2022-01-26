@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: eshopondapr
   labels:
-    istio-injection: disabled
+    istio-injection: enabled
   annotations:
     scheduler.alpha.kubernetes.io/defaultTolerations: '[{"key": "reservedFor", "operator": "Equal", "effect": "NoSchedule", "value": "eShopOnDapr"}]'
 ---
@@ -29,7 +29,7 @@ spec:
   chart:
     spec:
       chart: eshopondapr
-      version: '1.0.1'
+      version: '2.0.0'
       sourceRef:
         kind: HelmRepository
         name:  eshopondapr-ca369f
@@ -39,3 +39,4 @@ spec:
     gatewayDnsNameOrIP: eshop-api.bjdazure.tech
     identityDnsNameOrIP: identity-api.bjdazure.tech
     blazorDnsNameOrIP: shop.bjdazure.tech
+    istio_gateway: default/default-bjdazure-tech-gw
