@@ -3,28 +3,40 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
 
 ## Azure Resources Created
 * Private AKS Cluster with Azure AD Pod Identity and KeyVault CSI Driver extensions
-* Jumpbox VM
-* KeyVault
-* Private Zones for AKS and Keyvault
+* KeyVault with Private Link
+
+## Ressourced Deploy Inside Cluster
+* Istio 
+    * Ingress Gateway with TLS certificate from Key Vault
+* Dapr
+* Kured
+* Demo Applications
+    * A Todo application with Azure AD B2C integration
+    * A Chat application with Azure Cognitive Services
+    * eShopOnDapr
 
 ## Required Existing Azure Resources
+_[This](https://github.com/briandenicola/kubernetes-cluster-setup/blob/master/infrastructure/prereqs/azuredeploy.template.json) can help setup some of the pre-reqs._
 * Virtual Network with subnets
     * kubernetes
     * private-endpoint
-    * servers
-    * AzureBastionSubnet
+* Azure Private Zone DNS attached the virtual network
 * Azure Container Repostiory 
 * Azure Blob Storage - Terraform state storage
-* Azure Bastion - to access jumpbox VM
 * Azure Firewall with proper [network and application rules](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic)
    *  Follow [this](https://github.com/briandenicola/cqrs/blob/master/Infrastructure/terraform/regional-firewall-rules.tf) example of using AKS with Azure Firewall using Terraforms
 * A Route Table with a route 0.0.0.0/0 to the Azure Firewall internal IP Address
 
+## Other Required Resources
+* A domain with Private DNS Zone 
+* A TLS certificate 
+
 # GitHub Actions
 ## Prerequisites
+* One time run - ./scripts/aks-preview-features.sh to register subscription features
 * A task runner deployed in the virtual network where the AKS cluster will be deployed.
-* The task runnre VM need to have a User Managed Identity assigned 
-* Update infrastructure/uat.tfvars with correct values
+* The task runner VM need to have a User Managed Identity assigned 
+* Update infrastructure/istio.tfvars with correct values
 * Create the follow Secrets in GitHub:
 
     | Secret Name | Secret Name |
@@ -32,11 +44,18 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
     | ARM_CLIENT_ID | ARM_CLIENT_SECRET | 
     | ARM_SUBSCRIPTION_ID | ARM_TENANT_ID | 
     | STORAGE_ACCESS_KEY | PAT_TOKEN |
+    | CERTIFICATE | CERT_PASSWORD |
 
 ## Steps
 1. Trigger Github Action to create the cluster. 
-1. Terraform will the call the aks-post-creation-configuration.sh script to add Pod Identity and KeyVault CSI Driver 
-1. GitHub Actions pipeline will then call the aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
+1. Terraform will the call the ./infrastructure/aks-post-creation-addons.sh script to add Pod Identity
+1. The pipeline will call the ./scripts/aks-pod-identity-creation.sh script to create a couple Pod Identities 
+1. The pipeline will call the ./scripts/aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
+1. The pipeline will call the ./scripts/aks-update-defender-workspace.sh script to update Microsoft Defender for Cloud Log Analytics Workspace
+
+## Post Creation Steps
+1. Create *.${domain} DNS record pointing to Istio Gateway Service IP
+1. Create gatewayDnsNameOrIP (eshop-api.${domain}), identityDnsNameOrIP (identity-api.${domain}) and blazorDnsNameOrIP (shop.${domain})
 
 # Manual Setup
 ## Prerequisites
@@ -54,9 +73,12 @@ A method of creating a private AKS cluster with Egress filtering using Terraform
     * Wait till the above features are enabled
 1. az provider register --namespace Microsoft.ContainerService
 1. cd infrastructure
-1. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="production.terraform.tfstate"
-1. terraform plan -out="production.plan" -var "resource_group_name=DevSub_K8S_RG" -var-file="{osm|istio}.tfvars"
-1. terraform apply -auto-approve "production.plan"
+1. terraform init -backend=true -backend-config="access_key=${access_key}" -backend-config="e534wq.terraform.tfstate"
+1. terraform plan -out="e534wq.plan" -var "cluster_name=e534wq" -var "resource_group_name=DevSub_K8S_e534wq_RG" -var "certificate_base64_encoded=${CERTIFICATE}"  -var "certificate_password=${CERTIFICATE_PASSWORD}" -var "service_mesh_type=istio" -var-file="istio.tfvars" 
+1. terraform apply -auto-approve "e534wq.plan"
+1. ./scripts/aks-pod-identity-creation.sh
+1. ./scripts/aks-flux-configuration.sh
+1. ./scripts/aks-update-defender-workspace.sh 
 
 ## GitOps BootStrap
 1. Access the Jump VM through Azure Bastion 
