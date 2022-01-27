@@ -45,22 +45,22 @@ spec:
   path: ./apps/istio-bookstore
   prune: true
   validation: client
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-#kind: Kustomization
-#metadata:
-#  name: traduire
-#  namespace: flux-system
-#spec:
-#  interval: 30m0s
-#  dependsOn:
-#    - name: istio-system
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./apps/traduire
-#  prune: true
-#  validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: traduire
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  dependsOn:
+    - name: istio-system
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./apps/traduire
+  prune: true
+  validation: client
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
