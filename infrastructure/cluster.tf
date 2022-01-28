@@ -4,15 +4,19 @@ data "azurerm_kubernetes_service_versions" "current" {
 
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
-    azurerm_role_assignment.aks_role_assignemnt_msi
+    azurerm_role_assignment.aks_role_assignemnt_dns,
+    azurerm_role_assignment.aks_role_assignemnt_msi,
+    azurerm_role_assignment.aks_role_assignemnt_nework,
+    azurerm_role_assignment.aks_role_assignemnt_nework_kubelet
   ]
   name                      = var.cluster_name
   location                  = azurerm_resource_group.k8s.location
   resource_group_name       = azurerm_resource_group.k8s.name
   node_resource_group       = "${azurerm_resource_group.k8s.name}_nodes"
-  dns_prefix                = var.cluster_name
+  dns_prefix_private_cluster = var.cluster_name
+  private_dns_zone_id       = data.azurerm_private_dns_zone.aks_private_zone.id
   kubernetes_version        = data.azurerm_kubernetes_service_versions.current.latest_version
-  private_cluster_enabled   = "false"
+  private_cluster_enabled   = "true"
   automatic_channel_upgrade = "rapid"
 
   role_based_access_control {
@@ -46,14 +50,20 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     os_disk_size_gb         = 30
     os_disk_type            = "Ephemeral"
     type                    = "VirtualMachineScaleSets"
+    vnet_subnet_id          = data.azurerm_subnet.k8s_subnet.id
     enable_auto_scaling     = "true"
     min_count               = 1
     max_count               = 3
   }
 
   network_profile {
+    dns_service_ip     = var.dns_service_ip
+    service_cidr       = var.service_cidr
+    docker_bridge_cidr = "172.17.0.1/16"
     network_plugin     = "kubenet"
     load_balancer_sku  = var.load_balancer_sku
+    outbound_type      = "userDefinedRouting"
+    network_policy     = "calico"
   }
 
   addon_profile {
