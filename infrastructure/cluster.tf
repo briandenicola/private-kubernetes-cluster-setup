@@ -144,7 +144,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
 }
 */
 
-resource "null_resource" "config_setup_bf1e8069" {
+resource "null_resource" "post_creation_steps" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s,
     azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool
@@ -152,13 +152,17 @@ resource "null_resource" "config_setup_bf1e8069" {
     //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
   provisioner "local-exec" {
-    command = "./aks-post-creation-addons.sh"
+    command = "./aks-post-creation-steps.sh"
     interpreter = ["bash"]
 
     environment = {
-      CLUSTER_NAME        = "${var.cluster_name}"
-      RG                  = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
+      CLUSTER_NAME          = "${var.cluster_name}"
+      RG                    = "${azurerm_resource_group.k8s.name}"
+      SUBSCRIPTION_ID       = "${data.azurerm_client_config.current.subscription_id}"
+      CORE_SUBSCRIPTION_ID  = "${var.core_subscription}"
     }
+  }
+  triggers = {
+    md5 = "${filemd5("./aks-post-creation-steps.sh")}"
   }
 }
