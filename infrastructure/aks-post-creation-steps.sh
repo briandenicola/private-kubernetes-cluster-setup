@@ -30,5 +30,5 @@ az account set -s ${CORE_SUBSCRIPTION_ID}
 az role assignment delete  --role "Private DNS Zone Contributor" --scope ${DNS_ZONE_ID} --assignee ${CLUSTER_IDENTITY_ID}
 
 #Remove Virtual Network Link (if present)
-az account set -s ${CORE_SUBSCRIPTION_ID}
-az network private-dns link vnet delete -n ${CLUSTER_NAME} -g ${DNS_RG} --zone ${DNS_ZONE} -y
+#az account set -s ${CORE_SUBSCRIPTION_ID}
+#az network private-dns link vnet delete -n ${CLUSTER_NAME} -g ${DNS_RG} --zone ${DNS_ZONE} -y
