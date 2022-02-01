@@ -1,32 +1,17 @@
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-kind: Kustomization
-metadata:
-  name: todo
-  namespace: flux-system
-spec:
-  interval: 30m0s
-  dependsOn:
-    - name: istio-system
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./apps/todo
-  prune: true
-  validation: client
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 kind: Kustomization
 metadata:
-  name: chat
+  name: eshopondapr
   namespace: flux-system
 spec:
   interval: 30m0s
   dependsOn:
-    - name: istio-system
+    - name: dapr
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/chat
+  path: ./apps/eShopOnDapr
   prune: true
   validation: client
 ---
@@ -45,35 +30,51 @@ spec:
   path: ./apps/istio-bookstore
   prune: true
   validation: client
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-kind: Kustomization
-metadata:
-  name: traduire
-  namespace: flux-system
-spec:
-  interval: 30m0s
-  dependsOn:
-    - name: istio-system
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./apps/traduire
-  prune: true
-  validation: client
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-kind: Kustomization
-metadata:
-  name: eshopondapr
-  namespace: flux-system
-spec:
-  interval: 30m0s
-  dependsOn:
-    - name: dapr
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./apps/eShopOnDapr
-  prune: true
-  validation: client
+#---
+#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+#kind: Kustomization
+#metadata:
+#  name: todo
+#  namespace: flux-system
+#spec:
+#  interval: 30m0s
+#  dependsOn:
+#    - name: istio-system
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  path: ./apps/todo
+#  prune: true
+#  validation: client
+#---
+#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+#kind: Kustomization
+#metadata:
+#  name: chat
+#  namespace: flux-system
+#spec:
+#  interval: 30m0s
+#  dependsOn:
+#    - name: istio-system
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  path: ./apps/chat
+#  prune: true
+#  validation: client
+#---
+#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+#kind: Kustomization
+#metadata:
+#  name: traduire
+#  namespace: flux-system
+#spec:
+#  interval: 30m0s
+#  dependsOn:
+#    - name: istio-system
+#  sourceRef:
+#    kind: GitRepository
+#    name: flux-system
+#  path: ./apps/traduire
+#  prune: true
+#  validation: client
