@@ -14,7 +14,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 | Azure Virtual Network (Core) | Azure Virtual Network (Kubernetes) |
 | A DNS server | [Private Endpoint DNS Configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#on-premises-workloads-using-a-dns-forwarder) |
 | Virtual Networks Peered |  Vnet DNS set to DNS Server |
-| Subnet for Kubernetes (at least /23) | Subnet for Private Endpoints |
+| Subnet for Kubernetes (at least /23) | Subnet for Private Endpoints named private-endpoints |
 | [Github Actions Runner VM](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) | Assign VM a User Assigned Manage Identity |
 | Azure Container Repository | Private EndPoint for ACR |
 | An Azure SPN | Granted AcrPush/AcrPull RBAC from ACR |
@@ -29,9 +29,9 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 # Steps
 1. Fork this repository and [eShopOnDapr](https://github.com/briandenicola/eShopOnDapr/) into your own Github Account
 1. Package eShopOnDapr and Push to your Azure Container Repository
-    1. cd deploy/k8s/helm/
-    1. helm package .
-    1. az acr helm push -n ${ACR} eshopondapr-2.0.0.tgz 
+    *. cd deploy/k8s/helm/
+    *. helm package .
+    *. az acr helm push -n ${ACR} eshopondapr-2.0.0.tgz 
 1. Create an Azure SPN to run the Terraform Code with Owner rights over AKS subscription
 1. Create the follow Secrets in GitHub:
     | Secret Name | Purpose |
