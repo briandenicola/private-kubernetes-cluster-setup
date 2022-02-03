@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - e2112rta|f1dd32'
+        description: 'The name of the cluster to create - e616aq|f1dd32'
         required: true
-        default: 'e2112rta'
+        default: 'e616aq'
       mesh_type:
         description: 'Type of service mesh to include in the cluster - istio|osm'
         required: true
@@ -25,7 +25,7 @@ jobs:
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
-        REPO_BRANCH: terraform-msi
+        REPO_BRANCH: master
 
     defaults:
       run:

@@ -15,7 +15,7 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: e2112rta-kv                                            
+    keyvaultName: e616aq-kv                                            
     objects:  |
       array:
         - |
