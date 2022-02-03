@@ -15,8 +15,8 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 | A DNS server | [Private Endpoint DNS Configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#on-premises-workloads-using-a-dns-forwarder) |
 | Virtual Networks Peered |  Vnet DNS set to DNS Server |
 | Subnet for Kubernetes (at least /23) | Subnet for Private Endpoints named private-endpoints |
-|A [Github Actions Runner VM](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) with: | A User Assigned Manage Identity | 
-| | Identity granted Owner permissions over each subscription |
+| A [Github Actions Runner VM](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) with: | A User Assigned Manage Identity | 
+|| Identity granted Owner permissions over each subscription |
 | Azure Container Repository | Private EndPoint for ACR |
 | An Azure SPN | Granted AcrPush/AcrPull RBAC from ACR |
 | Azure Firewall| [AKS Egress Policies](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic) |
