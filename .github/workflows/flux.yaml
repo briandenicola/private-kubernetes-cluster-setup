@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - e616aq|f1dd32'
+        description: 'The name of the cluster to create - e2112rt|f1dd32'
         required: true
-        default: 'e616aq'
+        default: 'e2112rt'
       mesh_type:
         description: 'Type of service mesh to include in the cluster - istio|osm'
         required: true
@@ -16,11 +16,8 @@ jobs:
     name: Install Flux Operator
     runs-on: self-hosted
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG

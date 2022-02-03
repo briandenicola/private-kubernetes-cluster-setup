@@ -3,20 +3,17 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - e616aq|f1dd32'
+        description: 'The name of the cluster to create - e2112rt|f1dd32'
         required: true
-        default: 'e616aq'
+        default: 'e2112rt'
      
 jobs:
   deploy:
     name: Deploy Cluster
     runs-on: self-hosted
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         ACR_NAME: ${{ secrets.ACR_NAME }}
         ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
@@ -35,10 +32,9 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@master
 
-    - name: "Log into Azure"
-      uses: Azure/login@v1.1
-      with:
-        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
+    - name: Login to Azure
+      run: |
+        az login --identity 
 
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1

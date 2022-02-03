@@ -7,11 +7,14 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features  {}
+  use_msi   = true
 }
 
 provider "azurerm" {
   alias           = "core"
+  use_msi         = true
   features        {}
+
   subscription_id = var.core_subscription
 }

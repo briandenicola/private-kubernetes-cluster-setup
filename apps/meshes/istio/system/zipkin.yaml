@@ -7,7 +7,7 @@ spec:
   provider: azure
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: e616aq-kv                                     
+    keyvaultName: e2112rt-kv                                     
     objects:  |
       array:
         - |
@@ -50,7 +50,7 @@ spec:
       labels:
         app: opentelemetry
         component: otel-collector
-        aadpodidbinding: e616aq-istio-pod-identity
+        aadpodidbinding: e2112rt-istio-pod-identity
     spec:
       containers:
       - name: otel-collector

@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - e616aq|f1dd32'
+        description: 'The name of the cluster to create - e2112rt|f1dd32'
         required: true
-        default: 'e616aq'
+        default: 'e2112rt'
       mesh_type:
         description: 'Type of service mesh to include in the cluster - istio|osm'
         required: true
@@ -17,8 +17,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
@@ -30,10 +28,9 @@ jobs:
         working-directory: './infrastructure'
 
     steps:
-    - name: "Log into Azure"
-      uses: Azure/login@v1.1
-      with:
-        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
+    - name: Login to Azure
+      run: |
+        az login --identity 
 
     - name: Upgrade default node images
       uses: Azure/cli@v1.0.0
