@@ -37,7 +37,8 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     | Secret Name | Purpose |
     --------------- | --------------- 
     | ARM_SUBSCRIPTION_ID | The AKS Subscription ID used for Terraform access | 
-    | ARM_TENANT_ID | The Azure AD tenant of the Azure SPN | 
+    | ARM_CLIENT_ID | The Client ID of the Github Managed Identity | 
+    | ARM_TENANT_ID | The Azure AD tenant of the Github Managed Identity | 
     | PAT_TOKEN | A GitHub Personal Access Token with Repo permissions | 
     | CERTIFICATE | The base64 encoded string of the TLS cert in PFX format |
     | CERT_PASSWORD | The password for the PFX file |
