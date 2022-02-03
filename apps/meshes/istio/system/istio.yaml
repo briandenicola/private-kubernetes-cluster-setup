@@ -54,7 +54,7 @@ spec:
       namespace: default
       enabled: true
       label:
-        aadpodidbinding: e2112rt-istio-pod-identity
+        aadpodidbinding: e2112rta-istio-pod-identity
       k8s:
         podDisruptionBudget:
           minAvailable: 1
