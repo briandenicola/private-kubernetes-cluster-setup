@@ -15,7 +15,8 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 | A DNS server | [Private Endpoint DNS Configuration](https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#on-premises-workloads-using-a-dns-forwarder) |
 | Virtual Networks Peered |  Vnet DNS set to DNS Server |
 | Subnet for Kubernetes (at least /23) | Subnet for Private Endpoints named private-endpoints |
-| [Github Actions Runner VM](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) | Assign VM a User Assigned Manage Identity |
+| A [Github Actions Runner VM](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) with: | A User Assigned Manage Identity | 
+|| Identity granted Owner permissions over each subscription |
 | Azure Container Repository | Private EndPoint for ACR |
 | An Azure SPN | Granted AcrPush/AcrPull RBAC from ACR |
 | Azure Firewall| [AKS Egress Policies](https://docs.microsoft.com/en-us/azure/aks/limit-egress-traffic) |
@@ -32,15 +33,12 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     *. cd deploy/k8s/helm/
     *. helm package .
     *. az acr helm push -n ${ACR} eshopondapr-2.0.0.tgz 
-1. Create an Azure SPN to run the Terraform Code with Owner rights over AKS subscription
 1. Create the follow Secrets in GitHub:
     | Secret Name | Purpose |
     --------------- | --------------- 
-    | ARM_CLIENT_ID | The client id of the SPN created above used for Terraform access |
-    | ARM_CLIENT_SECRET | The client secret of the SPN created above used for Terraform access |
     | ARM_SUBSCRIPTION_ID | The AKS Subscription ID used for Terraform access | 
-    | ARM_TENANT_ID | The Azure AD tenant of the Azure SPN | 
-    | STORAGE_ACCESS_KEY | The storage account key of the Azure Storage Account | 
+    | ARM_CLIENT_ID | The Client ID of the Github Managed Identity | 
+    | ARM_TENANT_ID | The Azure AD tenant of the Github Managed Identity | 
     | PAT_TOKEN | A GitHub Personal Access Token with Repo permissions | 
     | CERTIFICATE | The base64 encoded string of the TLS cert in PFX format |
     | CERT_PASSWORD | The password for the PFX file |

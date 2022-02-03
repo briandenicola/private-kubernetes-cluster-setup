@@ -12,20 +12,18 @@ jobs:
     name: Deploy Cluster
     runs-on: self-hosted
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        ACR_NAME: ${{ secrets.ACR_NAME }}
-        ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
-        SERVICE_TYPE_MESH: none
-        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
-        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
-        GITHUB_ACCOUNT: briandenicola
-        GITHUB_REPO: kubernetes-cluster-setup
-        REPO_BRANCH: master
+      ARM_USE_MSI: true 
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      ACR_NAME: ${{ secrets.ACR_NAME }}
+      ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
+      SERVICE_TYPE_MESH: none
+      CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
+      CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+      GITHUB_ACCOUNT: briandenicola
+      GITHUB_REPO: kubernetes-cluster-setup
+      REPO_BRANCH: master
 
     defaults:
       run:
@@ -35,10 +33,9 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@master
 
-    - name: "Log into Azure"
-      uses: Azure/login@v1.1
-      with:
-        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
+    - name: Login to Azure
+      run: |
+        az login --identity 
 
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1

@@ -7,11 +7,12 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features  {}
 }
 
 provider "azurerm" {
   alias           = "core"
   features        {}
+
   subscription_id = var.core_subscription
 }

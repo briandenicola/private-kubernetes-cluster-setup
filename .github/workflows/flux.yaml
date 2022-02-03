@@ -16,11 +16,8 @@ jobs:
     name: Install Flux Operator
     runs-on: self-hosted
     env:
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        STORAGE_ACCESS_KEY: ${{ secrets.storage_access_key }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
         CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG

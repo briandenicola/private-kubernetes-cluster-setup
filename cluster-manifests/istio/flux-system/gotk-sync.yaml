@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: master
+    branch: terraform-msi
   secretRef:
     name: flux-system
   url: ssh://git@github.com/briandenicola/kubernetes-cluster-setup

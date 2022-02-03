@@ -1,5 +1,6 @@
 terraform {
   backend "azurerm" {
+    resource_group_name  = "DevSub02_Storage_RG"
     storage_account_name = "bjdterraform001"
     container_name       = "plans"
   }
