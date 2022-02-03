@@ -12,17 +12,18 @@ jobs:
     name: Deploy Cluster
     runs-on: self-hosted
     env:
-        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-        GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        ACR_NAME: ${{ secrets.ACR_NAME }}
-        ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
-        SERVICE_TYPE_MESH: none
-        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
-        CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
-        GITHUB_ACCOUNT: briandenicola
-        GITHUB_REPO: kubernetes-cluster-setup
-        REPO_BRANCH: master
+      ARM_USE_MSI: true 
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      ACR_NAME: ${{ secrets.ACR_NAME }}
+      ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
+      SERVICE_TYPE_MESH: none
+      CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
+      CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
+      GITHUB_ACCOUNT: briandenicola
+      GITHUB_REPO: kubernetes-cluster-setup
+      REPO_BRANCH: terraform-msi
 
     defaults:
       run:

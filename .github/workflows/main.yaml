@@ -16,6 +16,7 @@ jobs:
     name: Deploy Cluster
     runs-on: self-hosted
     env:
+        ARM_USE_MSI: true 
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
