@@ -5,84 +5,13 @@ resource "azurerm_key_vault" "k8s" {
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
+  enable_rbac_authorization   = true
 
   sku_name = "standard"
 
   network_acls {
     bypass                    = "AzureServices"
     default_action            = "Deny"
-  }
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = azurerm_user_assigned_identity.aks_identity.principal_id 
-
-    secret_permissions = [
-      "list",
-      "get"
-    ]
-  }
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = azurerm_user_assigned_identity.aks_service_mesh_identity.principal_id 
-
-    secret_permissions = [
-      "list",
-      "get"
-    ]
-  
-    certificate_permissions = [
-      "list",
-      "get"
-    ]
-  }
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_user_assigned_identity.github_actions.principal_id
-
-    key_permissions = [
-      "get",
-      "list",
-      "create",
-      "decrypt",
-      "encrypt",
-      "sign",
-      "unwrapKey",
-      "verify",
-      "wrapKey",
-    ]
-
-    certificate_permissions = [
-      "create",
-      "get",
-      "delete",
-      "list",
-      "backup",
-      "deleteissuers",
-      "GetIssuers", 
-      "Import",
-      "ListIssuers", 
-      "ManageContacts",
-      "ManageIssuers",
-      "Purge",
-      "Recover",
-      "Restore",
-      "SetIssuers",
-      "Update"
-    ]
-
-    secret_permissions = [
-      "set",
-      "get",
-      "delete",
-      "list",
-      "backup",
-      "purge",
-      "recover",
-      "restore"
-    ]
   }
 }
 
