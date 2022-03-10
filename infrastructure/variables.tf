@@ -41,16 +41,6 @@ variable "vm_size" {
   default     = "Standard_DS3_v2"
 }
 
-variable "admin_user" {
-  description = "The local administrator on Linux"
-  default     = "manager"
-}
-
-variable "ssh_public_key" {
-  description = "The public key for the local administrator"
-  default     = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGUfWYw+OI3udPmdcIklEeLapnR/9boHLNOpHwglZ+fxv959rjmXyq+ZB55xfHQqjYgvUARLbYmvnBgIpDDI95fo2tepHjspvw4nmM1OwRCt+DwY7Y7Rmq/5LRIj6RvJe0V2TsS8xE0VI907zLoatqQ6cO9kedlbr9KY4ZrRXYHOZWapHqcliyI29lZIPGdmAFjmtdkngmu4sgss9V+2gwWghp+bnMXyyn96oBxeQjCNDiP/90yucjYgoDPHslkLXc7jgdfnb+oxa0iG9bHutzgTdQ7ZkCZOnd++ZJISIvKhIIJAfqaQNVY1B7cXzFDcTJbZxpptZvKbaUaWhRS1uJ briandenicola@harpocrates.denicolafamily.com"
-}
-
 variable "load_balancer_sku" {
   default     = "standard"
   description = "The type of load balancer to deploy as part of the AKS cluster"

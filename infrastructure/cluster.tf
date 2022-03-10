@@ -35,14 +35,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
   }
 
-  linux_profile {
-    admin_username = var.admin_user
-
-    ssh_key {
-      key_data = var.ssh_public_key
-    }
-  }
-
   identity {
     type                      = "UserAssigned"
     user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
