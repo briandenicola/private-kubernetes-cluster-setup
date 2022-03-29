@@ -300,7 +300,8 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "monitoring.azure.com"
+                                    "*.monitoring.azure.com",
+                                    "*.monitor.azure.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
