@@ -60,4 +60,5 @@ variable "k8s_subnet" {}
 variable "k8s_vnet_resource_group_name" {}
 variable "dns_service_ip" {}
 variable "service_cidr" {}
+variable "pod_cidr" {}
 variable "dns_resource_group_name" {}

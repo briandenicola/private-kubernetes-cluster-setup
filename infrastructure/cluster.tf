@@ -60,6 +60,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     dns_service_ip     = var.dns_service_ip
     service_cidr       = var.service_cidr
     docker_bridge_cidr = "172.17.0.1/16"
+    pod_cidr           = var.pod_cidr
     network_plugin     = "kubenet"
     load_balancer_sku  = var.load_balancer_sku
     outbound_type      = "userDefinedRouting"
