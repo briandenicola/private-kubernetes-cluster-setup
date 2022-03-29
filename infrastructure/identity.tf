@@ -54,13 +54,6 @@ resource "azurerm_role_assignment" "github_deployer_access" {
   skip_service_principal_aad_check = true
 }
 
-resource "azurerm_role_assignment" "cluster_identity_access" {
-  scope                = azurerm_key_vault.k8s.id
-  role_definition_name = "Key Vault Secrets User"
-  principal_id         = azurerm_user_assigned_identity.aks_identity.principal_id
-  skip_service_principal_aad_check = true
-}
-
 resource "azurerm_role_assignment" "istio_pod_secret_access" {
   scope                = azurerm_key_vault.k8s.id
   role_definition_name = "Key Vault Secrets User"
