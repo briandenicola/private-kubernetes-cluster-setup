@@ -127,7 +127,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
 }
 */
 
-resource "null_resource" "config_setup_bf1e8069" {
+resource "null_resource" "post_setup_config" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s,
     azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool

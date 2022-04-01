@@ -52,11 +52,3 @@ jobs:
     - name: "Terraform Apply"
       id: apply
       run: terraform apply -auto-approve ${{ env.CLUSTER_NAME }}.plan
-
-    - name: "Update Azure Defender Log Analytics Workspace"
-      working-directory: './scripts'
-      run: |
-        export SUBSCRIPTION_ID=${{ env.ARM_SUBSCRIPTION_ID }}
-        export CLUSTER_NAME=${{ env.CLUSTER_NAME }}
-
-        bash ./aks-update-defender-workspace.sh
