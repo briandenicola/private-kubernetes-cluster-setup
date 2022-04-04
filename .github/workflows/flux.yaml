@@ -20,7 +20,7 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
-        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+        CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
