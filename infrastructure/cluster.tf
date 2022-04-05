@@ -126,22 +126,3 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   node_taints           = [ "app=traduire:NoSchedule" ]
 }
 */
-
-resource "null_resource" "post_setup_config" {
-  depends_on = [
-    azurerm_kubernetes_cluster.k8s,
-    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool
-    //azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool,
-    //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
-  ]
-  provisioner "local-exec" {
-    command = "./aks-post-creation-addons.sh"
-    interpreter = ["bash"]
-
-    environment = {
-      CLUSTER_NAME        = "${var.cluster_name}"
-      RG                  = "${azurerm_resource_group.k8s.name}"
-      SUBSCRIPTION_ID     = "${data.azurerm_client_config.current.subscription_id}"
-    }
-  }
-}
