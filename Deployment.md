@@ -64,10 +64,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     | ssh_public_key | A public key for the admin user on the AKS nodes | |
 1. Trigger the 'Creates K8s with a Mesh installed' Github Action to create the cluster. 
     * Accept the default cluster name and Service Mesh
-1. The pipeline executes the Terraform code to setup Azure Infrastructure 
-    * Terraform executes the ./infrastructure/aks-post-creation-addons.sh script to add Pod Identity
 1. The pipeline calls the ./scripts/aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
-1. The pipeline calls the ./scripts/aks-update-defender-workspace.sh script to update Microsoft Defender for Cloud Log Analytics Workspace
 
 ## Post Creation Steps
 1. Create catch-all DNS record pointing to Istio Gateway Service IP for the custom domain
