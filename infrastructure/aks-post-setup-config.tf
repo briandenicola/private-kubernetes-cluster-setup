@@ -6,7 +6,7 @@ resource "azurerm_resource_group_template_deployment" "this" {
     //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
   
-  name                = "defender-for-cloud-update"
+  name                = "post-cluster-configuration"
   resource_group_name = azurerm_resource_group.k8s.name
   deployment_mode     = "Incremental"
   parameters_content  = jsonencode({
@@ -37,7 +37,8 @@ resource "azurerm_resource_group_template_deployment" "this" {
           "location": "[resourceGroup().location]",
           "properties": {
               "oidcIssuerProfile": {
-                "enabled": true 
+                "enabled": true
+              },
               "podIdentityProfile": {
                 "enabled": true
               },
