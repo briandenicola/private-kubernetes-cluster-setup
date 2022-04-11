@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/meshes/osm/system
+  path: ./apps/addons/meshes/osm/system
   prune: true
   validation: client
 ---
