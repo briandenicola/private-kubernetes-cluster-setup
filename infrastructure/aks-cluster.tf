@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   identity {
     type                      = "UserAssigned"
-    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
+    identity_ids              = [ azurerm_user_assigned_identity.aks_identity.id ]
   }
 
   kubelet_identity {
@@ -48,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   default_node_pool  {
     name                    = "default"
     node_count              = var.agent_count
-    availability_zones      = ["1", "2", "3"]
+    zones                   = ["1", "2", "3"]
     vm_size                 = var.vm_size
     os_disk_size_gb         = 40
     os_disk_type            = "Ephemeral"
