@@ -14,6 +14,7 @@ jobs:
     env:
       ARM_USE_MSI: true 
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      CORE_SUBSCRIPTION_ID: ${{ secrets.CORE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
       ACR_NAME: ${{ secrets.ACR_NAME }}
@@ -42,7 +43,7 @@ jobs:
 
     - name: "Terraform Init"
       id: init
-      run: terraform init -backend=true -backend-config="tenant_id=${{ env.ARM_TENANT_ID }}" -backend-config="subscription_id=${{ env.ARM_SUBSCRIPTION_ID }}" -backend-config="key=${{ env.CLUSTER_NAME }}.terraform.tfstate"
+      run: terraform init -backend=true -backend-config="tenant_id=${{ env.ARM_TENANT_ID }}" -backend-config="subscription_id=${{ env.CORE_SUBSCRIPTION_ID }}" -backend-config="key=${{ env.CLUSTER_NAME }}.terraform.tfstate"
       
     - name: "Terraform Plan"
       id: plan
