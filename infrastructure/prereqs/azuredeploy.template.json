@@ -1,14 +1,49 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    "parameters": {},
-    "variables": {},
+    "parameters": {
+        "azure_firewall_name": {
+            "defaultValue": "bjdproxy-southcentral",
+            "type": "String"
+        },
+        "default_nsg_name": {
+            "defaultValue": "default-nsg",
+            "type": "String"
+        },
+        "internet_nsg_name": {
+            "defaultValue": "internet-nsg",
+            "type": "String"
+        },
+        "public_ip_address_name": {
+            "defaultValue": "bjdproxy-southcentral-pip",
+            "type": "String"
+        },
+        "routetable_name": {
+            "defaultValue": "bjdproxy-southcentral-routetable",
+            "type": "String"
+        },
+        "firewallpolicy_name": {
+            "defaultValue": "bjdproxy-southcentral-policy",
+            "type": "String"
+        },
+        "virtual_network_name": {
+            "defaultValue": "DevSub02-Vnet-Sandbox-002",
+            "type": "String"
+        },
+        "location": {
+            "defaultValue": "[resourceGroup().location]",
+            "type": "string"
+        }
+    },
+    "variables": {
+
+    },
     "resources": [
         {
             "type": "Microsoft.Network/firewallPolicies",
             "apiVersion": "2020-11-01",
-            "name": "bjdproxy-80c86b-policy",
-            "location": "southcentralus",
+            "name": "[parameters('firewallpolicy_name')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "sku": {
                     "tier": "Standard"
@@ -21,56 +56,12 @@
             }
         },
         {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2020-11-01",
-            "name": "bjdproxy-80c86b-pip",
-            "location": "southcentralus",
-            "sku": {
-                "name": "Standard",
-                "tier": "Regional"
-            },
-            "properties": {
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Static",
-                "idleTimeoutInMinutes": 4,
-                "ipTags": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/routeTables",
-            "apiVersion": "2020-11-01",
-            "name": "bjdproxy-80c86b-routetable",
-            "location": "southcentralus",
-            "properties": {
-                "disableBgpRoutePropagation": true,
-                "routes": [
-                    {
-                        "name": "DefaultRoute",
-                        "properties": {
-                            "addressPrefix": "0.0.0.0/0",
-                            "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "10.5.254.4",
-                            "hasBgpOverride": false
-                        }
-                    },
-                    {
-                        "name": "P2SVPN",
-                        "properties": {
-                            "addressPrefix": "172.16.200.0/24",
-                            "nextHopType": "VirtualNetworkGateway",
-                            "hasBgpOverride": false
-                        }
-                    }
-                ]
-            }
-        },
-        {
             "type": "Microsoft.Network/firewallPolicies/ruleCollectionGroups",
             "apiVersion": "2020-11-01",
-            "name": "bjdproxy-80c86b-policy/default_rules_collection",
-            "location": "southcentralus",
+            "name": "[concat(parameters('firewallpolicy_name'), '/default_rules_collection')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/firewallPolicies', 'bjdproxy-80c86b-policy')]"
+                "[resourceId('Microsoft.Network/firewallPolicies', parameters('firewallpolicy_name'))]"
             ],
             "properties": {
                 "priority": 200,
@@ -116,7 +107,8 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "production.cloudflare.docker.com",
-                                    "*.docker.io"
+                                    "*.docker.io",
+                                    "download.docker.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -483,8 +475,8 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "bjd145.azurecr.io",
-                                    "bjd145.southcentralus.data.azurecr.io",
-                                    "bjd145.southsouthcentralus.data.azurecr.io"
+                                    "bjd145.centralus.data.azurecr.io",
+                                    "bjd145.southcentralus.data.azurecr.io"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -551,7 +543,8 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "centralus.api.cognitive.microsoft.com"
+                                    "centralus.api.cognitive.microsoft.com",
+                                    "southcentralus.api.cognitive.microsoft.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -573,7 +566,7 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "mmztkupa.b2clogin.com"
+                                    "mmztkupi.b2clogin.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -692,6 +685,79 @@
                                 ],
                                 "destinationAddresses": [],
                                 "sourceIpGroups": []
+                            },
+                            {
+                                "ruleType": "ApplicationRule",
+                                "name": "traduire",
+                                "protocols": [
+                                    {
+                                        "protocolType": "Https",
+                                        "port": 443
+                                    }
+                                ],
+                                "fqdnTags": [],
+                                "webCategories": [],
+                                "targetFqdns": [
+                                    "trad8b43xz-pubsub01.webpubsub.azure.com"
+                                ],
+                                "targetUrls": [],
+                                "terminateTLS": false,
+                                "sourceAddresses": [
+                                    "*"
+                                ],
+                                "destinationAddresses": [],
+                                "sourceIpGroups": []
+                            },
+                            {
+                                "ruleType": "ApplicationRule",
+                                "name": "Redhat",
+                                "protocols": [
+                                    {
+                                        "protocolType": "Https",
+                                        "port": 44
+                                    },
+                                    {
+                                        "protocolType": "Http",
+                                        "port": 80
+                                    }
+                                ],
+                                "fqdnTags": [],
+                                "webCategories": [],
+                                "targetFqdns": [
+                                    "cdn-ubi.redhat.com",
+                                    "mirrorlist.centos.org",
+                                    "centos.mirror.shastacoe.net"
+                                ],
+                                "targetUrls": [],
+                                "terminateTLS": false,
+                                "sourceAddresses": [
+                                    "*"
+                                ],
+                                "destinationAddresses": [],
+                                "sourceIpGroups": []
+                            },
+                            {
+                                "ruleType": "ApplicationRule",
+                                "name": "google-container-repo",
+                                "protocols": [
+                                    {
+                                        "protocolType": "Https",
+                                        "port": 443
+                                    }
+                                ],
+                                "fqdnTags": [],
+                                "webCategories": [],
+                                "targetFqdns": [
+                                    "gcr.io",
+                                    "storage.googleapis.com"
+                                ],
+                                "targetUrls": [],
+                                "terminateTLS": false,
+                                "sourceAddresses": [
+                                    "*"
+                                ],
+                                "destinationAddresses": [],
+                                "sourceIpGroups": []
                             }
                         ],
                         "name": "app_rule_collection",
@@ -782,35 +848,172 @@
                         ],
                         "name": "network_rule_collection",
                         "priority": 400
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('default_nsg_name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('internet_nsg_name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "HTTP",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 100,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
                     },
                     {
-                        "ruleCollectionType": "FirewallPolicyNatRuleCollection",
-                        "action": {
-                            "type": "Dnat"
-                        },
-                        "rules": [
-                            {
-                                "ruleType": "NatRule",
-                                "name": "todo",
-                                "translatedAddress": "10.5.6.98",
-                                "translatedPort": "443",
-                                "ipProtocols": [
-                                    "TCP"
-                                ],
-                                "sourceAddresses": [
-                                    "*"
-                                ],
-                                "sourceIpGroups": [],
-                                "destinationAddresses": [
-                                    "[reference(resourceId('Microsoft.Network/publicIPAddresses','bjdproxy-80c86b-pip')).ipAddress]"
-                                ],
-                                "destinationPorts": [
-                                    "443"
-                                ]
-                            }
-                        ],
-                        "name": "dnat_rule_collection",
-                        "priority": 100
+                        "name": "HTTPS",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 110,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowGatewayManager",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "GatewayManager",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 120,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowSshRdpOutbound",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "VirtualNetwork",
+                            "access": "Allow",
+                            "priority": 130,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "22",
+                                "3389"
+                            ],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "AllowAzureCloudOutbound",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "AzureCloud",
+                            "access": "Allow",
+                            "priority": 140,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkWatchers",
+            "apiVersion": "2020-11-01",
+            "name": "NetworkWatcher_centralus",
+            "location": "centralus",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/networkWatchers",
+            "apiVersion": "2020-11-01",
+            "name": "NetworkWatcher_southcentralus",
+            "location": "[parameters('location')]",
+            "properties": {}
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('public_ip_address_name')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('routetable_name')]",
+            "location": "[parameters('location')]",
+            "tags": {
+            },
+            "properties": {
+                "disableBgpRoutePropagation": true,
+                "routes": [
+                    {
+                        "name": "DefaultRoute",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "10.7.254.4",
+                            "hasBgpOverride": false
+                        }
+                    },
+                    {
+                        "name": "HomeNetwork",
+                        "properties": {
+                            "addressPrefix": "172.16.201.0/24",
+                            "nextHopType": "VirtualNetworkGateway",
+                            "hasBgpOverride": false
+                        }
                     }
                 ]
             }
@@ -818,11 +1021,11 @@
         {
             "type": "Microsoft.Network/azureFirewalls",
             "apiVersion": "2020-11-01",
-            "name": "bjdproxy-80c86b",
-            "location": "southcentralus",
+            "name": "[parameters('azure_firewall_name')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', 'bjdproxy-80c86b-pip')]",
-                "[resourceId('Microsoft.Network/firewallPolicies', 'bjdproxy-80c86b-policy')]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('public_ip_address_name'))]",
+                "[resourceId('Microsoft.Network/firewallPolicies', parameters('firewallpolicy_name'))]"
             ],
             "properties": {
                 "sku": {
@@ -833,13 +1036,13 @@
                 "additionalProperties": {},
                 "ipConfigurations": [
                     {
-                        "name": "bjdproxy-80c86b-pip",
+                        "name": "[concat(parameters('public_ip_address_name'), '-pip')]",
                         "properties": {
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', 'bjdproxy-80c86b-pip')]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('public_ip_address_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'DevSub01-Vnet-001', 'AzureFirewallSubnet')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtual_network_name'), 'AzureFirewallSubnet')]"
                             }
                         }
                     }
@@ -848,9 +1051,134 @@
                 "applicationRuleCollections": [],
                 "natRuleCollections": [],
                 "firewallPolicy": {
-                    "id": "[resourceId('Microsoft.Network/firewallPolicies', 'bjdproxy-80c86b-policy')]"
+                    "id": "[resourceId('Microsoft.Network/firewallPolicies', parameters('firewallpolicy_name'))]"
                 }
             }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('virtual_network_name')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('internet_nsg_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routetable_name'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.7.0.0/16"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": [
+                        "10.1.6.4"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "kubernetes",
+                        "properties": {
+                            "addressPrefix": "10.7.4.0/22",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {   
+                        "name": "AzureFirewallSubnet",
+                        "properties": {
+                            "addressPrefix": "10.7.254.0/24",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "AzureBastionSubnet",
+                        "properties": {
+                            "addressPrefix": "10.7.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('internet_nsg_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "private-endpoints",
+                        "properties": {
+                            "addressPrefix": "10.7.2.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "Servers",
+                        "properties": {
+                            "addressPrefix": "10.7.1.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [
+                ],
+                "enableDdosProtection": false
+            }
         }
-   ]
+    ]
 }
