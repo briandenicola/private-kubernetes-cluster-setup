@@ -1,6 +1,7 @@
 data "azurerm_user_assigned_identity" "github_actions" {
     name                = var.github_actions_identity_name
     resource_group_name = var.github_actions_identity_resource_group
+    provider            = azurerm.core
 }
 
 resource "azurerm_role_assignment" "github_actions" {

@@ -3,8 +3,8 @@ terraform {
     azurerm        = "~> 3.0.2"
   }
   backend "azurerm" {
-    resource_group_name  = "DevSub02_Storage_RG"
-    storage_account_name = "bjdterraform001"
+    resource_group_name  = "Core_Infra_Storage_RG"
+    storage_account_name = "bjdterraform002"
     container_name       = "plans"
   }
 }
