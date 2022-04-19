@@ -1,6 +1,6 @@
 variable "location" {
   description = "The Azure Region to deploy AKS"
-  default     = "centralus"
+  default     = "southcentralus"
 }
 
 variable "k8s_vnet_resource_group_name" {
