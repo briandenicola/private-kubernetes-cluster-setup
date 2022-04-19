@@ -1,8 +1,8 @@
 agent_count = 3
 open_service_mesh_enabled = false
 k8s_vnet_resource_group_name = "DevSub02_Network_RG"
-k8s_vnet = "DevSub02-Vnet-Sandbox-001"
-k8s_subnet = "kubernetesuat"
+k8s_vnet = "DevSub02-Vnet-Sandbox-002"
+k8s_subnet = "kubernetes"
 dns_service_ip = "192.168.0.10"
 service_cidr = "192.168.0.0/16"
 core_subscription = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"
