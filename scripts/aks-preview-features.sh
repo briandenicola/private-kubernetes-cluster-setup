@@ -11,7 +11,10 @@ az feature register --name AKS-AzureKeyVaultSecretsProvider --namespace Microsof
 az feature register --name AKS-OpenServiceMesh --namespace Microsoft.ContainerService
 az feature register --name DisableLocalAccountsPreview --namespace Microsoft.ContainerService
 az feature register --name EnableOIDCIssuerPreview --namespace Microsoft.ContainerService
+az feature register --name AKS-ExtensionManager --namespace Microsoft.ContainerService 
 
-az feature list -o table --query "[?contains(name, 'az feature register --name EnableOIDCIssuerPreview')].{Name:name,State:properties.state}"
+az feature list --namespace Microsoft.ContainerService -o table | grep -i Registering
 
+az provider register --namespace Microsoft.Kubernetes
 az provider register --namespace Microsoft.ContainerService
+az provider register --namespace Microsoft.KubernetesConfiguration
