@@ -25,6 +25,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   sku_tier                            = "Paid"
   azure_policy_enabled                = true
   open_service_mesh_enabled           = var.open_service_mesh_enabled
+  oidc_issuer_enabled                 = true 
   role_based_access_control_enabled   = true
 
   azure_active_directory_role_based_access_control {
