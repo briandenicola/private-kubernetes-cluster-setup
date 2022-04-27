@@ -12,6 +12,7 @@ az feature register --name AKS-OpenServiceMesh --namespace Microsoft.ContainerSe
 az feature register --name DisableLocalAccountsPreview --namespace Microsoft.ContainerService
 az feature register --name EnableOIDCIssuerPreview --namespace Microsoft.ContainerService
 az feature register --name AKS-ExtensionManager --namespace Microsoft.ContainerService 
+az feature register --name AKS-AzureDefender --namespace Microsoft.ContainerService
 
 az feature list --namespace Microsoft.ContainerService -o table | grep -i Registering
 

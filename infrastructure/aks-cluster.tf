@@ -75,6 +75,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
   }
 
+  microsoft_defender {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
+  }
+
   key_vault_secrets_provider {
     secret_rotation_enabled = true
     secret_rotation_interval = "2m"

@@ -12,9 +12,6 @@ resource "azurerm_resource_group_template_deployment" "this" {
   parameters_content  = jsonencode({
     "aksCluster"      = {
       value = var.cluster_name
-    },
-    "logAnalyticsId"  = {
-      value = azurerm_log_analytics_workspace.k8s.id
     }
   })
   template_content = <<TEMPLATE
@@ -23,9 +20,6 @@ resource "azurerm_resource_group_template_deployment" "this" {
       "contentVersion": "1.0.0.0",
       "parameters": {
         "aksCluster": {
-          "type": "string"
-        },
-        "logAnalyticsId": {
           "type": "string"
         }
       },
@@ -36,17 +30,8 @@ resource "azurerm_resource_group_template_deployment" "this" {
           "name": "[parameters('aksCluster')]", 
           "location": "[resourceGroup().location]",
           "properties": {
-              "oidcIssuerProfile": {
-                "enabled": true
-              },
               "podIdentityProfile": {
                 "enabled": true
-              },
-              "securityProfile": { 
-                "azureDefender": { 
-                  "enabled": true, 
-                  "logAnalyticsWorkspaceResourceId": "[parameters('logAnalyticsId')]"
-                }
               }
           }
         }

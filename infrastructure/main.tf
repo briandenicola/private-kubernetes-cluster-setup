@@ -1,6 +1,6 @@
 terraform {
   required_providers {
-    azurerm        = "~> 3.2.0"
+    azurerm        = "~> 3.3.0"
   }
   backend "azurerm" {
     resource_group_name  = "Core_Infra_Storage_RG"
