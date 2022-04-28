@@ -6,6 +6,7 @@ terraform {
     }
     azapi = {
       source = "Azure/azapi"
+      version = "0.1.1"
     }
   }
   backend "azurerm" {
@@ -13,6 +14,9 @@ terraform {
     storage_account_name = "bjdterraform002"
     container_name       = "plans"
   }
+}
+
+provider "azapi" {
 }
 
 provider "azurerm" {
