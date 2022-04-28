@@ -1,6 +1,12 @@
 terraform {
   required_providers {
-    azurerm        = "~> 3.3.0"
+    azurerm  = {
+      source = "hashicorp/azurerm"
+      version = "3.3.0"
+    }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
   backend "azurerm" {
     resource_group_name  = "Core_Infra_Storage_RG"
