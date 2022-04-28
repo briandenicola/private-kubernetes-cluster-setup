@@ -4,3 +4,4 @@ resources:
   - zipkin.yaml
   - container-azm-ms-agentconfig.yaml
   - istio.yaml
+  - istio-cluster-roles.yaml
