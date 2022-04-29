@@ -16,10 +16,10 @@ resource "azurerm_key_vault" "k8s" {
 }
 
 resource "azurerm_private_endpoint" "key_vault" {
-  name                      = "${var.cluster_name}-kv-endpoint"
-  resource_group_name       = azurerm_resource_group.k8s.name
-  location                  = azurerm_resource_group.k8s.location
-  subnet_id                 = data.azurerm_subnet.private_endpoint_subnet.id
+  name                        = "${var.cluster_name}-kv-endpoint"
+  resource_group_name         = azurerm_resource_group.k8s.name
+  location                    = azurerm_resource_group.k8s.location
+  subnet_id                   = data.azurerm_subnet.private_endpoint_subnet.id
   
   private_service_connection {
     name                           = "kv-${var.cluster_name}-kv-endpoint"
