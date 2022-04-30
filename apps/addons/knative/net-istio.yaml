@@ -30,7 +30,47 @@ rules:
   - apiGroups: ["networking.istio.io"]
     resources: ["virtualservices", "gateways", "destinationrules"]
     verbs: ["get", "list", "create", "update", "delete", "patch", "watch"]
-
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: knative-local-gateway
+  namespace: knative-serving
+  labels:
+    app.kubernetes.io/component: net-istio
+    app.kubernetes.io/name: knative-serving
+    app.kubernetes.io/version: "1.4.0"
+    networking.knative.dev/ingress-provider: istio
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 8081
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: knative-local-gateway
+  namespace: istio-system
+  labels:
+    app.kubernetes.io/component: net-istio
+    app.kubernetes.io/name: knative-serving
+    app.kubernetes.io/version: "1.4.0"
+    networking.knative.dev/ingress-provider: istio
+    experimental.istio.io/disable-gateway-port-translation: "true"
+spec:
+  type: ClusterIP
+  selector:
+    istio: ingressgateway
+  ports:
+    - name: http2
+      port: 80
+      targetPort: 8081
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -45,7 +85,8 @@ metadata:
     networking.knative.dev/ingress-provider: istio
 data:
   gateway.default.default-bjdazure-tech-gw: "istio-ingressgateway.default.svc.cluster.local"
-  enable-virtualservice-status: "true"
+  local-gateway.knative-serving.knative-local-gateway: "knative-local-gateway.istio-system.svc.cluster.local"
+  enable-virtualservice-status: "false"
 
 ---
 # Allows the Webhooks to be reached by kube-api with or without
