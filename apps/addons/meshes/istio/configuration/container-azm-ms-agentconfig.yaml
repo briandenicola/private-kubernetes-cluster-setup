@@ -54,8 +54,8 @@ data:
 
   integrations: |-
     [integrations.azure_network_policy_manager]
-        collect_basic_metrics = false
-        collect_advanced_metrics = false
+        collect_basic_metrics = true
+        collect_advanced_metrics = true
 
   agent-settings: |-
     [agent_settings.prometheus_fbit_settings]
