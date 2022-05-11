@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - b425nd|f1dd32'
+        description: 'The name of the cluster to create - default_cluster_name|f1dd32'
         required: true
-        default: 'b425nd'
+        default: 'default_cluster_name'
      
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
       CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
       GITHUB_ACCOUNT: briandenicola
       GITHUB_REPO: kubernetes-cluster-setup
-      REPO_BRANCH: cluster/b425nd
+      REPO_BRANCH: cluster/default_cluster_name
 
     defaults:
       run:
