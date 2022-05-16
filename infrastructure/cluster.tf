@@ -2,6 +2,10 @@ data "azurerm_kubernetes_service_versions" "current" {
   location = azurerm_resource_group.k8s.location
 }
 
+data "http" "myip" {
+  url = "http://checkip.amazonaws.com/"
+}
+
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
     azurerm_role_assignment.aks_role_assignemnt_dns,
@@ -9,31 +13,24 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     azurerm_role_assignment.aks_role_assignemnt_nework,
     azurerm_role_assignment.aks_role_assignemnt_nework_kubelet
   ]
+
   name                      = var.cluster_name
   location                  = azurerm_resource_group.k8s.location
   resource_group_name       = azurerm_resource_group.k8s.name
   node_resource_group       = "${azurerm_resource_group.k8s.name}_nodes"
+  kubernetes_version        = data.azurerm_kubernetes_service_versions.current.latest_version
   dns_prefix_private_cluster = var.cluster_name
   private_dns_zone_id       = data.azurerm_private_dns_zone.aks_private_zone.id
-  kubernetes_version        = data.azurerm_kubernetes_service_versions.current.latest_version
   private_cluster_enabled   = "true"
   automatic_channel_upgrade = "rapid"
-
-  role_based_access_control {
-    enabled = "true"
-  }
-
-  linux_profile {
-    admin_username = var.admin_user
-
-    ssh_key {
-      key_data = var.ssh_public_key
-    }
-  }
+  sku_tier                  = "Paid"
+  oidc_issuer_enabled       = true
+  //dns_prefix                = var.cluster_name
+  //api_server_authorized_ip_ranges = ["${chomp(data.http.myip.body)}/32"]
 
   identity {
     type                      = "UserAssigned"
-    user_assigned_identity_id = azurerm_user_assigned_identity.aks_identity.id
+    identity_ids              = [ azurerm_user_assigned_identity.aks_identity.id ]
   }
 
   kubelet_identity {
@@ -45,7 +42,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   default_node_pool  {
     name                    = "default"
     node_count              = var.agent_count
-    availability_zones      = ["1", "2", "3"]
     vm_size                 = var.vm_size
     os_disk_size_gb         = 30
     os_disk_type            = "Ephemeral"
@@ -67,17 +63,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_policy     = "calico"
   }
 
-  addon_profile {
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
-    }
-    azure_policy {
-      enabled                    = false
-    }
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
   }
 
-  tags = {
-    Environment = var.environment
+  microsoft_defender {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
   }
 }
