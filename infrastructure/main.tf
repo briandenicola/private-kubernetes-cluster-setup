@@ -1,8 +1,4 @@
 terraform {
-  backend "azurerm" {
-    storage_account_name = "bjdterraform001"
-    container_name       = "plans"
-  }
 }
 
 data "azurerm_client_config" "current" {}

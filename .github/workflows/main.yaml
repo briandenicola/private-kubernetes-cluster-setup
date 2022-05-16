@@ -25,21 +25,16 @@ jobs:
     - name: "Checkout"
       uses: actions/checkout@master
 
-    - name: "Log into Azure"
-      uses: Azure/login@v1.1
-      with:
-        creds: '{"clientId":"${{ env.ARM_CLIENT_ID }}","clientSecret":"${{ env.ARM_CLIENT_SECRET }}","subscriptionId":"${{ env.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ env.ARM_TENANT_ID }}"}'
-
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1
 
     - name: "Terraform Init"
       id: init
-      run: terraform init -backend=true -backend-config="access_key=${{ env.STORAGE_ACCESS_KEY }}" -backend-config="key=simple.terraform.tfstate"
+      run: terraform init
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="simple.plan" -var "resource_group_name=DevSub02_K8SUAT_RG" -var-file="uat.tfvars"
+      run:  terraform plan -out="simple.plan" -var "resource_group_name=DevSub02_K8S_kubenet_RG" -var-file="uat.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"
