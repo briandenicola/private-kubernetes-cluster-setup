@@ -1,0 +1,33 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "azure_firewall_name": {
+            "value": "bjdproxy-central"
+        },
+        "default_nsg_name": {
+            "value": "default-nsg"
+        },
+        "internet_nsg_name": {
+            "value": "internet-nsg"
+        },
+        "public_ip_address_name": {
+            "value": "bjdproxy-central-pip"
+        },
+        "routetable_name": {
+            "value": "bjdproxy-central-routetable"
+        },
+        "firewallpolicy_name": {
+            "value": "bjdproxy-central-policy"
+        },
+        "virtual_network_name": {
+            "value": "DevSub02-Vnet-Sandbox-001"
+        },
+        "virtual_network_cidr" :{
+            "value": "10.7"
+        },
+        "firewall_next_hop": {
+            "value": "10.7.254.4"
+        }
+    }
+}
