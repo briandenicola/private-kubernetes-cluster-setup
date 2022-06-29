@@ -1139,7 +1139,7 @@
                     {   
                         "name": "AzureFirewallSubnet",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.254.0/22')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.254.0/24')]",
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.KeyVault",
@@ -1156,7 +1156,7 @@
                     {
                         "name": "AzureBastionSubnet",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.0.0/22')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.0.0/24')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('internet_nsg_name'))]"
                             },
@@ -1176,7 +1176,7 @@
                     {
                         "name": "private-endpoints",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.2.0/22')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.2.0/24')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
                             },
@@ -1196,7 +1196,7 @@
                     {
                         "name": "Servers",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.1.0/22')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.1.0/24')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
                             },

@@ -24,10 +24,10 @@
             "value": "DevSub02-Vnet-Sandbox-002"
         },
         "virtual_network_cidr" :{
-            "value": "10.5"
+            "value": "10.7"
         },
         "firewall_next_hop": {
-            "value": "10.5.254.4"
+            "value": "10.7.254.4"
         }
     }
 }
