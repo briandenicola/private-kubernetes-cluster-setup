@@ -19,3 +19,5 @@ az feature list --namespace Microsoft.ContainerService -o table | grep -i Regist
 az provider register --namespace Microsoft.Kubernetes
 az provider register --namespace Microsoft.ContainerService
 az provider register --namespace Microsoft.KubernetesConfiguration
+
+az extension add --name k8s-extension

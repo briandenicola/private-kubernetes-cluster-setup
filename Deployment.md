@@ -6,7 +6,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 * An Azure subscription (two for a more Enterprise Scale-like deployment)
 * A GitHub respository 
 * A custom domain with a TLS certificate - the following will use bjdazure.tech and a cert from [Let's Encrypt](https://letsencrypt.org/)
-* Enable [AKS Preview Features](./preview-features.md) - Once time per subscription
+* Enable [AKS Preview Features](./scripts/aks-preview-features.sh) - Once time per subscription
 
 ## Required Existing Resources and Configuration
 | |  |
