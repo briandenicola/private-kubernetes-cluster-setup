@@ -78,6 +78,7 @@ variable "github_actions_identity_resource_group" {
 }
 
 variable "service_mesh_type" {
+  default     = "istio" 
   description = "The type of Service Mesh to install onto the cluster"
 }
 
