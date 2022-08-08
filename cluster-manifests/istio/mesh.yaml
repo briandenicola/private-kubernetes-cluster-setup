@@ -8,7 +8,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/addons/meshes/istio/crd
+  path: /apps/addons/istio/crd
   prune: true
   validation: client
   healthChecks:
@@ -29,7 +29,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ../apps/addons/istio/configuration
+  path: /apps/addons/istio/configuration
   prune: true
   validation: client
   healthChecks:
@@ -50,6 +50,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/addons/istio/gateway
+  path: /apps/addons/istio/gateway
   prune: true
   validation: client
