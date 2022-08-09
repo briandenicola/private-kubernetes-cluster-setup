@@ -82,10 +82,6 @@ variable "service_mesh_type" {
   description = "The type of Service Mesh to install onto the cluster"
 }
 
-variable "open_service_mesh_enabled" {
-  description = "Whether or not to enable Open Service Mesh add-on for AKS"
-}
-
 variable "certificate_name" {
   description = "The name of the certificate to use for TLS"
 }
