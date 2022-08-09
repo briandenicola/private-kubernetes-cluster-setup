@@ -15,7 +15,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   name                                = var.cluster_name
   location                            = azurerm_resource_group.k8s.location
   resource_group_name                 = azurerm_resource_group.k8s.name
-  node_resource_group                 = "${azurerm_resource_group.k8s.name}_nodes"
+  node_resource_group                 = replace(var.resource_group_name, "_RG", "_Nodes_RG")
   dns_prefix_private_cluster          = var.cluster_name
   kubernetes_version                  = data.azurerm_kubernetes_service_versions.current.latest_version
   private_cluster_enabled             = true
