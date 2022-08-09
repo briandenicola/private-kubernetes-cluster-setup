@@ -2,11 +2,11 @@ terraform {
   required_providers {
     azurerm  = {
       source = "hashicorp/azurerm"
-      version = "3.3.0"
+      version = "3.17.0"
     }
     azapi = {
       source = "Azure/azapi"
-      version = "0.1.1"
+      version = "0.4.0"
     }
   }
   backend "azurerm" {
@@ -36,7 +36,7 @@ resource "azurerm_resource_group" "k8s" {
   name                  = var.resource_group_name
   location              = var.location
   tags     = {
-    Application = "eshopOnContainers"
+    Application = "eshopOnDapr"
     Components  = "aks; key vault; "
     DeployedOn  = timestamp()
   }
