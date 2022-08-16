@@ -1,11 +1,12 @@
-apiVersion: source.toolkit.fluxcd.io/v1beta1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: todo-da27d5
+  name: todo
   namespace: flux-system
 spec:
-  interval: 1m
-  url: https://bjd145.azurecr.io/helm/v1/repo/
+  interval: 10m
+  type: oci
+  url: oci://bjd145.azurecr.io/helm
   passCredentials: true
   secretRef:
     name: https-credentials
@@ -13,7 +14,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: todo-da27d5
+  name: todo
   namespace: default
 spec:
   interval: 5m
@@ -23,9 +24,9 @@ spec:
       version: '0.1.4'
       sourceRef:
         kind: HelmRepository
-        name: todo-da27d5
+        name: todo
         namespace: flux-system
-      interval: 1m
+      interval: 10m
   values:
     hostname: 'todo.bjdazure.tech'
     todo_build_version: 'ab34b340dc9297d2312115c2375b99d998f6fa77'
