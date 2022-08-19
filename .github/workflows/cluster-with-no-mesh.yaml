@@ -13,6 +13,7 @@ jobs:
     runs-on: self-hosted
     env:
       ARM_USE_MSI: true 
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       CORE_SUBSCRIPTION_ID: ${{ secrets.CORE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -20,7 +21,7 @@ jobs:
       ACR_NAME: ${{ secrets.ACR_NAME }}
       ACR_SUBSCRIPTION_ID: ${{ secrets.ACR_SUBSCRIPTION_ID }}
       SERVICE_TYPE_MESH: none
-      CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.cluster_name }}_RG
+      CLUSTER_RG:  Apps02_K8S_${{ github.event.inputs.cluster_name }}_RG
       CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
       GITHUB_ACCOUNT: briandenicola
       GITHUB_REPO: kubernetes-cluster-setup
@@ -36,7 +37,7 @@ jobs:
 
     - name: Login to Azure
       run: |
-        az login --identity 
+        az login --identity -u ${{ env.ARM_CLIENT_ID }}
 
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1

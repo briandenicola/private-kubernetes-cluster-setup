@@ -21,7 +21,7 @@
             "value": "bjdproxy-southcentral-policy"
         },
         "virtual_network_name": {
-            "value": "DevSub02-Vnet-Sandbox-002"
+            "value": "DevSub02-Vnet-001"
         },
         "virtual_network_cidr" :{
             "value": "10.7"

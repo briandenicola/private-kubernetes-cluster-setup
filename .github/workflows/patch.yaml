@@ -17,10 +17,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       SERVICE_TYPE_MESH:  ${{ github.event.inputs.mesh_type }}
-      CLUSTER_RG:  DevSub02_K8S_${{ github.event.inputs.mesh_type }}_RG
+      CLUSTER_RG:  Apps02_K8S_${{ github.event.inputs.mesh_type }}_RG
       CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
       
     defaults:
@@ -30,7 +31,7 @@ jobs:
     steps:
     - name: Login to Azure
       run: |
-        az login --identity 
+        az login --identity -u ${{ env.ARM_CLIENT_ID }}
 
     - name: Upgrade default node images
       uses: Azure/cli@v1.0.0
