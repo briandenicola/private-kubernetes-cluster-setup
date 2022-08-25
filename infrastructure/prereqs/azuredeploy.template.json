@@ -1005,13 +1005,6 @@
             }
         },
         {
-            "type": "Microsoft.Network/networkWatchers",
-            "apiVersion": "2020-11-01",
-            "name": "[concat('NetworkWatcher_',parameters('location'))]",
-            "location": "[parameters('location')]",
-            "properties": {}
-        },
-        {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
             "name": "[parameters('public_ip_address_name')]",
