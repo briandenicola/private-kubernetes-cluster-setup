@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "azure_firewall_name": {
-            "value": "bjdproxy-southcentral"
+            "value": "bjdproxy-northcentral"
         },
         "default_nsg_name": {
             "value": "default-nsg"
@@ -12,22 +12,22 @@
             "value": "internet-nsg"
         },
         "public_ip_address_name": {
-            "value": "bjdproxy-southcentral-pip"
+            "value": "bjdproxy-northcentral-pip"
         },
         "routetable_name": {
-            "value": "bjdproxy-southcentral-routetable"
+            "value": "bjdproxy-northcentral-routetable"
         },
         "firewallpolicy_name": {
-            "value": "bjdproxy-southcentral-policy"
+            "value": "bjdproxy-northcentral-policy"
         },
         "virtual_network_name": {
-            "value": "DevSub02-Vnet-001"
+            "value": "DevSub02-Vnet-002"
         },
         "virtual_network_cidr" :{
-            "value": "10.7"
+            "value": "10.17"
         },
         "firewall_next_hop": {
-            "value": "10.7.254.4"
+            "value": "10.17.254.4"
         }
     }
 }

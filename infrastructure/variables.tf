@@ -57,7 +57,7 @@ variable "acr_resource_group" {
 }
 
 variable "acr_name" {
-  default     = "bjd145"
+  default     = "bjdcsa"
   description = "The Azure Container Repo name"
 }
 

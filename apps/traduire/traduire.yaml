@@ -15,7 +15,7 @@ metadata:
 spec:
   interval: 10m
   type: oci
-  url: oci://bjd145.azurecr.io/helm
+  url: oci://bjdcsa.azurecr.io/helm
   passCredentials: true
   secretRef:
     name: https-credentials

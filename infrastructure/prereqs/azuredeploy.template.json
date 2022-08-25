@@ -473,9 +473,9 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "bjd145.azurecr.io",
-                                    "bjd145.centralus.data.azurecr.io",
-                                    "bjd145.southcentralus.data.azurecr.io"
+                                    "bjdcsa.azurecr.io",
+                                    "bjdcsa.centralus.data.azurecr.io",
+                                    "bjdcsa.southcentralus.data.azurecr.io"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -1003,13 +1003,6 @@
                     }
                 ]
             }
-        },
-        {
-            "type": "Microsoft.Network/networkWatchers",
-            "apiVersion": "2020-11-01",
-            "name": "[concat('NetworkWatcher_',parameters('location'))]",
-            "location": "[parameters('location')]",
-            "properties": {}
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",

@@ -48,7 +48,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     | Secret Name |  Purpose | Default |
     --------------- | --------------- | --------------- 
     | location | The Azure Region for the resources| centralus |
-    | k8s_vnet_resource_group_name | The Resource Group (RG) where the Azure Vnet for AKS is deployed | DevSub02_Network_RG |
+    | k8s_vnet_resource_group_name | The Resource Group (RG) where the Azure Vnet for AKS is deployed | Apps02_Network_RG |
     | k8s_vnet | The AKS Virtual Network Name | DevSub02-Vnet-Sandbox-001 |
     | k8s_subnet | The subnet in k8s_vnet to deploy AKS | kubernetesuat |
     | dns_service_ip | The DNS IP for CoreDNS in AKS| 192.168.0.10 |
