@@ -54,7 +54,7 @@ spec:
       namespace: default
       enabled: true
       label:
-        aadpodidbinding: default_cluster_name-istio-pod-identity
+        aadpodidbinding: k43a68-istio-pod-identity
       k8s:
         podDisruptionBudget:
           minAvailable: 1

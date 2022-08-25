@@ -7,13 +7,13 @@ spec:
   provider: azure
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: default_cluster_name-kv                                     
+    keyvaultName: k43a68-kv                                     
     objects:  |
       array:
         - |
           objectName: otel-collector-config
           objectType: secret
-    tenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
+    tenantId: 16b3c013-d300-468d-ac64-7eda0820b6d3
 ---
 apiVersion: v1
 kind: Service
@@ -50,7 +50,7 @@ spec:
       labels:
         app: opentelemetry
         component: otel-collector
-        aadpodidbinding: default_cluster_name-istio-pod-identity
+        aadpodidbinding: k43a68-istio-pod-identity
     spec:
       containers:
       - name: otel-collector

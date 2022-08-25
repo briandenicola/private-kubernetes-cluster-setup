@@ -15,13 +15,13 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: default_cluster_name-kv                                            
+    keyvaultName: k43a68-kv                                            
     objects:  |
       array:
         - |
           objectName: wildcard-bjdazure-tech
           objectType: secret
-    tenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
+    tenantId: 16b3c013-d300-468d-ac64-7eda0820b6d3
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway

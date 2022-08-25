@@ -33,4 +33,4 @@ spec:
     keyvault_secret_name: 'chat-e0ce7b6-cogs-key'
     pod_identity: 'chat-e0ce7b6-identity'
     hostname: 'chat.bjdazure.tech'
-    tenant_id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    tenant_id: '16b3c013-d300-468d-ac64-7eda0820b6d3'

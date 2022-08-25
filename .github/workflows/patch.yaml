@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - default_cluster_name|f1dd32'
+        description: 'The name of the cluster to create - k43a68|f1dd32'
         required: true
-        default: 'default_cluster_name'
+        default: 'k43a68'
       mesh_type:
         description: 'Type of service mesh to include in the cluster - istio|osm'
         required: true
