@@ -18,7 +18,7 @@ spec:
     metadata:
       labels:
         app: ingress-ee85e06
-        aadpodidbinding: k43a69-istio-pod-identity 
+        aadpodidbinding: default_cluster_name-istio-pod-identity 
     spec:
       containers:
       - name: ingress-ee85e06
