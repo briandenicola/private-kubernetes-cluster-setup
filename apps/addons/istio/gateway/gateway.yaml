@@ -15,7 +15,7 @@ spec:
       key: tls.crt
   parameters:
     usePodIdentity: "true"                                        
-    keyvaultName: k43a68-kv                                            
+    keyvaultName: k43a69-kv                                            
     objects:  |
       array:
         - |

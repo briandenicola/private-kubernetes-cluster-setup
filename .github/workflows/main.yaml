@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       cluster_name:
-        description: 'The name of the cluster to create - k43a68|f1dd32'
+        description: 'The name of the cluster to create - k43a69|f1dd32'
         required: true
-        default: 'k43a68'
+        default: 'k43a69'
       
 jobs:
   deploy:
@@ -19,11 +19,11 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  istio
-        CLUSTER_RG:  Apps02_K8S_${{ github.event.inputs.cluster_name }}_RG
+        CLUSTER_RG:  Apps03_K8S_${{ github.event.inputs.cluster_name }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
-        REPO_BRANCH: cluster/k43a68
+        REPO_BRANCH: cluster/k43a69
 
     defaults:
       run:

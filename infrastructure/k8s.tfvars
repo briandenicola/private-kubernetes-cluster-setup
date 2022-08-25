@@ -1,4 +1,5 @@
 agent_count = 3
+location = "northcentralus"
 k8s_vnet_resource_group_name = "Apps02_Network_RG"
 k8s_vnet = "DevSub02-Vnet-001"
 k8s_subnet = "kubernetes"
