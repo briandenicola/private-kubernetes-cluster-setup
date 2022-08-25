@@ -19,7 +19,7 @@ jobs:
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
         GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         SERVICE_TYPE_MESH:  istio
-        CLUSTER_RG:  Apps03_K8S_${{ github.event.inputs.cluster_name }}_RG
+        CLUSTER_RG:  Apps02_K8S_${{ github.event.inputs.cluster_name }}_RG
         CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
         GITHUB_ACCOUNT: briandenicola
         GITHUB_REPO: kubernetes-cluster-setup
