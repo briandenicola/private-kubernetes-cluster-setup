@@ -42,7 +42,7 @@ jobs:
 
     - name: "Terraform Init"
       id: init
-      run: terraform init -backend=true -backend-config="tenant_id=${{ env.ARM_TENANT_ID }}" -backend-config="subscription_id=${{ env.CORE_SUBSCRIPTION_ID }}" -backend-config="key=${{ env.CLUSTER_NAME }}.terraform.tfstate"
+      run: terraform init -backend=true -backend-config="client_id=${{ env.MSI_CLIENT_ID }}" -backend-config="tenant_id=${{ env.ARM_TENANT_ID }}" -backend-config="subscription_id=${{ env.CORE_SUBSCRIPTION_ID }}" -backend-config="key=${{ env.CLUSTER_NAME }}.terraform.tfstate"
       
     - name: "Terraform Plan"
       id: plan
