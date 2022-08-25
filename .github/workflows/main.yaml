@@ -13,7 +13,7 @@ jobs:
     runs-on: self-hosted
     env:
         ARM_USE_MSI: true
-        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        MSI_CLIENT_ID: ${{ secrets.MSI_CLIENT_ID }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         CORE_SUBSCRIPTION_ID: ${{ secrets.CORE_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -35,7 +35,7 @@ jobs:
 
     - name: Login to Azure
       run: |
-        az login --identity -u ${{ env.ARM_CLIENT_ID }}
+        az login --identity -u ${{ env.MSI_CLIENT_ID }}
 
     - name: "Terraform Setup"
       uses: hashicorp/setup-terraform@v1
