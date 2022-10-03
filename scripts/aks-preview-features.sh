@@ -14,6 +14,7 @@ az feature register --name EnableOIDCIssuerPreview --namespace Microsoft.Contain
 az feature register --name AKS-ExtensionManager --namespace Microsoft.ContainerService 
 az feature register --name AKS-AzureDefender --namespace Microsoft.ContainerService
 az feature register --name AzureOverlayPreview --namespace Microsoft.ContainerService
+az feature register --name EnableWorkloadIdentityPreview --namespace Microsoft.ContainerService
 
 az feature list --namespace Microsoft.ContainerService -o table | grep -i Registering
 
