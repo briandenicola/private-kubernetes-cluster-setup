@@ -7,29 +7,29 @@ metadata:
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: kured
+  name: kubereboot
   namespace: flux-system
 spec:
   interval: 1m0s
-  url: https://weaveworks.github.io/kured
+  url: https://kubereboot.github.io/charts/
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: kured
-  namespace: kured-system
+  name: kured-release
+  namespace: flux-system
 spec:
   interval: 5m
+  targetNamespace: kured-system
   chart:
     spec:
       chart: kured
-      version: '2.10.0'
+      version: '4.0.2'
       sourceRef:
         kind: HelmRepository
-        name: kured
+        name: kubereboot
         namespace: flux-system
       interval: 1m
   values:
     nodeSelector:
       kubernetes.io/os: linux
-    
