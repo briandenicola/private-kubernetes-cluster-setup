@@ -3,18 +3,18 @@
 az extension add --name aks-preview
 az extension update --name aks-preview
 
-az feature register --name HTTPProxyConfigPreview --namespace Microsoft.ContainerService
-az feature register --name MultiAgentpoolPreview --namespace Microsoft.ContainerService
-az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
-az feature register --name RunCommandPreview --namespace Microsoft.ContainerService
-az feature register --name AKS-AzureKeyVaultSecretsProvider --namespace Microsoft.ContainerService
-az feature register --name AKS-OpenServiceMesh --namespace Microsoft.ContainerService
-az feature register --name DisableLocalAccountsPreview --namespace Microsoft.ContainerService
-az feature register --name EnableOIDCIssuerPreview --namespace Microsoft.ContainerService
-az feature register --name AKS-ExtensionManager --namespace Microsoft.ContainerService 
-az feature register --name AKS-AzureDefender --namespace Microsoft.ContainerService
-az feature register --name AzureOverlayPreview --namespace Microsoft.ContainerService
-az feature register --name EnableWorkloadIdentityPreview --namespace Microsoft.ContainerService
+az feature register --namespace Microsoft.ContainerService --name HTTPProxyConfigPreview 
+az feature register --namespace Microsoft.ContainerService --name MultiAgentpoolPreview
+az feature register --namespace Microsoft.ContainerService --name EnablePodIdentityPreview
+az feature register --namespace Microsoft.ContainerService --name RunCommandPreview
+az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
+az feature register --namespace Microsoft.ContainerService --name AKS-OpenServiceMesh
+az feature register --namespace Microsoft.ContainerService --name DisableLocalAccountsPreview
+az feature register --namespace Microsoft.ContainerService --name EnableOIDCIssuerPreview
+az feature register --namespace Microsoft.ContainerService --name AKS-ExtensionManager
+az feature register --namespace Microsoft.ContainerService --name AKS-AzureDefender
+az feature register --namespace Microsoft.ContainerService --name AzureOverlayPreview
+az feature register --namespace Microsoft.ContainerService --name EnableWorkloadIdentityPreview
 az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
@@ -24,3 +24,4 @@ az provider register --namespace Microsoft.ContainerService
 az provider register --namespace Microsoft.KubernetesConfiguration
 
 az extension add --name k8s-extension
+az extension add --name fleet
