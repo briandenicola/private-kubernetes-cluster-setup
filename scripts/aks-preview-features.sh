@@ -15,8 +15,9 @@ az feature register --name AKS-ExtensionManager --namespace Microsoft.ContainerS
 az feature register --name AKS-AzureDefender --namespace Microsoft.ContainerService
 az feature register --name AzureOverlayPreview --namespace Microsoft.ContainerService
 az feature register --name EnableWorkloadIdentityPreview --namespace Microsoft.ContainerService
+az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
 
-az feature list --namespace Microsoft.ContainerService -o table | grep -i Registering
+watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
 az provider register --namespace Microsoft.Kubernetes
 az provider register --namespace Microsoft.ContainerService
