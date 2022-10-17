@@ -8,9 +8,6 @@
         "default_nsg_name": {
             "value": "default-nsg"
         },
-        "internet_nsg_name": {
-            "value": "internet-nsg"
-        },
         "public_ip_address_name": {
             "value": "bjdproxy-southcentral-pip"
         },
