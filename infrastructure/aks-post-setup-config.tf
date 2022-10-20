@@ -10,11 +10,6 @@ resource "azapi_update_resource" "this" {
 
   body = jsonencode({
     properties = {
-      securityProfile = {
-        workloadIdentity = {
-          enabled = true
-        }
-      }
       podIdentityProfile = {
         enabled = true
       }

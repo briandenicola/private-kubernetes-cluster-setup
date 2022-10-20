@@ -27,7 +27,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   sku_tier                            = "Paid"
   azure_policy_enabled                = true
   open_service_mesh_enabled           = false
-  oidc_issuer_enabled                 = true 
+  oidc_issuer_enabled                 = true
+  workload_identity_enabled           = true
   role_based_access_control_enabled   = true
 
   azure_active_directory_role_based_access_control {
@@ -61,6 +62,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     enable_auto_scaling     = "true"
     min_count               = 1
     max_count               = 5
+    upgrade_settings {
+      max_surge             = "25%"
+    }
   }
 
   network_profile {
