@@ -1009,9 +1009,32 @@
                 },
                 "subnets": [
                     {
-                        "name": "kubernetes",
+                        "name": "kubernetes-nodes",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.4.0/22')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.3.0/24')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables', parameters('routetable_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "*"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "kubernetes-pods",
+                        "properties": {
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.5.0/23')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
                             },

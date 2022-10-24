@@ -1,7 +1,7 @@
 resource "azurerm_monitor_diagnostic_setting" "aks" {
-  name                        = "diag"
-  target_resource_id          = azurerm_kubernetes_cluster.k8s.id
-  log_analytics_workspace_id  = azurerm_log_analytics_workspace.k8s.id
+  name                       = "diag"
+  target_resource_id         = azurerm_kubernetes_cluster.k8s.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
 
   log {
     category = "kube-apiserver"
@@ -22,12 +22,12 @@ resource "azurerm_monitor_diagnostic_setting" "aks" {
     category = "kube-controller-manager"
     enabled  = true
   }
-  
+
   log {
     category = "kube-scheduler"
     enabled  = true
   }
-  
+
   log {
     category = "cluster-autoscaler"
     enabled  = true

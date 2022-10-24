@@ -7,8 +7,12 @@ variable "k8s_vnet_resource_group_name" {
   description = "The Resource Group name that contains the Vnet for AKS"
 }
 
-variable "k8s_subnet" {
-  description = "The subnet name where AKS will be deployed to"
+variable "k8s_nodes_subnet" {
+  description = "The subnet name where AKS nodes will be deployed to"
+}
+
+variable "k8s_pods_subnet" {
+  description = "The subnet name where AKS pods will be deployed to"
 }
 
 variable "k8s_vnet" {
@@ -41,10 +45,6 @@ variable "vm_size" {
   default     = "Standard_DS3_v2"
 }
 
-variable "load_balancer_sku" {
-  default     = "standard"
-  description = "The type of load balancer to deploy as part of the AKS cluster"
-}
 
 variable "core_subscription" {
   default     = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"
@@ -78,7 +78,7 @@ variable "github_actions_identity_resource_group" {
 }
 
 variable "service_mesh_type" {
-  default     = "istio" 
+  default     = "istio"
   description = "The type of Service Mesh to install onto the cluster"
 }
 
