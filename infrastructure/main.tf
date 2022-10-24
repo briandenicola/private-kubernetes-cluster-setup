@@ -1,11 +1,11 @@
 terraform {
   required_providers {
-    azurerm  = {
-      source = "hashicorp/azurerm"
+    azurerm = {
+      source  = "hashicorp/azurerm"
       version = "3.27.0"
     }
     azapi = {
-      source = "Azure/azapi"
+      source  = "Azure/azapi"
       version = "0.4.0"
     }
   }
@@ -20,12 +20,12 @@ provider "azapi" {
 }
 
 provider "azurerm" {
-  features  {}
+  features {}
 }
 
 provider "azurerm" {
-  alias           = "core"
-  features        {}
+  alias = "core"
+  features {}
 
   subscription_id = var.core_subscription
 }
@@ -33,9 +33,9 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_resource_group" "k8s" {
-  name                  = var.resource_group_name
-  location              = var.location
-  tags     = {
+  name     = var.resource_group_name
+  location = var.location
+  tags = {
     Application = "eshopOnDapr"
     Components  = "aks; key vault; "
     DeployedOn  = timestamp()
