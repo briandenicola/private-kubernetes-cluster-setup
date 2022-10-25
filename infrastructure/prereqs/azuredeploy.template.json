@@ -495,7 +495,8 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "ghcr.io",
-                                    "pkg-containers.githubusercontent.com"
+                                    "pkg-containers.githubusercontent.com",
+                                    "objects.githubusercontent.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
@@ -748,8 +749,7 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "gcr.io",
-                                    "storage.googleapis.com",
-                                    "objects.githubusercontent.com"
+                                    "storage.googleapis.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
