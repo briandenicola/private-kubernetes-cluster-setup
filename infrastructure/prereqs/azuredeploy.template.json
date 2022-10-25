@@ -1034,7 +1034,7 @@
                     {
                         "name": "kubernetes-pods",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.5.0/23')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.4.0/23')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
                             },

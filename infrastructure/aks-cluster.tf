@@ -57,7 +57,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   default_node_pool {
     name                = "default"
     node_count          = var.agent_count
-    zones               = ["1", "2", "3"]
+    zones               = var.location == "northcentralus" ? null : ["1", "2", "3"] 
     vm_size             = var.vm_size
     os_disk_size_gb     = 30
     os_disk_type        = "Ephemeral"
