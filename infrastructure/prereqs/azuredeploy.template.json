@@ -748,7 +748,8 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "gcr.io",
-                                    "storage.googleapis.com"
+                                    "storage.googleapis.com",
+                                    "objects.githubusercontent.com"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
