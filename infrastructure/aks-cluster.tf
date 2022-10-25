@@ -54,6 +54,17 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     max_unready_nodes = "1"
   }
 
+  maintenance_window {
+    allowed {
+      day               = "Friday"
+      hours             = [21, 22, 22] 
+    }
+    allowed {
+      day               = "Sunday"
+      hours             = [1, 2, 3, 4, 5] 
+    }
+  }
+
   default_node_pool {
     name                = "default"
     node_count          = var.agent_count
