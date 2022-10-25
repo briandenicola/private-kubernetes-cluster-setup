@@ -650,7 +650,8 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "weaveworks.github.io"
+                                    "weaveworks.github.io",
+                                    "kubereboot.github.io"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
