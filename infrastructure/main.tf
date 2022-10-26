@@ -31,6 +31,7 @@ provider "azurerm" {
 }
 
 data "azurerm_client_config" "current" {}
+data "azurerm_subscription" "current" {}
 
 resource "azurerm_resource_group" "k8s" {
   name     = var.resource_group_name
