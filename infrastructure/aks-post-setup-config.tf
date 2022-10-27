@@ -10,6 +10,11 @@ resource "azapi_update_resource" "this" {
 
   body = jsonencode({
     properties = {
+      securityProfile = {
+        imageCleaner = {
+          enabled = true
+        }
+      }
       podIdentityProfile = {
         enabled = true
       }
