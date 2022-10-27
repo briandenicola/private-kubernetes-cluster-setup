@@ -6,27 +6,26 @@ data:
   config-version:
     ver1
   log-data-collection-settings: |-
-    [log_collection_settings.schema]
-      # In the absence of this ConfigMap, the default value for containerlog_schema_version is "v1"
-      # Supported values for this setting are "v1","v2"
-      # See documentation at https://aka.ms/ContainerLogv2 for benefits of v2 schema over v1 schema before opting for "v2" schema
-      containerlog_schema_version = "v2"
-
     [log_collection_settings]
-       [log_collection_settings.stdout]
-          enabled = true
-          exclude_namespaces = ["kube-system"]
+      [log_collection_settings.stdout]
+        enabled = true
+        exclude_namespaces = ["kube-system","gatekeeper-system"]
 
-       [log_collection_settings.stderr]
-          enabled = true
-          exclude_namespaces = ["kube-system"]
+      [log_collection_settings.stderr]
+        enabled = true
+        exclude_namespaces = ["kube-system","gatekeeper-system"]
 
-       [log_collection_settings.env_var]
-          enabled = true
-       [log_collection_settings.enrich_container_logs]
-          enabled = false
-       [log_collection_settings.collect_all_kube_events]
-          enabled = false
+      [log_collection_settings.env_var]
+        enabled = true
+
+      [log_collection_settings.enrich_container_logs]
+        enabled = false
+        
+      [log_collection_settings.collect_all_kube_events]
+        enabled = false
+
+      [log_collection_settings.schema]
+        containerlog_schema_version = "v2"
 
   prometheus-data-collection-settings: |-
     [prometheus_data_collection_settings.cluster]
