@@ -6,6 +6,12 @@ data:
   config-version:
     ver1
   log-data-collection-settings: |-
+    [log_collection_settings.schema]
+      # In the absence of this ConfigMap, the default value for containerlog_schema_version is "v1"
+      # Supported values for this setting are "v1","v2"
+      # See documentation at https://aka.ms/ContainerLogv2 for benefits of v2 schema over v1 schema before opting for "v2" schema
+      containerlog_schema_version = "v2"
+
     [log_collection_settings]
        [log_collection_settings.stdout]
           enabled = true
