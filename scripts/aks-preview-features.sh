@@ -17,6 +17,7 @@ az feature register --namespace Microsoft.ContainerService --name AzureOverlayPr
 az feature register --namespace Microsoft.ContainerService --name EnableWorkloadIdentityPreview
 az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
 az feature register --namespace Microsoft.ContainerService --name AKS-PrometheusAddonPreview
+az feature register --namespace Microsoft.ContainerService --name EnableImageCleanerPreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
