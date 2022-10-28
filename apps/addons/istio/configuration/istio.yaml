@@ -38,6 +38,8 @@ spec:
         zipkin:
           address: otel-collector.default.svc.cluster.local:9411
   components:
+    cni:
+      enabled: true
     pilot:
       k8s:
         podDisruptionBudget:
