@@ -18,6 +18,7 @@ az feature register --namespace Microsoft.ContainerService --name EnableWorkload
 az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
 az feature register --namespace Microsoft.ContainerService --name AKS-PrometheusAddonPreview
 az feature register --namespace Microsoft.ContainerService --name EnableImageCleanerPreview
+az feature register --namespace Microsoft.ContainerService --name AKS-KedaPreview 
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
