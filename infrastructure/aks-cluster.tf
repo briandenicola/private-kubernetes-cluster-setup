@@ -81,7 +81,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     max_count                     = 5
     only_critical_addons_enabled  = true
     upgrade_settings {
-      max_surge                   = "25%"
+      max_surge                   = "33%"
     }
   }
 
