@@ -19,6 +19,18 @@ resource "azapi_update_resource" "this" {
       podIdentityProfile = {
         enabled = true
       }
+      storageProfile = {
+        blobCSIDriver = {
+          enabled = true
+        }
+        diskCSIDriver = {
+          enabled = true
+          version = "v2"
+        }
+        fileCSIDriver = {
+          enabled = false
+        }
+      }   
     }
   })
 }
