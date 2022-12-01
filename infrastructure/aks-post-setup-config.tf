@@ -25,7 +25,7 @@ resource "azapi_update_resource" "this" {
         }
         diskCSIDriver = {
           enabled = true
-          version = "v2"
+          version = "v1"
         }
         fileCSIDriver = {
           enabled = false
