@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ingress-ee85e06
+  name: default-ingress
   namespace: default
 spec:
   selector:
     matchLabels:
-      app: ingress-ee85e06
+      app: default-ingress
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -17,11 +17,11 @@ spec:
   template:
     metadata:
       labels:
-        app: ingress-ee85e06
+        app: default-ingress
         aadpodidbinding: default_cluster_name-istio-pod-identity 
     spec:
       containers:
-      - name: ingress-ee85e06
+      - name: default-ingress
         image: nginx:latest
         ports:
         - containerPort: 80
@@ -47,13 +47,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ingress-ee85e06-svc
+  name: default-ingress-svc
   namespace: default
   labels:
     version: "1.0"
 spec:
   selector:
-    app: ingress-ee85e06
+    app: default-ingress
   ports:
   - port: 80
     targetPort: 80

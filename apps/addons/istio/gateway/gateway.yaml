@@ -67,7 +67,7 @@ spec:
   http:
   - route:
     - destination:
-        host: ingress-ee85e06-svc
+        host: default-ingress-svc
         port:
           number: 80
   
