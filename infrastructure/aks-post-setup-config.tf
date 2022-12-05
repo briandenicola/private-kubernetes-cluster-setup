@@ -14,6 +14,7 @@ resource "azapi_update_resource" "this" {
       securityProfile = {
         imageCleaner = {
           enabled = true
+          intervalHours = 48
         }
       }
       podIdentityProfile = {
