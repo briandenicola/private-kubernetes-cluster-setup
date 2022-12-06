@@ -66,7 +66,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   default_node_pool {
-    name                          = "default"
+    name                          = "system"
     node_count                    = var.agent_count
     zones                         = var.location == "northcentralus" ? null : ["1", "2", "3"] 
     vm_size                       = var.vm_size
