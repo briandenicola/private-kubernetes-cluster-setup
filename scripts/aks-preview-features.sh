@@ -21,6 +21,9 @@ az feature register --namespace Microsoft.ContainerService --name EnableImageCle
 az feature register --namespace Microsoft.ContainerService --name AKS-KedaPreview 
 az feature register --namespace Microsoft.ContainerService --name EnableAPIServerVnetIntegrationPreview
 az feature register --namespace Microsoft.ContainerService --name EnableAzureDiskCSIDriverV2
+az feature register --namespace Microsoft.ContainerService --name AKS-Dapr
+az feature register --namespace Microsoft.ContainerService --name EnableMultipleStandardLoadBalancers
+az feature register --namespace Microsoft.ContainerService --name AKSNodelessPreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
