@@ -20,7 +20,7 @@ az feature register --namespace Microsoft.ContainerService --name AKS-Prometheus
 az feature register --namespace Microsoft.ContainerService --name EnableImageCleanerPreview
 az feature register --namespace Microsoft.ContainerService --name AKS-KedaPreview 
 az feature register --namespace Microsoft.ContainerService --name EnableAPIServerVnetIntegrationPreview
-#az feature register --namespace Microsoft.ContainerService --name EnableAzureDiskCSIDriverV2
+az feature register --namespace Microsoft.ContainerService --name EnableAzureDiskCSIDriverV2
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
