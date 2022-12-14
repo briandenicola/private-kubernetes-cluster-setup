@@ -31,7 +31,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   oidc_issuer_enabled               = true
   workload_identity_enabled         = true
   role_based_access_control_enabled = true
-
+  image_cleaner_enabled           = true
+  image_cleaner_interval_hours    = 48
+  
   azure_active_directory_role_based_access_control {
     managed                = true
     azure_rbac_enabled     = true
