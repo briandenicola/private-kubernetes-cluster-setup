@@ -38,7 +38,7 @@ resource "azurerm_resource_group" "k8s" {
   location = var.location
   tags = {
     Application = "eshopOnDapr"
-    Components  = "aks; key vault; "
+    Components  = "aks; key vault; istio"
     DeployedOn  = timestamp()
   }
 }
