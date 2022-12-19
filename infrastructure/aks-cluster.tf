@@ -110,6 +110,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     secret_rotation_interval = "2m"
   }
 
+  storage_profile {
+    blob_driver_enabled = true
+    disk_driver_enabled = true
+    disk_driver_version = "v2"
+    file_driver_enabled = true
+  }
+
   tags = {
     ServiceMeshType = var.service_mesh_type
   }
