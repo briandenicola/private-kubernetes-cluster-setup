@@ -13,27 +13,6 @@ resource "azapi_update_resource" "this" {
     properties = {
       autoUpgradeProfile = {
         nodeOSUpgradeChannel = "NodeImage"
-      }
-      securityProfile = {
-        imageCleaner = {
-          enabled = true
-          intervalHours = 48
-        }
-      }
-      podIdentityProfile = {
-        enabled = true
-      }
-      storageProfile = {
-        blobCSIDriver = {
-          enabled = true
-        }
-        diskCSIDriver = {
-          enabled = true
-          version = "v1"
-        }
-        fileCSIDriver = {
-          enabled = false
-        }
       }   
     }
   })
