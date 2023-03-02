@@ -31,9 +31,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   oidc_issuer_enabled               = true
   workload_identity_enabled         = true
   role_based_access_control_enabled = true
-  image_cleaner_enabled           = true
-  image_cleaner_interval_hours    = 48
-  
+  image_cleaner_enabled             = true
+  image_cleaner_interval_hours      = 48
+
   azure_active_directory_role_based_access_control {
     managed                = true
     azure_rbac_enabled     = true
@@ -42,8 +42,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   identity {
-    type                      = "UserAssigned"
-    identity_ids              = [azurerm_user_assigned_identity.aks_identity.id]
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.aks_identity.id]
   }
 
   kubelet_identity {
@@ -53,37 +53,37 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   auto_scaler_profile {
-    max_unready_nodes         = "1"
+    max_unready_nodes = "1"
   }
 
   maintenance_window {
     allowed {
-      day                     = "Friday"
-      hours                   = [21, 22, 22] 
+      day   = "Friday"
+      hours = [21, 22, 22]
     }
     allowed {
-      day                     = "Sunday"
-      hours                   = [1, 2, 3, 4, 5] 
+      day   = "Sunday"
+      hours = [1, 2, 3, 4, 5]
     }
   }
 
   default_node_pool {
-    name                          = "system"
-    node_count                    = var.agent_count
-    zones                         = var.location == "northcentralus" ? null : ["1", "2", "3"] 
-    vm_size                       = var.vm_size
-    os_disk_size_gb               = 30
-    os_disk_type                  = "Ephemeral"
-    os_sku                        = "CBLMariner"
-    vnet_subnet_id                = data.azurerm_subnet.k8s_nodes_subnet.id
-    pod_subnet_id                 = data.azurerm_subnet.k8s_pods_subnet.id
-    type                          = "VirtualMachineScaleSets"
-    enable_auto_scaling           = "true"
-    min_count                     = 1
-    max_count                     = 5
-    only_critical_addons_enabled  = true
+    name                         = "system"
+    node_count                   = var.agent_count
+    zones                        = var.location == "northcentralus" ? null : ["1", "2", "3"]
+    vm_size                      = var.vm_size
+    os_disk_size_gb              = 30
+    os_disk_type                 = "Ephemeral"
+    os_sku                       = "CBLMariner"
+    vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
+    pod_subnet_id                = data.azurerm_subnet.k8s_pods_subnet.id
+    type                         = "VirtualMachineScaleSets"
+    enable_auto_scaling          = "true"
+    min_count                    = 1
+    max_count                    = 5
+    only_critical_addons_enabled = true
     upgrade_settings {
-      max_surge                   = "33%"
+      max_surge = "33%"
     }
   }
 

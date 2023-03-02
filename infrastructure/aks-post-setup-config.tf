@@ -6,31 +6,13 @@ resource "azapi_update_resource" "this" {
     //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
 
-  type        = "Microsoft.ContainerService/managedClusters@2022-09-02-preview"
+  type        = "Microsoft.ContainerService/managedClusters@2022-11-02-preview"
   resource_id = azurerm_kubernetes_cluster.k8s.id
 
   body = jsonencode({
     properties = {
-      securityProfile = {
-        imageCleaner = {
-          enabled = true
-          intervalHours = 48
-        }
-      }
-      podIdentityProfile = {
-        enabled = true
-      }
-      storageProfile = {
-        blobCSIDriver = {
-          enabled = true
-        }
-        diskCSIDriver = {
-          enabled = true
-          version = "v1"
-        }
-        fileCSIDriver = {
-          enabled = false
-        }
+      autoUpgradeProfile = {
+        nodeOSUpgradeChannel = "NodeImage"
       }   
     }
   })
