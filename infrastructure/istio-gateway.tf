@@ -1,6 +1,7 @@
 resource "kubernetes_namespace" "istio-gateways" {
   depends_on = [
-    azurerm_kubernetes_cluster.k8s
+    azurerm_kubernetes_cluster.k8s,
+    azurerm_role_assignment.github_actions
   ]
   metadata {
     name = var.ingress_namespace

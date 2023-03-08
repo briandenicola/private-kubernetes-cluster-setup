@@ -1,6 +1,7 @@
 resource "kubernetes_namespace" "zipkin" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s
+    azurerm_role_assignment.github_actions
   ]
   metadata {
     name = var.zipkin_namespace
