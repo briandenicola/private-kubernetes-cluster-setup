@@ -40,4 +40,4 @@ spec:
     gatewayDnsNameOrIP: eshop-api.bjdazure.tech
     identityDnsNameOrIP: identity-api.bjdazure.tech
     blazorDnsNameOrIP: shop.bjdazure.tech
-    istio_gateway: default/default-bjdazure-tech-gw
+    istio_gateway: istio-gateways/default-bjdazure-tech-gw

@@ -19,7 +19,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name               = azurerm_resource_group.k8s.name
   node_resource_group               = replace(var.resource_group_name, "_RG", "_Nodes_RG")
   dns_prefix_private_cluster        = var.cluster_name
-  kubernetes_version                = data.azurerm_kubernetes_service_versions.current.latest_version
+  kubernetes_version                = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions)-2]
   private_cluster_enabled           = true
   private_dns_zone_id               = data.azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade         = "patch"
@@ -56,6 +56,10 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     max_unready_nodes = "1"
   }
 
+  workload_autoscaler_profile {
+    keda_enabled        = true
+  }
+  
   maintenance_window {
     allowed {
       day   = "Friday"
@@ -82,6 +86,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     min_count                    = 1
     max_count                    = 5
     only_critical_addons_enabled = true
+    
     upgrade_settings {
       max_surge = "33%"
     }

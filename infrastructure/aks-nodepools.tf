@@ -4,6 +4,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
       node_count
     ]
   }
+
   name                  = "apps"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vnet_subnet_id        = data.azurerm_subnet.k8s_nodes_subnet.id
@@ -28,6 +29,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
       node_count
     ]
   }
+
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vnet_subnet_id        = data.azurerm_subnet.k8s_nodes_subnet.id
