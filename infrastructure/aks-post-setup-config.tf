@@ -11,6 +11,9 @@ resource "azapi_update_resource" "this" {
 
   body = jsonencode({
     properties = {
+      podIdentityProfile = {
+        enabled = true
+      }
       autoUpgradeProfile = {
         nodeOSUpgradeChannel = "NodeImage"
       }   
