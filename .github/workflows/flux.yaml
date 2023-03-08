@@ -36,6 +36,6 @@ jobs:
       run: |
         export ACR_SPN_ID=${{ secrets.ACR_SPN_ID }}
         export ACR_SPN_PASSWORD=${{ secrets.ACR_SPN_PASSWORD }}
-        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
+        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests
         
         bash ./aks-flux-configuration.sh
