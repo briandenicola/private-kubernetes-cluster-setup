@@ -19,7 +19,7 @@ spec:
       labels:
         app: default-ingress-backend
     spec:
-      serviceAccountName: istio-ingress-sa-identity"
+      serviceAccountName: istio-ingress-sa-identity
       containers:
       - name: default-ingress-backend
         image: nginx:latest
