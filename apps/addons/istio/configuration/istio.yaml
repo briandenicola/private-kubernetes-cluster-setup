@@ -7,13 +7,6 @@ metadata:
     istio-operator-managed: Reconcile
     istio-injection: disabled
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: default
-  labels:
-    istio-injection: enabled
----
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
@@ -31,12 +24,12 @@ spec:
     defaultConfig:
       tracing:
         zipkin:
-          address: otel-collector.default.svc.cluster.local:9411
+          address: otel-collector.otel-system.svc.cluster.local:9411
   values:
     global:
       tracer:
         zipkin:
-          address: otel-collector.default.svc.cluster.local:9411
+          address: otel-collector.otel-system.svc.cluster.local:9411
   components:
     cni:
       enabled: true
@@ -46,17 +39,15 @@ spec:
           minAvailable: 1
     egressGateways:
     - name: istio-egressgateway
-      namespace: default
+      namespace: istio-gateways
       enabled: true
       k8s:
         podDisruptionBudget:
           minAvailable: 1
     ingressGateways:
     - name: istio-ingressgateway
-      namespace: default
+      namespace: istio-gateways
       enabled: true
-      label:
-        aadpodidbinding: default_cluster_name-istio-pod-identity
       k8s:
         podDisruptionBudget:
           minAvailable: 1

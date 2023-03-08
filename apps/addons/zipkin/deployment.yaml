@@ -1,42 +1,8 @@
-apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
-kind: SecretProviderClass
-metadata:
-  name: otel-collector-config
-  namespace: default
-spec:
-  provider: azure
-  parameters:
-    usePodIdentity: "true"                                        
-    keyvaultName: default_cluster_name-kv                                     
-    objects:  |
-      array:
-        - |
-          objectName: otel-collector-config
-          objectType: secret
-    tenantId: 16b3c013-d300-468d-ac64-7eda0820b6d3
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: otel-collector
-  namespace: default
-  labels:
-    app: opencesus
-    component: otel-collector
-spec:
-  ports:
-  - name: zipkin
-    port: 9411
-    protocol: TCP
-    targetPort: 9411
-  selector:
-    component: otel-collector
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: otel-collector
-  namespace: default
+  namespace: otel-system
   labels:
     app: opentelemetry
     component: otel-collector
@@ -50,8 +16,8 @@ spec:
       labels:
         app: opentelemetry
         component: otel-collector
-        aadpodidbinding: default_cluster_name-istio-pod-identity
     spec:
+      serviceAccountName: zipkin-sa-identity
       containers:
       - name: otel-collector
         image: otel/opentelemetry-collector-contrib-dev:latest
@@ -85,3 +51,20 @@ spec:
           readOnly: true
           volumeAttributes:
             secretProviderClass: "otel-collector-config"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  namespace: otel-system
+  labels:
+    app: opencesus
+    component: otel-collector
+spec:
+  ports:
+  - name: zipkin
+    port: 9411
+    protocol: TCP
+    targetPort: 9411
+  selector:
+    component: otel-collector

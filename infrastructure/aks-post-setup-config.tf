@@ -1,8 +1,8 @@
 resource "azapi_update_resource" "this" {
   depends_on = [
     azurerm_kubernetes_cluster.k8s,
-    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool
-    //azurerm_kubernetes_cluster_node_pool.default_app_node_pool
+    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool,
+    azurerm_kubernetes_cluster_node_pool.default_app_node_pool,
     //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
 
@@ -31,8 +31,8 @@ resource "azapi_resource" "maintenance_window" {
 
   depends_on = [
     azurerm_kubernetes_cluster.k8s,
-    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool
-    //azurerm_kubernetes_cluster_node_pool.default_app_node_pool
+    azurerm_kubernetes_cluster_node_pool.eshop_app_node_pool,
+    azurerm_kubernetes_cluster_node_pool.default_app_node_pool,
     //azurerm_kubernetes_cluster_node_pool.traduire_app_node_pool
   ]
 

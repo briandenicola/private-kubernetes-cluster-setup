@@ -45,7 +45,6 @@ variable "vm_size" {
   default     = "Standard_DS3_v2"
 }
 
-
 variable "core_subscription" {
   default     = "2deb88fe-eca8-499a-adb9-6e0ea8b6c1d2"
   description = "The subscription where Azure Container Repo lives"
@@ -89,6 +88,17 @@ variable "certificate_name" {
 variable "certificate_base64_encoded" {
   description = "The name of the certificate to use for TLS"
 }
+
 variable "certificate_password" {
   description = "The password for the certificate"
+}
+
+variable "ingress_namespace" {
+  description = "The namespace to deploy Istio gateway components to"
+  default     = "istio-gateways"
+}
+
+variable "zipkin_namespace" {
+  description = "The namespace to deploy Istio gateway components to"
+  default     = "otel-system"
 }
