@@ -16,7 +16,16 @@ resource "azapi_update_resource" "this" {
       }
       autoUpgradeProfile = {
         nodeOSUpgradeChannel = "NodeImage"
-      }   
+      } 
+      azureMonitorProfile = {
+        metrics = {
+          enabled = true,
+          kubeStateMetrics =  {
+            metricLabelsAllowlist = ""
+            metricAnnotationsAllowList = ""
+          }
+        }
+      }  
     }
   })
 }
