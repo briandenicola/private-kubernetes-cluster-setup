@@ -19,12 +19,12 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name               = azurerm_resource_group.k8s.name
   node_resource_group               = replace(var.resource_group_name, "_RG", "_Nodes_RG")
   dns_prefix_private_cluster        = var.cluster_name
-  kubernetes_version                = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions)-2]
+  kubernetes_version                = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions) - 2]
   private_cluster_enabled           = true
   private_dns_zone_id               = data.azurerm_private_dns_zone.aks_private_zone.id
   automatic_channel_upgrade         = "patch"
   local_account_disabled            = true
-  sku_tier                          = "Paid"
+  sku_tier                          = "Standard"
   azure_policy_enabled              = true
   open_service_mesh_enabled         = false
   run_command_enabled               = false
@@ -33,6 +33,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   role_based_access_control_enabled = true
   image_cleaner_enabled             = true
   image_cleaner_interval_hours      = 48
+
+  api_server_access_profile {
+    vnet_integration_enabled = true
+    subnet_id                = data.azurerm_subnet.k8s_apiserver_subnet.id
+  }
 
   azure_active_directory_role_based_access_control {
     managed                = true
@@ -57,9 +62,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   workload_autoscaler_profile {
-    keda_enabled        = true
+    keda_enabled = true
   }
-  
+
   maintenance_window {
     allowed {
       day   = "Friday"
@@ -80,26 +85,26 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     os_disk_type                 = "Ephemeral"
     os_sku                       = "CBLMariner"
     vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
-    pod_subnet_id                = data.azurerm_subnet.k8s_pods_subnet.id
     type                         = "VirtualMachineScaleSets"
     enable_auto_scaling          = "true"
     min_count                    = 1
     max_count                    = 5
     only_critical_addons_enabled = true
-    
+
     upgrade_settings {
       max_surge = "33%"
     }
   }
 
   network_profile {
-    dns_service_ip     = var.dns_service_ip
-    service_cidr       = var.service_cidr
-    docker_bridge_cidr = "172.17.0.1/16"
-    network_plugin     = "azure"
-    load_balancer_sku  = "standard"
-    outbound_type      = "userDefinedRouting"
-    network_policy     = "calico"
+    dns_service_ip      = var.dns_service_ip
+    service_cidr        = var.service_cidr
+    pod_cidr            = "192.168.0.0/16"
+    network_plugin      = "azure"
+    network_plugin_mode = "Overlay"
+    load_balancer_sku   = "standard"
+    outbound_type       = "userDefinedRouting"
+    network_policy      = "calico"
   }
 
   oms_agent {
