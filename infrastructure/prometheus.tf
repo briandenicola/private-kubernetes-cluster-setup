@@ -2,7 +2,7 @@ resource "azapi_resource" "azure_monitor_workspace" {
   type      = "microsoft.monitor/accounts@2021-06-03-preview"
   name      = "${var.cluster_name}-workspace"
   parent_id = azurerm_resource_group.k8s.id
-  location = azurerm_resource_group.k8s.location
+  location  = "southcentralus" #azurerm_resource_group.k8s.location
 
   body = jsonencode({
   })
@@ -52,8 +52,8 @@ resource "azurerm_monitor_data_collection_rule" "prometheus" {
 }
 
 resource "azapi_resource" "monitor_datacollection_rule_associations" {
-  type = "Microsoft.Insights/dataCollectionRuleAssociations@2021-09-01-preview"
-  name = "${var.cluster_name}-prometheus-datacollection-rules-association"
+  type      = "Microsoft.Insights/dataCollectionRuleAssociations@2021-09-01-preview"
+  name      = "${var.cluster_name}-prometheus-datacollection-rules-association"
   parent_id = azurerm_kubernetes_cluster.k8s.id
   body = jsonencode({
     properties = {
