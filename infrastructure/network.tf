@@ -9,8 +9,8 @@ data "azurerm_subnet" "k8s_nodes_subnet" {
   resource_group_name  = var.k8s_vnet_resource_group_name
 }
 
-data "azurerm_subnet" "k8s_pods_subnet" {
-  name                 = var.k8s_pods_subnet
+data "azurerm_subnet" "k8s_apiserver_subnet" {
+  name                 = var.k8s_apiserver_subnet
   virtual_network_name = var.k8s_vnet
   resource_group_name  = var.k8s_vnet_resource_group_name
 }

@@ -8,7 +8,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   name                  = "eshop"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vnet_subnet_id        = data.azurerm_subnet.k8s_nodes_subnet.id
-  pod_subnet_id         = data.azurerm_subnet.k8s_pods_subnet.id
   vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"
@@ -36,7 +35,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
   name                  = "apps"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vnet_subnet_id        = data.azurerm_subnet.k8s_nodes_subnet.id
-  pod_subnet_id         = data.azurerm_subnet.k8s_pods_subnet.id
   vm_size               = "Standard_DS2_v2"
   enable_auto_scaling   = true
   mode                  = "User"
@@ -60,7 +58,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   name                  = "traduire"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.k8s.id
   vnet_subnet_id        = data.azurerm_subnet.k8s_nodes_subnet.id
-  pod_subnet_id         = data.azurerm_subnet.k8s_pods_subnet.id
   vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"

@@ -1034,9 +1034,9 @@
                         }
                     },
                     {
-                        "name": "kubernetes-pods",
+                        "name": "kubernetes-apiserver",
                         "properties": {
-                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.4.0/23')]",
+                            "addressPrefix": "[concat(parameters('virtual_network_cidr'),'.0.0/28')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('default_nsg_name'))]"
                             },
@@ -1051,7 +1051,16 @@
                                     ]
                                 }
                             ],
-                            "delegations": [],
+                            "delegations": [
+                                {
+                                    "name": "Microsoft.ContainerService.managedClusters",
+                                    "id": "[concat(resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtual_network_name'), 'kubernetes-apiserver'), '/delegations/Microsoft.ContainerService.managedClusters')]",
+                                    "properties": {
+                                        "serviceName": "Microsoft.ContainerService/managedClusters"
+                                    },
+                                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                                }                  
+                            ],
                             "privateEndpointNetworkPolicies": "Disabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
                         }

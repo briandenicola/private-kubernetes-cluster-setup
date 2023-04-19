@@ -25,6 +25,7 @@ az feature register --namespace Microsoft.ContainerService --name AKS-Dapr
 az feature register --namespace Microsoft.ContainerService --name EnableMultipleStandardLoadBalancers
 az feature register --namespace Microsoft.ContainerService --name AKSNodelessPreview
 az feature register --namespace Microsoft.ContainerService --name NodeOsUpgradeChannelPreview
+az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
