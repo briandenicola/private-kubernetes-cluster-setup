@@ -85,7 +85,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     os_disk_type                 = "Ephemeral"
     os_sku                       = "CBLMariner"
     vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
-    pod_subnet_id                = data.azurerm_subnet.k8s_pods_subnet.id
     type                         = "VirtualMachineScaleSets"
     enable_auto_scaling          = "true"
     min_count                    = 1
