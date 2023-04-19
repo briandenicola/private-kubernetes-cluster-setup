@@ -11,8 +11,8 @@ variable "k8s_nodes_subnet" {
   description = "The subnet name where AKS nodes will be deployed to"
 }
 
-variable "k8s_pods_subnet" {
-  description = "The subnet name where AKS pods will be deployed to"
+variable "k8s_apiserver_subnet" {
+  description = "The subnet name where AKS master server will be projected into"
 }
 
 variable "k8s_vnet" {
