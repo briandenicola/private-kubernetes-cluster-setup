@@ -2,3 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - container-azm-ms-agentconfig.yaml
+  - ama-metrics-settings-configmap.yaml
+  - prometheus-config.yaml
