@@ -81,7 +81,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count                   = var.agent_count
     zones                        = var.location == "northcentralus" ? null : ["1", "2", "3"]
     vm_size                      = var.vm_size
-    os_disk_size_gb              = 30
+    os_disk_size_gb              = 100
     os_disk_type                 = "Ephemeral"
     os_sku                       = "CBLMariner"
     vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
@@ -89,6 +89,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     enable_auto_scaling          = "true"
     min_count                    = 1
     max_count                    = 5
+     kubelet_disk_type           = "Temporary"
     only_critical_addons_enabled = true
 
     upgrade_settings {

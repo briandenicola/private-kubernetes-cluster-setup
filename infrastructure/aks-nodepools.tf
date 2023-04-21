@@ -12,10 +12,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
-  os_disk_size_gb       = 30
+  os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
   max_count             = 6
+  kubelet_disk_type     = "Temporary"
 
   upgrade_settings {
     max_surge = "25%"
@@ -39,10 +40,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
-  os_disk_size_gb       = 30
+  os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
   max_count             = 6
+  kubelet_disk_type     = "Temporary"
 
   upgrade_settings {
     max_surge           = "25%"
@@ -62,10 +64,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   enable_auto_scaling   = true
   mode                  = "User"
   os_sku                = "CBLMariner"
-  os_disk_size_gb       = 30
+  os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
   max_count             = 6
+  kubelet_disk_type     = "Temporary"
 
   upgrade_settings {
     max_surge         = "25%"
