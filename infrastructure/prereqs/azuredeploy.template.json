@@ -803,6 +803,32 @@
                                 ],
                                 "destinationAddresses": [],
                                 "sourceIpGroups": []
+                            },
+                            {
+                                "ruleType": "ApplicationRule",
+                                "name": "AKS-Cluster-extensions",
+                                "protocols": [
+                                    {
+                                        "protocolType": "Https",
+                                        "port": 443
+                                    }
+                                ],
+                                "fqdnTags": [],
+                                "webCategories": [],
+                                "targetFqdns": [
+                                    "*.dp.kubernetesconfiguration.azure.com",
+                                    "arcmktplaceprod.azurecr.io",
+                                    "*.ingestion.msftcloudes.com",
+                                    "*.microsoftmetrics.com",
+                                    "marketplaceapi.microsoft.com"
+                                ],
+                                "targetUrls": [],
+                                "terminateTLS": false,
+                                "sourceAddresses": [
+                                    "*"
+                                ],
+                                "destinationAddresses": [],
+                                "sourceIpGroups": []
                             }
                         ],
                         "name": "app_rule_collection",
