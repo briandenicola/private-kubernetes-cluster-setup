@@ -26,6 +26,7 @@ az feature register --namespace Microsoft.ContainerService --name EnableMultiple
 az feature register --namespace Microsoft.ContainerService --name AKSNodelessPreview
 az feature register --namespace Microsoft.ContainerService --name NodeOsUpgradeChannelPreview
 az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
+az feature register --namespace Microsoft.ContainerService --name CiliumDataplanePreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
