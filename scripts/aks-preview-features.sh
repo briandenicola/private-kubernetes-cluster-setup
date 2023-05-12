@@ -3,12 +3,14 @@
 az extension add --name aks-preview
 az extension update --name aks-preview
 
-az feature register --namespace Microsoft.ContainerService --name HTTPProxyConfigPreview 
-az feature register --namespace Microsoft.ContainerService --name MultiAgentpoolPreview
-az feature register --namespace Microsoft.ContainerService --name EnablePodIdentityPreview
-az feature register --namespace Microsoft.ContainerService --name RunCommandPreview
-az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
-az feature register --namespace Microsoft.ContainerService --name AKS-OpenServiceMesh
+#Features Have Gone GA and no longer require preview flag
+#az feature register --namespace Microsoft.ContainerService --name HTTPProxyConfigPreview 
+#az feature register --namespace Microsoft.ContainerService --name MultiAgentpoolPreview
+#az feature register --namespace Microsoft.ContainerService --name EnablePodIdentityPreview
+#az feature register --namespace Microsoft.ContainerService --name RunCommandPreview
+#az feature register --namespace Microsoft.ContainerService --name AKS-OpenServiceMesh
+#az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
+
 az feature register --namespace Microsoft.ContainerService --name DisableLocalAccountsPreview
 az feature register --namespace Microsoft.ContainerService --name EnableOIDCIssuerPreview
 az feature register --namespace Microsoft.ContainerService --name AKS-ExtensionManager
@@ -27,6 +29,7 @@ az feature register --namespace Microsoft.ContainerService --name AKSNodelessPre
 az feature register --namespace Microsoft.ContainerService --name NodeOsUpgradeChannelPreview
 az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
 az feature register --namespace Microsoft.ContainerService --name CiliumDataplanePreview
+az feature register --namespace Microsoft.ContainerService --name TrustedAccessPreview
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
