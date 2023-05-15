@@ -11,26 +11,33 @@ az extension update --name aks-preview
 #az feature register --namespace Microsoft.ContainerService --name AKS-OpenServiceMesh
 #az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
 
-az feature register --namespace Microsoft.ContainerService --name DisableLocalAccountsPreview
-az feature register --namespace Microsoft.ContainerService --name EnableOIDCIssuerPreview
-az feature register --namespace Microsoft.ContainerService --name AKS-ExtensionManager
-az feature register --namespace Microsoft.ContainerService --name AKS-AzureDefender
-az feature register --namespace Microsoft.ContainerService --name AzureOverlayPreview
-az feature register --namespace Microsoft.ContainerService --name EnableWorkloadIdentityPreview
-az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
-az feature register --namespace Microsoft.ContainerService --name AKS-PrometheusAddonPreview
-az feature register --namespace Microsoft.ContainerService --name EnableImageCleanerPreview
-az feature register --namespace Microsoft.ContainerService --name AKS-KedaPreview 
-az feature register --namespace Microsoft.ContainerService --name EnableAPIServerVnetIntegrationPreview
-az feature register --namespace Microsoft.ContainerService --name EnableAzureDiskCSIDriverV2
-az feature register --namespace Microsoft.ContainerService --name AKS-Dapr
-az feature register --namespace Microsoft.ContainerService --name EnableMultipleStandardLoadBalancers
-az feature register --namespace Microsoft.ContainerService --name AKSNodelessPreview
-az feature register --namespace Microsoft.ContainerService --name NodeOsUpgradeChannelPreview
-az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
-az feature register --namespace Microsoft.ContainerService --name CiliumDataplanePreview
-az feature register --namespace Microsoft.ContainerService --name TrustedAccessPreview
-az feature register --namespace Microsoft.ContainerService --name KubeletDisk
+features=(
+    "DisableLocalAccountsPreview"
+    "EnableOIDCIssuerPreview"
+    "AKS-ExtensionManager"
+    "AKS-AzureDefender"
+    "AzureOverlayPreview"
+    "EnableWorkloadIdentityPreview"
+    "FleetResourcePreview"
+    "AKS-PrometheusAddonPreview"
+    "EnableImageCleanerPreview"
+    "AKS-KedaPreview"
+    "EnableAPIServerVnetIntegrationPreview"
+    "EnableAzureDiskCSIDriverV2"
+    "AKS-Dapr"
+    "EnableMultipleStandardLoadBalancers"
+    "AKSNodelessPreview"
+    "NodeOsUpgradeChannelPreview"
+    "AzureServiceMeshPreview"
+    "CiliumDataplanePreview"
+    "TrustedAccessPreview"
+    "KubeletDisk"
+)
+
+for feature in ${features[*]}
+do
+    az feature register --namespace Microsoft.ContainerService --name $feature
+done 
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
