@@ -64,7 +64,11 @@ kubelogin convert-kubeconfig -l azurecli
 
 ID=${RANDOM}
 PRIVATE_KEY_FILE=/tmp/id_rsa_${ID}
+PUBLIC_KEY_FILE=/tmp/id_rsa_${ID}.pub
 ssh-keygen -q -b 4096 -f ${PRIVATE_KEY_FILE} -t rsa
 
 az keyvault secret set --name ${KEY_VAULT_SECRET_NAME} --vault-name ${KEY_VAULT_NAME} --file ${PRIVATE_KEY_FILE} --encoding ascii
-az aks update  -g ${CLUSTER_RG} -n ${CLUSTER_NAME} --ssh-key-value ${PRIVATE_KEY_FILE}
+az aks update  -g ${CLUSTER_RG} -n ${CLUSTER_NAME} --ssh-key-value ${PUBLIC_KEY_FILE}
+
+rm -rf ${PUBLIC_KEY_FILE}
+rm -rf ${PRIVATE_KEY_FILE}
