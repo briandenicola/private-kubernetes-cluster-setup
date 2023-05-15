@@ -30,6 +30,7 @@ az feature register --namespace Microsoft.ContainerService --name NodeOsUpgradeC
 az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
 az feature register --namespace Microsoft.ContainerService --name CiliumDataplanePreview
 az feature register --namespace Microsoft.ContainerService --name TrustedAccessPreview
+az feature register --namespace Microsoft.ContainerService --name KubeletDisk
 
 watch -n 10 -g az feature list --namespace Microsoft.ContainerService -o table --query \"[?properties.state == \'Registering\']\"
 
