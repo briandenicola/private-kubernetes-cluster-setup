@@ -27,7 +27,7 @@ while (( "$#" )); do
       shift 2
       ;;
     -h|--help)
-      echo "Usage: ./aks-repave.sh -i {MSI_GUID} -s {SUBSCRIPTIO_GUID} -n {AKS_NAME} -g {AKS_RG} -v {KeyVault_NAME} --secret-name {SSH_SECRET_NAME}
+      echo "Usage: ./aks-repave.sh -i {MSI_GUID} -s {SUBSCRIPTION_GUID} -n {AKS_NAME} -g {AKS_RG} -v {KeyVault_NAME} --secret-name {SSH_SECRET_NAME}
         -i: The Managed Identity to access the Azure Resources
         -s: The Azure Subscription for the resources
         -n: The AKS name
