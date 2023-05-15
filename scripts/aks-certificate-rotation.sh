@@ -23,7 +23,7 @@ while (( "$#" )); do
         -i: The Managed Identity to access the Azure Resources
         -s: The Azure Subscription for the resources
         -n: The AKS name
-        -g: The Resource Group for AKS and Key Vault
+        -g: The Resource Group for AKS
       "
       exit 0
       ;;
