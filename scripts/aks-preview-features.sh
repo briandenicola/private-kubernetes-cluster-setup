@@ -32,6 +32,7 @@ features=(
     "CiliumDataplanePreview"
     "TrustedAccessPreview"
     "KubeletDisk"
+    "KataVMIsolationPreview"
 )
 
 for feature in ${features[*]}
