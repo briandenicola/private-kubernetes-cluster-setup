@@ -11,7 +11,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "eshop_app_node_pool" {
   vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"
-  os_sku                = "CBLMariner"
+  os_sku                = "Mariner"
   os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
@@ -39,7 +39,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
   vm_size               = "Standard_DS2_v2"
   enable_auto_scaling   = true
   mode                  = "User"
-  os_sku                = "CBLMariner"
+  os_sku                = "Mariner"
   os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
@@ -63,7 +63,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "traduire_app_node_pool" {
   vm_size               = "Standard_B4ms"
   enable_auto_scaling   = true
   mode                  = "User"
-  os_sku                = "CBLMariner"
+  os_sku                = "Mariner"
   os_disk_size_gb       = 100
   node_count            = 3
   min_count             = 3
