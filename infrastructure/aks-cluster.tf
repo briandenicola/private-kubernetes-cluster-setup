@@ -2,6 +2,10 @@ data "azurerm_kubernetes_service_versions" "current" {
   location = azurerm_resource_group.k8s.location
 }
 
+locals {
+  kubernetes_version = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions) - 2]
+}
+
 resource "azurerm_kubernetes_cluster" "k8s" {
   depends_on = [
     azurerm_role_assignment.aks_role_assignemnt_dns,
@@ -19,12 +23,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name               = azurerm_resource_group.k8s.name
   node_resource_group               = replace(var.resource_group_name, "_RG", "_Nodes_RG")
   dns_prefix_private_cluster        = var.cluster_name
-  kubernetes_version                = data.azurerm_kubernetes_service_versions.current.versions[length(data.azurerm_kubernetes_service_versions.current.versions) - 2]
+  kubernetes_version                = local.kubernetes_version
   private_cluster_enabled           = true
   private_dns_zone_id               = data.azurerm_private_dns_zone.aks_private_zone.id
-  automatic_channel_upgrade         = "patch"
-  local_account_disabled            = true
   sku_tier                          = "Standard"
+  automatic_channel_upgrade         = "patch"
+  node_os_channel_upgrade           = "NodeImage"
+  local_account_disabled            = true
   azure_policy_enabled              = true
   open_service_mesh_enabled         = false
   run_command_enabled               = false
@@ -57,40 +62,21 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     user_assigned_identity_id = azurerm_user_assigned_identity.aks_kubelet_identity.id
   }
 
-  auto_scaler_profile {
-    max_unready_nodes = "1"
-  }
-
-  workload_autoscaler_profile {
-    keda_enabled = true
-  }
-
-  maintenance_window {
-    allowed {
-      day   = "Friday"
-      hours = [21, 22, 22]
-    }
-    allowed {
-      day   = "Sunday"
-      hours = [1, 2, 3, 4, 5]
-    }
-  }
-
   default_node_pool {
-    name                         = "system"
-    node_count                   = var.agent_count
-    zones                        = var.location == "northcentralus" ? null : ["1", "2", "3"]
-    vm_size                      = var.vm_size
-    os_disk_size_gb              = 100
-    os_disk_type                 = "Ephemeral"
-    os_sku                       = "Mariner"
-    vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
-    type                         = "VirtualMachineScaleSets"
-    enable_auto_scaling          = "true"
-    min_count                    = 1
-    max_count                    = 5
-     kubelet_disk_type           = "Temporary"
-    only_critical_addons_enabled = true
+    name                          = "system"
+    node_count                    = var.agent_count
+    zones                         = var.location == "northcentralus" ? null : ["1", "2", "3"]
+    vm_size                       = var.vm_size
+    os_disk_size_gb               = 100
+    os_disk_type                  = "Ephemeral"
+    os_sku                        = "Mariner"
+    vnet_subnet_id                = data.azurerm_subnet.k8s_nodes_subnet.id
+    type                          = "VirtualMachineScaleSets"
+    enable_auto_scaling           = "true"
+    min_count                     = 1
+    max_count                     = 5
+    kubelet_disk_type             = "Temporary"
+    only_critical_addons_enabled  = true
 
     upgrade_settings {
       max_surge = "33%"
@@ -108,6 +94,50 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_policy      = "calico"
   }
 
+  maintenance_window {
+    allowed {
+      day   = "Friday"
+      hours = [21, 22, 22]
+    }
+    allowed {
+      day   = "Sunday"
+      hours = [1, 2, 3, 4, 5]
+    }
+  }
+
+  maintenance_window_auto_upgrade {
+    frequency = "Weekly"
+    interval  = 1
+    duration  = 4
+    day_of_week = "Friday"
+    utc_offset = "-06:00"
+    start_time = "20:00"
+  }
+
+  maintenance_window_node_os {
+    frequency = "Weekly"
+    interval  = 1
+    duration  = 4
+    day_of_week = "Friday"
+    utc_offset = "-06:00"
+    start_time = "20:00"
+  }
+
+  auto_scaler_profile {
+    max_unready_nodes = "1"
+  }
+
+  workload_autoscaler_profile {
+    keda_enabled = true
+  }
+
+  storage_profile {
+    blob_driver_enabled = true
+    disk_driver_enabled = true
+    disk_driver_version = "v2"
+    file_driver_enabled = true
+  }
+  
   oms_agent {
     log_analytics_workspace_id      = azurerm_log_analytics_workspace.k8s.id
     msi_auth_for_monitoring_enabled = true
@@ -117,16 +147,12 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.k8s.id
   }
 
+  monitor_metrics {
+  }
+
   key_vault_secrets_provider {
     secret_rotation_enabled  = true
     secret_rotation_interval = "2m"
-  }
-
-  storage_profile {
-    blob_driver_enabled = true
-    disk_driver_enabled = true
-    disk_driver_version = "v2"
-    file_driver_enabled = true
   }
 
   tags = {
