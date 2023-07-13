@@ -94,13 +94,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_policy      = "calico"
   }
 
-  maintenance_window {
-    allowed {
-      day   = "Sunday"
-      hours = [1, 2, 3, 4, 5]
-    }
-  }
-
   maintenance_window_auto_upgrade {
     frequency = "Weekly"
     interval  = 1
