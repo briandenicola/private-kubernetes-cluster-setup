@@ -33,6 +33,7 @@ features=(
     "TrustedAccessPreview"
     "KubeletDisk"
     "KataVMIsolationPreview"
+    "EnableBYOKOnEphemeralOSDiskPreview"
 )
 
 for feature in ${features[*]}
