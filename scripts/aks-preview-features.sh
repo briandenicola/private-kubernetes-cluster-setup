@@ -34,6 +34,7 @@ features=(
     "KubeletDisk"
     "KataVMIsolationPreview"
     "EnableBYOKOnEphemeralOSDiskPreview"
+    "NetworkObservabilityPreview"
 )
 
 for feature in ${features[*]}
