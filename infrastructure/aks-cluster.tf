@@ -96,10 +96,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
 
   maintenance_window {
     allowed {
-      day   = "Friday"
-      hours = [21, 22, 22]
-    }
-    allowed {
       day   = "Sunday"
       hours = [1, 2, 3, 4, 5]
     }
@@ -118,7 +114,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     frequency = "Weekly"
     interval  = 1
     duration  = 4
-    day_of_week = "Friday"
+    day_of_week = "Saturday"
     utc_offset = "-06:00"
     start_time = "20:00"
   }
