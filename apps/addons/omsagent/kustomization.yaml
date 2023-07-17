@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - container-azm-ms-agentconfig.yaml
   - ama-metrics-settings-configmap.yaml
-  - prometheus-config.yaml
+  #- prometheus-config.yaml
