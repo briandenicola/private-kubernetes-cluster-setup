@@ -60,10 +60,6 @@ variable "acr_name" {
   description = "The Azure Container Repo name"
 }
 
-variable "azure_rbac_group_object_id" {
-  description = "GUID of the AKS admin Group"
-}
-
 variable "dns_resource_group_name" {
   description = "The Resource Group name that contains Private DNS Zones"
 }

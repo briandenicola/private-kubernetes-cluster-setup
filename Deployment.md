@@ -57,7 +57,6 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     | dns_resource_group_name | The RG where the Private Zone DNS resources have been deployed to | Core_Infra_DNS_RG |
     | acr_resource_group |The RG where the Azure Container Repository has been deployed to | Core_Infra_ContainerRepo_RG |
     | acr_name | The name of the Azure Container Repository ||
-    | azure_rbac_group_object_id | The GUID of an Azure AD Group that will be granted AKS RBAC Cluster Admin role ||
     | github_actions_identity_name | The name of the managed identity for the Github Actions runner used to bootstrap flux | github-actions-identity |
     | github_actions_identity_resource_group |The RG for the managed identity for the Github Actions runner| Core_Infra_GithubActions_RG |
     | certificate_name | The name of the secret that will store the TLS wildcard certificate | wildcard_certificate |

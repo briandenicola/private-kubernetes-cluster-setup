@@ -48,7 +48,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     managed                = true
     azure_rbac_enabled     = true
     tenant_id              = data.azurerm_client_config.current.tenant_id
-    admin_group_object_ids = [var.azure_rbac_group_object_id]
   }
 
   identity {
