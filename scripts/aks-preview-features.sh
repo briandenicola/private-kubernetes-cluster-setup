@@ -10,15 +10,15 @@ az extension update --name aks-preview
 #az feature register --namespace Microsoft.ContainerService --name RunCommandPreview
 #az feature register --namespace Microsoft.ContainerService --name AKS-OpenServiceMesh
 #az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
+#az feature register --namespace Microsoft.ContainerService --name EnableOIDCIssuerPreview
+#az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
 
 features=(
     "DisableLocalAccountsPreview"
-    "EnableOIDCIssuerPreview"
     "AKS-ExtensionManager"
     "AKS-AzureDefender"
     "AzureOverlayPreview"
     "EnableWorkloadIdentityPreview"
-    "FleetResourcePreview"
     "AKS-PrometheusAddonPreview"
     "EnableImageCleanerPreview"
     "AKS-KedaPreview"
