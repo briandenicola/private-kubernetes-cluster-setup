@@ -37,6 +37,9 @@ features=(
     "EnableBYOKOnEphemeralOSDiskPreview"
     "NetworkObservabilityPreview"
     "EnableCloudControllerManager"
+    "EnableImageIntegrityPreview"
+    "AKS-AzurePolicyExternalData"
+    "KubeProxyConfigurationPreview"
 )
 
 for feature in ${features[*]}
