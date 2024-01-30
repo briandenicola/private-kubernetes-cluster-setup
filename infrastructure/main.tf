@@ -5,7 +5,7 @@ resource "azurerm_resource_group" "k8s" {
   name     = var.resource_group_name
   location = var.location
   tags = {
-    Application = "eshopOnDapr"
+    Application = "Private AKSKubernetes Demo"
     Components  = "aks; key vault; istio"
     DeployedOn  = timestamp()
   }

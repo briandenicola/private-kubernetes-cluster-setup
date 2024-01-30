@@ -85,9 +85,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   network_profile {
     dns_service_ip      = var.dns_service_ip
     service_cidr        = var.service_cidr
-    pod_cidr            = "192.168.0.0/16"
+    pod_cidr            = var.pod_cidr
     network_plugin      = "azure"
-    network_plugin_mode = "Overlay"
+    network_plugin_mode = "overlay"
     load_balancer_sku   = "standard"
     outbound_type       = "userDefinedRouting"
     network_policy      = "calico"

@@ -27,6 +27,10 @@ variable "service_cidr" {
   description = "The IP range for internal services in AKS. Should not overlap any other IP space "
 }
 
+variable "pod_cidr" {
+  description = "The IP range for internal pod in AKS. Should not overlap any other IP space "
+}
+
 variable "cluster_name" {
   description = "The cluster name"
 }
