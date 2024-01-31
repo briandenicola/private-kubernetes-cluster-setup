@@ -67,7 +67,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     zones                         = var.location == "northcentralus" ? null : ["1", "2", "3"]
     vm_size                       = var.vm_size
     os_disk_size_gb               = 100
-    os_disk_type                  = "Ephemeral"
+    #os_disk_type                  = "Ephemeral"
     os_sku                        = "Mariner"
     vnet_subnet_id                = data.azurerm_subnet.k8s_nodes_subnet.id
     type                          = "VirtualMachineScaleSets"
