@@ -1,7 +1,7 @@
 agent_count                            = 3
-location                               = "soutcentralus"
-k8s_vnet_resource_group_name           = "Apps03_Network_RG"
-k8s_vnet                               = "DevSub02-Vnet-002"
+location                               = "southcentralus"
+k8s_vnet_resource_group_name           = "Apps02_Network_RG"
+k8s_vnet                               = "DevSub02-Vnet-001"
 k8s_nodes_subnet                       = "kubernetes-nodes"
 k8s_apiserver_subnet                   = "kubernetes-api-server"
 dns_service_ip                         = "100.66.0.10"
