@@ -38,7 +38,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     *. az acr helm push -n ${ACR} eshopondapr-2.0.0.tgz 
 1. Fork repository
 1. Create a new branch for the cluster 
-1. Search and Replace default_cluster_name with the new name of the cluster
+1. Search and Replace k8994a with the new name of the cluster
 1. Commit branch to your repository
 1. Create the follow Secrets in GitHub:
     | Secret Name | Purpose |
@@ -85,7 +85,7 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
 # Steps for Basic Private Cluster
 1. Fork repository
 1. Create a new branch for the cluster 
-1. Search and Replace default_cluster_name with the new name of the cluster
+1. Search and Replace k8994a with the new name of the cluster
 1. Commit branch to your repository
 1. Create the follow Secrets in GitHub:
     | Secret Name | Purpose |
