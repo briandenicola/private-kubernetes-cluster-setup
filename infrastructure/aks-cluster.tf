@@ -143,6 +143,11 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     secret_rotation_interval = "2m"
   }
 
+  service_mesh_profile {
+    mode                             = "Istio" 
+    internal_ingress_gateway_enabled = true
+  }
+
   tags = {
     ServiceMeshType = var.service_mesh_type
   }

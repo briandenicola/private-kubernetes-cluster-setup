@@ -4,4 +4,4 @@ kind: Namespace
 metadata:
   name: knative-example
   labels:
-    istio-injection: enabled
+    istio.io/rev: asm-1-17

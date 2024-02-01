@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: default-backend
+  namespace: aks-istio-ingress
+spec:
+  selector:
+    matchLabels:
+      app: default-ingress-backend
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: default-ingress-backend
+    spec:
+      serviceAccountName: istio-ingress-sa-identity
+      containers:
+      - name: ingress
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: tls-mount
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+      volumes:
+      - name: tls-mount
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "istio-tls"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: default-backend-svc
+  namespace: aks-istio-ingress
+spec:
+  selector:
+    app: default-ingress-backend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

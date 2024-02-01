@@ -1,3 +1,31 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: httpbin-app
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./apps/httpbin
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: aks-flux-extension
+  validation: client
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
+kind: Kustomization
+metadata:
+  name: bookstore-app
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./apps/bookstore
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: aks-flux-extension
+  validation: client
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
 # kind: Kustomization
@@ -5,60 +33,10 @@
 #   name: eshopondapr
 #   namespace: flux-system
 # spec:
-#   interval: 30m0s
-#   dependsOn:
-#   - name: dapr
+#   interval: 5m0s
 #   sourceRef:
 #     kind: GitRepository
-#     name: flux-system
+#     name: aks-flux-extension
 #   path: ./apps/eShopOnDapr
 #   prune: true
 #   validation: client
-# #---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-#kind: Kustomization
-#metadata:
-#  name: chat
-#  namespace: flux-system
-#spec:
-#  interval: 30m0s
-#  dependsOn:
-#    - name: istio-system
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./apps/chat
-#  prune: true
-#  validation: client
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-#kind: Kustomization
-#metadata:
-#  name: bookstore
-#  namespace: flux-system
-#spec:
-#  interval: 30m0s
-#  dependsOn:
-#    - name: istio-system
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./apps/bookstore
-#  prune: true
-#  validation: client
-#---
-#apiVersion: kustomize.toolkit.fluxcd.io/v1beta1
-#kind: Kustomization
-#metadata:
-#  name: whatos-api
-#  namespace: flux-system
-#spec:
-#  interval: 30m0s
-#  dependsOn:
-#    - name: knative
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./apps/whatos-api
-#  prune: true
-#  validation: client

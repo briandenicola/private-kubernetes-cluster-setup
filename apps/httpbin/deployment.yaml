@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: apps
+  labels:
+    istio.io/rev: asm-1-17
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: v1.25
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/audit-version: v1.25
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: v1.25
+  annotations:
+    scheduler.alpha.kubernetes.io/defaultTolerations: '[{"key": "reservedFor", "operator": "Equal", "effect": "NoSchedule", "value": "apps"}]'
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+  namespace: apps
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: httpbin
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: httpbin
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000  
+        supplementalGroups: [2000]
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: httpbin
+        image: bjd145/httpbin:1087
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop: ["ALL"]
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "2"
+          requests:
+            memory: "64Mi"
+            cpu: "0.25"
+        volumeMounts:
+        - mountPath: /usr/tmp
+          name: tmp-volume
+      tolerations:
+      - key: "reservedFor"
+        operator: "Equal"
+        value: "apps"
+        effect: "NoSchedule"
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbinsvc
+  namespace: apps
+spec:
+  selector:
+    app: httpbin
+  ports:
+  - port: 80
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name:  httpbinsvc-vs
+  namespace: apps
+spec:
+  hosts:
+  -  httpbin.bjdazure.tech
+  gateways:
+  -  aks-istio-ingress/default-bjdazure-tech-gw
+  http:
+  - route:
+    - destination:
+        host: httpbinsvc
+        port:
+          number: 80
+

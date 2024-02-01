@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: eshopondapr
   labels:
-    istio-injection: enabled
+    istio.io/rev: asm-1-17
   annotations:
     scheduler.alpha.kubernetes.io/defaultTolerations: '[{"key": "reservedFor", "operator": "Equal", "effect": "NoSchedule", "value": "eShopOnDapr"}]'
 ---

@@ -18,7 +18,6 @@ jobs:
       CORE_SUBSCRIPTION_ID: ${{ secrets.CORE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
       GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-      SERVICE_TYPE_MESH:  istio
       CLUSTER_RG:  Apps02_K8S_${{ github.event.inputs.cluster_name }}_RG
       CLUSTER_NAME: ${{ github.event.inputs.cluster_name }}
       GITHUB_ACCOUNT: briandenicola
@@ -46,18 +45,9 @@ jobs:
       
     - name: "Terraform Plan"
       id: plan
-      run:  terraform plan -out="${{ env.CLUSTER_NAME }}.plan" -var "cluster_name=${{ env.CLUSTER_NAME }}" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var "service_mesh_type=${{ env.SERVICE_TYPE_MESH }}" -var-file="${{ env.SERVICE_TYPE_MESH }}.tfvars"
+      run:  terraform plan -out="${{ env.CLUSTER_NAME }}.plan" -var "cluster_name=${{ env.CLUSTER_NAME }}" -var "resource_group_name=${{ env.CLUSTER_RG }}" -var "certificate_base64_encoded=${{ secrets.CERTIFICATE }}"  -var "certificate_password=${{ secrets.CERT_PASSWORD }}" -var-file="cluster.tfvars"
       continue-on-error: false 
 
     - name: "Terraform Apply"
       id: apply
       run: terraform apply -auto-approve ${{ env.CLUSTER_NAME }}.plan
-
-    - name: Setup Flux
-      working-directory: './scripts'
-      run: |
-        export ACR_SPN_ID=${{ secrets.ACR_SPN_ID }}
-        export ACR_SPN_PASSWORD=${{ secrets.ACR_SPN_PASSWORD }}
-        export CLUSTER_BOOTSTRAP_PATH=./cluster-manifests/${{ env.SERVICE_TYPE_MESH }}
-        
-        bash ./aks-flux-configuration.sh

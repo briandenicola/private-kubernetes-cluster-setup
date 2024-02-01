@@ -1,0 +1,48 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: default-bjdazure-tech-gw
+  namespace: aks-istio-ingress
+spec:
+  selector:
+    istio: aks-istio-ingressgateway-internal  
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*.bjdazure.tech"
+  - port:
+      number: 80
+      name: http-serving
+      protocol: HTTP
+    hosts:
+    - "*.knative.bjdazure.tech"
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: istio-ingress-tls
+    hosts:
+    - "*.bjdazure.tech"
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name:  default-bjdazure-tech-vs
+  namespace: aks-istio-ingress
+spec:
+  hosts:
+  -  istio-default.bjdazure.tech
+  gateways:
+  -  aks-istio-ingress/default-bjdazure-tech-gw
+  http:
+  - route:
+    - destination:
+        host: default-backend-svc
+        port:
+          number: 80
+  

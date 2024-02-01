@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+# CRDs are install when Istio CRDs are deployed to the cluster under ./istio/customresources
+  - serving-core.yaml
+  - net-istio.yaml
+  - serving-config.yaml
