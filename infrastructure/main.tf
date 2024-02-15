@@ -15,7 +15,7 @@ locals {
   ingress_identity      = "${var.service_mesh_type}-ingress-sa-identity"
   zipkin_identity       = "zipkin-sa-identity"
   flux_repository       = "https://github.com/briandenicola/private-kubernetes-cluster-setup"
-  flux_branch           = "cluster/default_cluster_name"
+  flux_branch           = "cluster/k8995b "
   app_path              = "./cluster-manifests"  
   crd_path              = "./cluster-manifests/common/customresourcedefinitions"
   istio_cfg_path        = "./cluster-manifests/common/istio/configuration"
