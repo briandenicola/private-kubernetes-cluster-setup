@@ -785,6 +785,28 @@
                             },
                             {
                                 "ruleType": "ApplicationRule",
+                                "name": "Kubecost",
+                                "protocols": [
+                                    {
+                                        "protocolType": "Https",
+                                        "port": 443
+                                    }
+                                ],
+                                "fqdnTags": [],
+                                "webCategories": [],
+                                "targetFqdns": [
+                                    "kubecost.github.io"
+                                ],
+                                "targetUrls": [],
+                                "terminateTLS": false,
+                                "sourceAddresses": [
+                                    "*"
+                                ],
+                                "destinationAddresses": [],
+                                "sourceIpGroups": []
+                            },                           
+                            {
+                                "ruleType": "ApplicationRule",
                                 "name": "cert-manager",
                                 "protocols": [
                                     {
