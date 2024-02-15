@@ -795,7 +795,9 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "kubecost.github.io"
+                                    "kubecost.github.io",
+                                    "quay.io",
+                                    "k8s.gcr.io"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
