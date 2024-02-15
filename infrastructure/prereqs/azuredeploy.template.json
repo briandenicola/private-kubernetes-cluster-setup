@@ -629,7 +629,8 @@
                                 "fqdnTags": [],
                                 "webCategories": [],
                                 "targetFqdns": [
-                                    "dapr.github.io"
+                                    "dapr.github.io",
+                                    "linuxgeneva-microsoft.azurecr.io"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
