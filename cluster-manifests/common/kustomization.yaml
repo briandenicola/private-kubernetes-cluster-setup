@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - ./zipkin
   - ./prometheus
+  - ./knative
   - kubecost.yaml
-  - knative.yaml
   - kured.yaml
