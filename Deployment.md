@@ -73,8 +73,8 @@ The following is a detailed guide on how to standup an AKS cluster using the cod
     | vm_size | The VM size of the default node pool | Standard_B4ms |
 1. Trigger the 'Creates K8s with a Mesh installed' Github Action to create the cluster. 
     * Accept the default cluster name and Service Mesh
-1. Search and Replace default_ingress_client_id with the client id of Istio Service Mesh Ingress managed identity
-1. Search and Replace default_zipkin_client_id with the client id of Zipkin managed identity 
+1. Search and Replace 0c237e7c-2007-4392-96e5-bec4323fa4c1 with the client id of Istio Service Mesh Ingress managed identity
+1. Search and Replace 5adeae46-7597-426f-a40d-a8938f206444 with the client id of Zipkin managed identity 
 1. Search and Replace 16b3c013-d300-468d-ac64-7eda0820b6d3 with ther proper Azure AD tenant ID
 1. Commit branch to your repository
 1. The pipeline calls the ./scripts/aks-flux-configuration.sh script to confiugre flux and execute the GitOps flow
