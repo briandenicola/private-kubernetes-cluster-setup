@@ -630,7 +630,8 @@
                                 "webCategories": [],
                                 "targetFqdns": [
                                     "dapr.github.io",
-                                    "linuxgeneva-microsoft.azurecr.io"
+                                    "linuxgeneva-microsoft.azurecr.io",
+                                    "*.blob.core.windows.net"
                                 ],
                                 "targetUrls": [],
                                 "terminateTLS": false,
