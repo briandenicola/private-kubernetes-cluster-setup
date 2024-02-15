@@ -6,4 +6,3 @@ resources:
   - kubecost.yaml
   - knative.yaml
   - kured.yaml
-  - securitystandards.yaml 
