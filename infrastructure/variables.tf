@@ -95,7 +95,7 @@ variable "certificate_password" {
 
 variable "ingress_namespace" {
   description = "The namespace to deploy Istio gateway components to"
-  default     = "istio-gateways"
+  default     = "aks-istio-ingress"
 }
 
 variable "zipkin_namespace" {
