@@ -45,9 +45,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   azure_active_directory_role_based_access_control {
-    managed                = true
-    azure_rbac_enabled     = true
-    tenant_id              = data.azurerm_client_config.current.tenant_id
+    managed            = true
+    azure_rbac_enabled = true
+    tenant_id          = data.azurerm_client_config.current.tenant_id
   }
 
   identity {
@@ -62,20 +62,21 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   default_node_pool {
-    name                          = "system"
-    node_count                    = var.agent_count
-    zones                         = var.location == "northcentralus" ? null : ["1", "2", "3"]
-    vm_size                       = var.vm_size
-    os_disk_size_gb               = 100
-    os_disk_type                  = "Ephemeral"
-    os_sku                        = "Mariner"
-    vnet_subnet_id                = data.azurerm_subnet.k8s_nodes_subnet.id
-    type                          = "VirtualMachineScaleSets"
-    enable_auto_scaling           = "true"
-    min_count                     = 1
-    max_count                     = 5
-    kubelet_disk_type             = "Temporary"
-    only_critical_addons_enabled  = true
+    name                         = "system"
+    node_count                   = var.agent_count
+    zones                        = var.location == "northcentralus" ? null : ["1", "2", "3"]
+    vm_size                      = var.vm_size
+    os_disk_size_gb              = 100
+    os_disk_type                 = "Ephemeral"
+    os_sku                       = "Mariner"
+    vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
+    type                         = "VirtualMachineScaleSets"
+    enable_auto_scaling          = "true"
+    min_count                    = 1
+    max_count                    = 5
+    kubelet_disk_type            = "Temporary"
+    only_critical_addons_enabled = true
+    max_pods                     = 250
 
     upgrade_settings {
       max_surge = "33%"
@@ -94,21 +95,21 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   maintenance_window_auto_upgrade {
-    frequency = "Weekly"
-    interval  = 1
-    duration  = 4
+    frequency   = "Weekly"
+    interval    = 1
+    duration    = 4
     day_of_week = "Friday"
-    utc_offset = "-06:00"
-    start_time = "20:00"
+    utc_offset  = "-06:00"
+    start_time  = "20:00"
   }
 
   maintenance_window_node_os {
-    frequency = "Weekly"
-    interval  = 1
-    duration  = 4
+    frequency   = "Weekly"
+    interval    = 1
+    duration    = 4
     day_of_week = "Saturday"
-    utc_offset = "-06:00"
-    start_time = "20:00"
+    utc_offset  = "-06:00"
+    start_time  = "20:00"
   }
 
   auto_scaler_profile {
@@ -125,7 +126,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     disk_driver_version = "v2"
     file_driver_enabled = true
   }
-  
+
   oms_agent {
     log_analytics_workspace_id      = azurerm_log_analytics_workspace.k8s.id
     msi_auth_for_monitoring_enabled = true
@@ -144,7 +145,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   service_mesh_profile {
-    mode                             = "Istio" 
+    mode                             = "Istio"
     internal_ingress_gateway_enabled = true
   }
 

@@ -17,7 +17,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
   min_count             = 3
   max_count             = 6
   kubelet_disk_type     = "Temporary"
-
+  max_pods = 250
   upgrade_settings {
     max_surge           = "25%"
   }
@@ -42,6 +42,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
 #   min_count             = 3
 #   max_count             = 6
 #   kubelet_disk_type     = "Temporary"
+#   max_pods              = 250
 
 #   upgrade_settings {
 #     max_surge = "25%"
@@ -68,6 +69,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "default_app_node_pool" {
 #   min_count             = 3
 #   max_count             = 6
 #   kubelet_disk_type     = "Temporary"
+#   max_pods              = 250
 
 #   upgrade_settings {
 #     max_surge         = "25%"
