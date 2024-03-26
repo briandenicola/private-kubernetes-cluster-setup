@@ -40,6 +40,7 @@ features=(
     "EnableImageIntegrityPreview"
     "AKS-AzurePolicyExternalData"
     "KubeProxyConfigurationPreview"
+    "NodeAutoProvisioningPreview"
 )
 
 for feature in ${features[*]}
