@@ -17,7 +17,7 @@ spec:
         app: opentelemetry
         component: otel-collector
     spec:
-      serviceAccountName: zipkin-sa-identity
+      serviceAccountName: otel-sa-identity
       containers:
       - name: otel-collector
         image: otel/opentelemetry-collector-contrib-dev:latest
