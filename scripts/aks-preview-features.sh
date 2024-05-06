@@ -41,6 +41,7 @@ features=(
     "AKS-AzurePolicyExternalData"
     "KubeProxyConfigurationPreview"
     "NodeAutoProvisioningPreview"
+    "NRGLockdownPreview"
 )
 
 for feature in ${features[*]}
