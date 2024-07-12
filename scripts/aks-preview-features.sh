@@ -42,6 +42,10 @@ features=(
     "KubeProxyConfigurationPreview"
     "NodeAutoProvisioningPreview"
     "NRGLockdownPreview"
+    "IstioNativeSidecarModePreview"
+    "SafeguardsPreview"
+    "DisableSSHPreview"
+    "AutomaticSKUPreview"
 )
 
 for feature in ${features[*]}
