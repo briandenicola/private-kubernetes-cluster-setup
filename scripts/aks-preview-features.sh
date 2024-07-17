@@ -12,13 +12,14 @@ az extension update --name aks-preview
 #az feature register --namespace Microsoft.ContainerService --name AKS-AzureKeyVaultSecretsProvider
 #az feature register --namespace Microsoft.ContainerService --name EnableOIDCIssuerPreview
 #az feature register --namespace Microsoft.ContainerService --name FleetResourcePreview
+#az feature register --namespace Microsoft.ContainerService --name AzureServiceMeshPreview
+#az feature register --namespace Microsoft.ContainerService --name EnableWorkloadIdentityPreview
 
 features=(
     "DisableLocalAccountsPreview"
     "AKS-ExtensionManager"
     "AKS-AzureDefender"
     "AzureOverlayPreview"
-    "EnableWorkloadIdentityPreview"
     "AKS-PrometheusAddonPreview"
     "EnableImageCleanerPreview"
     "AKS-KedaPreview"
@@ -28,7 +29,6 @@ features=(
     "EnableMultipleStandardLoadBalancers"
     "AKSNodelessPreview"
     "NodeOsUpgradeChannelPreview"
-    "AzureServiceMeshPreview"
     "CiliumDataplanePreview"
     "TrustedAccessPreview"
     "KubeletDisk"
@@ -46,6 +46,7 @@ features=(
     "SafeguardsPreview"
     "DisableSSHPreview"
     "AutomaticSKUPreview"
+    "AdvancedNetworkingPreview"
 )
 
 for feature in ${features[*]}
