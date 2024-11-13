@@ -47,6 +47,7 @@ features=(
     "DisableSSHPreview"
     "AutomaticSKUPreview"
     "AdvancedNetworkingPreview"
+    "AzureLinuxV3Preview"
 )
 
 for feature in ${features[*]}
