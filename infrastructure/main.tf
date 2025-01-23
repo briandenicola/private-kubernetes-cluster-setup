@@ -20,4 +20,5 @@ locals {
   crd_path              = "./cluster-manifests/common/customresourcedefinitions"
   istio_cfg_path        = "./cluster-manifests/common/istio/configuration"
   istio_gw_path         = "./cluster-manifests/common/istio/gateway"
+  istio_version        = [ "asm-1-23" ]
 }

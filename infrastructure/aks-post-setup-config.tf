@@ -11,11 +11,13 @@ resource "azapi_update_resource" "this" {
 
   body = jsonencode({
     properties = {
-        metricsProfile = {
-            costAnalysis = {
-                enabled = true
-            }
+      networkProfile = {
+        advancedNetworking = {
+          observability = {
+            enabled = true
+          }
         }
+      }
     }
   })
 }

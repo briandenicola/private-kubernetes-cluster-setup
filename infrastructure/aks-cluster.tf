@@ -27,8 +27,8 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   private_cluster_enabled           = true
   private_dns_zone_id               = data.azurerm_private_dns_zone.aks_private_zone.id
   sku_tier                          = "Standard"
-  automatic_channel_upgrade         = "patch"
-  node_os_channel_upgrade           = "NodeImage"
+  automatic_upgrade_channel         = "patch"
+  node_os_upgrade_channel           = "NodeImage"
   local_account_disabled            = true
   azure_policy_enabled              = true
   open_service_mesh_enabled         = false
@@ -38,14 +38,14 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   role_based_access_control_enabled = true
   image_cleaner_enabled             = true
   image_cleaner_interval_hours      = 48
+  cost_analysis_enabled             = true
 
-  api_server_access_profile {
-    vnet_integration_enabled = true
-    subnet_id                = data.azurerm_subnet.k8s_apiserver_subnet.id
-  }
+  # api_server_access_profile {
+  #   vnet_integration_enabled = true
+  #   subnet_id                = data.azurerm_subnet.k8s_apiserver_subnet.id
+  # }
 
   azure_active_directory_role_based_access_control {
-    managed            = true
     azure_rbac_enabled = true
     tenant_id          = data.azurerm_client_config.current.tenant_id
   }
@@ -66,12 +66,12 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     node_count                   = var.agent_count
     zones                        = var.location == "northcentralus" ? null : ["1", "2", "3"]
     vm_size                      = var.vm_size
-    os_disk_size_gb              = 100
+    os_disk_size_gb              = 127
     os_disk_type                 = "Ephemeral"
-    os_sku                       = "Mariner"
+    os_sku                       = "AzureLinux"
     vnet_subnet_id               = data.azurerm_subnet.k8s_nodes_subnet.id
     type                         = "VirtualMachineScaleSets"
-    enable_auto_scaling          = "true"
+    auto_scaling_enabled         = "true"
     min_count                    = 1
     max_count                    = 5
     kubelet_disk_type            = "Temporary"
@@ -90,8 +90,9 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     network_plugin      = "azure"
     network_plugin_mode = "overlay"
     load_balancer_sku   = "standard"
+    network_data_plane  = "cilium"
+    network_policy      = "cilium"
     outbound_type       = "userDefinedRouting"
-    network_policy      = "calico"
   }
 
   maintenance_window_auto_upgrade {
@@ -123,7 +124,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   storage_profile {
     blob_driver_enabled = true
     disk_driver_enabled = true
-    disk_driver_version = "v2"
     file_driver_enabled = true
   }
 
@@ -147,6 +147,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   service_mesh_profile {
     mode                             = "Istio"
     internal_ingress_gateway_enabled = true
+    revisions                        = local.istio_version
   }
 
   tags = {
