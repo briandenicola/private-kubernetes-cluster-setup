@@ -10,18 +10,17 @@ data:
        [log_collection_settings.stdout]
           enabled = true
           exclude_namespaces = ["kube-system","gatekeeper-system"]
-
        [log_collection_settings.stderr]
           enabled = true
           exclude_namespaces = ["kube-system","gatekeeper-system"]
-
        [log_collection_settings.env_var]
           enabled = true
        [log_collection_settings.enrich_container_logs]
           enabled = false
        [log_collection_settings.collect_all_kube_events]
           enabled = false
-
+       [log_collection_settings.schema]
+          containerlog_schema_version = "v2"
 
   prometheus-data-collection-settings: |-
     [prometheus_data_collection_settings.cluster]
